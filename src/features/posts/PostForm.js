@@ -1,9 +1,23 @@
+import { addDoc, collection } from "firebase/firestore";
 import React, {useState} from "react";
+import { db } from "../../firebase";
 
 export const PostForm = () => {
   const [content, setContent] = useState('');
 
   const handleChange = e => setContent(e.target.value);
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      await addDoc(collection(db, "posts"), {
+        content: content
+      });
+
+    } catch(err) {
+      console.error(err);
+    }
+  }
 
   return (
     <form>
@@ -21,7 +35,7 @@ export const PostForm = () => {
         <div>Add to your post</div>
         <div>icons</div>
       </div>
-      <button type="button">Post</button>
+      <button type="button" onClick={e => handleSubmit(e)} >Post</button>
     </form>
   );
 };
