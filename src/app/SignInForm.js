@@ -8,6 +8,7 @@ export const SignInForm = () => {
     try {
       await signInWithRedirect(auth, provider);
       // send user to homepage with `navigate`
+      navigate('newsfeed');
     } catch (err) {
       console.error(err);
     }
