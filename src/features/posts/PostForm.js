@@ -1,16 +1,33 @@
 import { addDoc, collection } from "firebase/firestore";
 import React, {useState} from "react";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 export const PostForm = () => {
   const [content, setContent] = useState('');
+  const [name, setName] = useState('');
+  const [id, setId] = useState('');
 
   const handleChange = e => setContent(e.target.value);
 
+  const getUserInfo = () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      setName(user.displayName);
+      setId(user.uid);
+    } else {
+      throw new Error('user is not signed in');
+    }
+
+  }
+
   const handleSubmit = async (e) => {
     try {
+      getUserInfo();
       e.preventDefault();
       await addDoc(collection(db, "posts"), {
+        name: name,
+        userId: id,
         content: content
       });
 
