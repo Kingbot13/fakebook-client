@@ -6,9 +6,10 @@ import { collection, setDoc } from "firebase/firestore";
 import { useGetUsersQuery } from "../features/api/apiSlice";
 
 export const SignInForm = () => {
+  const { data: users, isError } = useGetUsersQuery();
+
   const googleSignIn = async () => {
     try {
-      const { data: users, isError } = useGetUsersQuery();
       await signInWithRedirect(auth, provider);
       const user = auth.currentUser;
       if (!users.includes(user.id)) {
