@@ -48,4 +48,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetPostsQuery } = apiSlice;
+export const { useGetPostsQuery, useGetUsersQuery } = apiSlice;
