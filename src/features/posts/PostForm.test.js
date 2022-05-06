@@ -1,15 +1,15 @@
 import React from "react";
 import { PostForm } from "./PostForm";
-import { userEvent } from "@testing-library/user-event/dist/types/setup";
+import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 
 
 describe("PostForm", ()=> {
-    test("typing in textarea", async ()=> {
+    test("typing in textarea", ()=> {
         render(<PostForm />);
         const user = userEvent.setup();
-        const textarea = screen.getByRole('textarea');
-        await user.keyboard('new post');
-        expect(textarea.textContent).toBe('new post');
+        const textarea = screen.getByRole('textbox');
+        user.type(textarea, 'new post');
+        expect(textarea.value).toBe('new post');
     })
 })
