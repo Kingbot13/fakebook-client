@@ -46,7 +46,7 @@ export const PostForm = () => {
         <div>user pic here</div>
         <div>user name here friend dropdown list here</div>
       </div>
-      <textarea placeholder="What's on your mind?" onChange={e => handleChange(e)} ></textarea>
+      <textarea placeholder="What's on your mind?" onChange={e => handleChange(e)} value={content} ></textarea>
       <div></div>
       <div>
         <div>Add to your post</div>
