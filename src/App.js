@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<SignInPage />} />
-        <Route path="newsfeed" element={<Newsfeed />} />
+        <Route path="/newsfeed" element={<Newsfeed />} />
       </Routes>
     </Router>
   );
