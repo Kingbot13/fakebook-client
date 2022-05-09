@@ -11,5 +11,6 @@ describe("PostForm", ()=> {
         const textarea = screen.getByRole('textbox');
         await userEvent.type(textarea, 'test');
         expect(textarea).toHaveValue('test');
-    })
-})
+    });
+    test.todo("clicking X button hides ")
+});

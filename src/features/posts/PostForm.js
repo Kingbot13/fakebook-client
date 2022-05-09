@@ -2,7 +2,7 @@ import { addDoc, collection } from "firebase/firestore";
 import React, {useState} from "react";
 import { auth, db } from "../../firebase";
 
-export const PostForm = () => {
+export const PostForm = ({toggle}) => {
   const [content, setContent] = useState('');
   const [name, setName] = useState('');
   const [id, setId] = useState('');
@@ -30,6 +30,7 @@ export const PostForm = () => {
         userId: id,
         content: content
       });
+      toggle();
 
     } catch(err) {
       console.error(err);

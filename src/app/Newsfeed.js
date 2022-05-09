@@ -11,7 +11,7 @@ export const Newsfeed = () => {
   }
   return (
     <main>
-      {showForm && <PostForm />}
+      {showForm && <PostForm toggle={toggleForm} />}
       <PostFormButton onClick={toggleForm} />
       <PostList />
     </main>
