@@ -5,11 +5,11 @@ import { render, screen } from "@testing-library/react";
 
 
 describe("PostForm", ()=> {
-    test("typing in textarea", ()=> {
+    test("typing in textarea", async ()=> {
         render(<PostForm />);
-        const user = userEvent.setup();
+        // const user = userEvent;
         const textarea = screen.getByRole('textbox');
-        user.type(textarea, 'new post');
-        expect(textarea.value).toBe('new post');
+        await userEvent.type(textarea, 'test');
+        expect(textarea).toHaveValue('test');
     })
 })
