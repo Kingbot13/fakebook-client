@@ -14,10 +14,6 @@ export const SignInForm = () => {
     try {
       e.preventDefault();
       await signInWithRedirect(auth, provider);
-      if (!users.includes(user.id)) {
-        
-      }
-      // send user to homepage with `navigate`
     } catch (err) {
       console.error(err);
     }
@@ -37,10 +33,13 @@ export const SignInForm = () => {
   },[]);
 
   const addUser = async () => {
-    await setDoc(collection(db, "users", `${user.uid}`), {
-      name: user.displayName,
-      photo: user.photoURL,
-    });
+    if (!users.includes(user.id)) {
+      await setDoc(collection(db, "users", `${user.uid}`), {
+        name: user.displayName,
+        photo: user.photoURL,
+      });
+        
+    }
   }
 
   return (
