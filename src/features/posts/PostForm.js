@@ -53,7 +53,7 @@ export const PostForm = ({toggle}) => {
         <div>Add to your post</div>
         <div>icons</div>
       </div>
-      <button type="button" onClick={e => handleSubmit(e)} >Post</button>
+      <button name="post-submit" type="button" onClick={e => handleSubmit(e)} >Post</button>
     </form>
   );
 };
