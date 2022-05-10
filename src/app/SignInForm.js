@@ -20,11 +20,11 @@ export const SignInForm = () => {
 
   const addUser = async (user) => {
     if (!users.includes(user.id) || !users) {
-    await setDoc(doc(db, "users", `${user.uid}`), {
-      name: user.displayName,
-      photo: user.photoURL,
-    });
-    // }
+      await setDoc(doc(db, "users", `${user.uid}`), {
+        name: user.displayName,
+        photo: user.photoURL,
+      });
+    }
   };
 
   useEffect(() => {
