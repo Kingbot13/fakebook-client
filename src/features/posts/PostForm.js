@@ -39,7 +39,9 @@ export const PostForm = ({ toggle }) => {
     <form>
       <div>
         <h2>Create post</h2>
-        <button type="button">X</button>
+        <button type="button" onClick={() => toggle()}>
+          X
+        </button>
       </div>
       <div>
         <div>user pic here</div>
