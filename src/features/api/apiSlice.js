@@ -28,9 +28,14 @@ export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
   endpoints: (build) => ({
     getPosts: build.query({
-      queryFn() {
+      queryFn: async () => {
         try {
-          getPostsFromFirebase();
+          let posts;
+          const request = await getDocs(collection(db, "posts"));
+          request.forEach((doc) => posts.push(doc.data()));
+          // getPostsFromFirebase();
+          console.log(posts);
+          return {data: posts};
         } catch (err) {
           console.error(err);
         }
