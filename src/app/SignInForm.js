@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { auth, db, provider } from "../firebase";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useGetUsersQuery } from "../features/api/apiSlice";
 
 export const SignInForm = () => {
