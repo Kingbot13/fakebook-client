@@ -1,5 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { auth } from "../../firebase";
+import { useGetUsersQuery } from "../api/apiSlice";
 
 export const UserPhoto = () => {
-  return <img />;
+  const user = auth.currentUser;
+  //   const { data: users } = useGetUsersQuery();
+  //   const currentUser = users.find((item) => item.id === user.id);
+
+  return <img src={user.photo} alt="" />;
 };
