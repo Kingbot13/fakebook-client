@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { UserPhoto } from "../users/UserPhoto";
 
 export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
   return (
@@ -10,7 +11,9 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
         </button>
       </div>
       <div>
-        <div>user pic here</div>
+        <div>
+          <UserPhoto />
+        </div>
         <div>user name here friend dropdown list here</div>
       </div>
       <textarea

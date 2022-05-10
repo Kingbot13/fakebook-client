@@ -7,5 +7,5 @@ export const UserPhoto = () => {
   //   const { data: users } = useGetUsersQuery();
   //   const currentUser = users.find((item) => item.id === user.id);
 
-  return <img src={user.photo} alt="" />;
+  return <img src={user.photoURL} alt="" />;
 };
