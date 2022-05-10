@@ -1,45 +1,11 @@
-import { addDoc, collection } from "firebase/firestore";
 import React, { useState } from "react";
-import { auth, db } from "../../firebase";
 
-export const PostForm = ({ toggle }) => {
-  const [content, setContent] = useState("");
-  const [name, setName] = useState("");
-  const [id, setId] = useState("");
-
-  const handleChange = (e) => setContent(e.target.value);
-
-  const getUserInfo = () => {
-    const user = auth.currentUser;
-
-    if (user) {
-      setName(user.displayName);
-      setId(user.uid);
-    } else {
-      throw new Error("user is not signed in");
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    try {
-      getUserInfo();
-      e.preventDefault();
-      await addDoc(collection(db, "posts"), {
-        name: name,
-        userId: id,
-        content: content,
-      });
-      toggle();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
   return (
     <form>
       <div>
         <h2>Create post</h2>
-        <button type="button" onClick={() => toggle()}>
+        <button type="button" onClick={toggle}>
           X
         </button>
       </div>
