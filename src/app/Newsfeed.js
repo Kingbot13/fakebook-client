@@ -33,6 +33,7 @@ export const Newsfeed = () => {
         name: name,
         userId: id,
         content: content,
+        photo: auth.currentUser.photoURL,
       });
       setContent("");
       toggleForm();
