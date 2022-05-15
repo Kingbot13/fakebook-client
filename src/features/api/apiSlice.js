@@ -30,21 +30,25 @@ export const apiSlice = createApi({
     getPosts: build.query({
       queryFn: async () => {
         try {
-          let posts;
+          let posts = [];
           const request = await getDocs(collection(db, "posts"));
           request.forEach((doc) => posts.push(doc.data()));
           // getPostsFromFirebase();
           console.log(posts);
-          return {data: posts};
+          return { data: posts };
         } catch (err) {
           console.error(err);
         }
       },
     }),
     getUsers: build.query({
-      queryFn() {
+      queryFn: async () => {
         try {
-          getUsers();
+          let users = [];
+          const request = await getDocs(collection(db, "users"));
+          request.forEach((doc) => users.push(doc.data()));
+          return { data: users };
+          // getUsers();
         } catch (err) {
           console.error(err);
         }
