@@ -2,17 +2,6 @@ import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
-// const getPostsFromFirebase = async () => {
-//   try {
-//     let posts = [];
-//     const request = await getDocs(collection(db, "posts"));
-//     request.forEach((doc) => posts.push(doc.data()));
-//     return { data: posts };
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 // const getUsers = async () => {
 //   try {
 //     let users = [];
