@@ -2,17 +2,6 @@ import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
-// const getUsers = async () => {
-//   try {
-//     let users = [];
-//     const request = await getDocs(collection(db, "users"));
-//     request.forEach((doc) => users.push(doc.data()));
-//     return { data: users };
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
   endpoints: (build) => ({
@@ -24,8 +13,6 @@ export const apiSlice = createApi({
           request.forEach((doc) =>
             posts.push({ data: doc.data(), id: doc.id })
           );
-          // getPostsFromFirebase();
-          console.log(posts);
           return { data: posts };
         } catch (err) {
           console.error(err);
@@ -55,7 +42,6 @@ export const apiSlice = createApi({
             users.push({ data: doc.data(), id: doc.id })
           );
           return { data: users };
-          // getUsers();
         } catch (err) {
           console.error(err);
         }
