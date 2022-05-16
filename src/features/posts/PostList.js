@@ -9,7 +9,7 @@ export const PostList = () => {
 
   return (
     <div>
-      {posts ? posts.map(post => <Post key={post.id} name={post.name} content={post.content} photo={post.photo} />)
+      {posts ? posts.map(post => <Post key={post.id} name={post.data.name} content={post.data.content} photo={post.data.photo} />)
       :
       "Be the first to write a post!"}
     </div>
