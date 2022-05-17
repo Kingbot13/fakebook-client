@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
 
@@ -22,10 +22,15 @@ export const Newsfeed = () => {
     if (user) {
       setName(user.displayName);
       setId(user.uid);
+      console.log(user, name, id);
     } else {
       throw new Error("user is not signed in");
     }
   };
+
+  useEffect(() => {
+    getUserInfo();
+  },[]);
 
   const handleSubmit = async (e) => {
     try {

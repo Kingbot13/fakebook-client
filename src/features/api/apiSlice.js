@@ -20,13 +20,14 @@ export const apiSlice = createApi({
       },
     }),
     addPost: build.mutation({
-      queryFn: async ({name, content, photo, userId}) => {
+      queryFn: async ({name, content, photo, id}) => {
         try {
+          console.log(id, name, content);
           await addDoc(collection(db, "posts"), {
             name: name,
             content: content,
             photo: photo,
-            userId: userId,
+            userId: id,
           });
           return {data: null};
         } catch (err) {
