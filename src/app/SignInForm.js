@@ -3,10 +3,12 @@ import { auth, db, provider } from "../firebase";
 import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
-import { useGetUsersQuery } from "../features/api/apiSlice";
+import { useGetUsersQuery, useAddUserMutation } from "../features/api/apiSlice";
+
 
 export const SignInForm = () => {
   const { data: users, isError } = useGetUsersQuery();
+  const [addUser] = useAddUserMutation();
   const navigate = useNavigate();
 
   const googleSignIn = async (e) => {
@@ -18,14 +20,14 @@ export const SignInForm = () => {
     }
   };
 
-  const addUser = async (user) => {
-    if (!users.find((item) => item.id === user.id) || !users) {
-      await setDoc(doc(db, "users", `${user.uid}`), {
-        name: user.displayName,
-        photo: user.photoURL,
-      });
-    }
-  };
+  // const addUser = async (user) => {
+  //   if (!users.find((item) => item.id === user.id) || !users) {
+  //     await setDoc(doc(db, "users", `${user.uid}`), {
+  //       name: user.displayName,
+  //       photo: user.photoURL,
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     getRedirectResult(auth)
@@ -33,8 +35,8 @@ export const SignInForm = () => {
         console.log(result);
         if (result) {
           const user = auth.currentUser;
-
-          addUser(user);
+          addUser({name: user.displayName, photo: user.photoURL, id: user.uid});
+          // addUser(user);
           navigate("/newsfeed");
         }
       })
