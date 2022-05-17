@@ -35,7 +35,7 @@ export const SignInForm = () => {
         console.log(result);
         if (result) {
           const user = auth.currentUser;
-          addUser({name: user.displayName, photo: user.photoURL, id: user.uid});
+          if (!users.find((item) => item.id === user.id) || !users) addUser({name: user.displayName, photo: user.photoURL, id: user.uid});
           // addUser(user);
           navigate("/newsfeed");
         }
