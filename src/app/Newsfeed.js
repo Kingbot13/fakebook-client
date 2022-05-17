@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addDoc, collection } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 
 import { PostFormButton } from "../features/posts/PostFormButton";
 import { PostForm } from "../features/posts/PostForm";
@@ -22,7 +21,6 @@ export const Newsfeed = () => {
     if (user) {
       setName(user.displayName);
       setId(user.uid);
-      console.log(user, name, id);
     } else {
       throw new Error("user is not signed in");
     }
@@ -36,12 +34,6 @@ export const Newsfeed = () => {
     try {
       e.preventDefault();
       getUserInfo();
-      // await addDoc(collection(db, "posts"), {
-      //   name: name,
-      //   userId: id,
-      //   content: content,
-      //   photo: auth.currentUser.photoURL,
-      // });
       const photo = auth.currentUser.photoURL
       await addPost({name, content, photo, id}).unwrap();
       setContent("");
