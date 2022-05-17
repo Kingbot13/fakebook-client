@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { UserPhoto } from "../users/UserPhoto";
+import { auth } from "../../firebase";
 
 export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
   return (
@@ -14,7 +15,7 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
         <div>
           <UserPhoto />
         </div>
-        <div>user name here friend dropdown list here</div>
+        <div>{auth.currentUser.displayName} friend dropdown list here</div>
       </div>
       <textarea
         placeholder="What's on your mind?"
