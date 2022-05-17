@@ -5,12 +5,14 @@ import { auth, db } from "../firebase";
 import { PostFormButton } from "../features/posts/PostFormButton";
 import { PostForm } from "../features/posts/PostForm";
 import { PostList } from "../features/posts/PostList";
+import { useAddPostMutation } from "../features/api/apiSlice";
 
 export const Newsfeed = () => {
   const [showForm, setShowForm] = useState(false);
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [id, setId] = useState("");
+  const [addPost] = useAddPostMutation();
 
   const handleChange = (e) => setContent(e.target.value);
 
@@ -27,14 +29,16 @@ export const Newsfeed = () => {
 
   const handleSubmit = async (e) => {
     try {
-      getUserInfo();
       e.preventDefault();
-      await addDoc(collection(db, "posts"), {
-        name: name,
-        userId: id,
-        content: content,
-        photo: auth.currentUser.photoURL,
-      });
+      getUserInfo();
+      // await addDoc(collection(db, "posts"), {
+      //   name: name,
+      //   userId: id,
+      //   content: content,
+      //   photo: auth.currentUser.photoURL,
+      // });
+      const photo = auth.currentUser.photoURL
+      await addPost({name, content, photo, id}).unwrap();
       setContent("");
       toggleForm();
     } catch (err) {

@@ -20,7 +20,7 @@ export const apiSlice = createApi({
       },
     }),
     addPost: build.mutation({
-      queryFn: async (name, content, photo, userId) => {
+      queryFn: async ({name, content, photo, userId}) => {
         try {
           await addDoc(collection(db, "posts"), {
             name: name,
@@ -28,6 +28,7 @@ export const apiSlice = createApi({
             photo: photo,
             userId: userId,
           });
+          return {data: null};
         } catch (err) {
           console.error(err);
         }
@@ -50,4 +51,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetPostsQuery, useGetUsersQuery } = apiSlice;
+export const { useGetPostsQuery, useGetUsersQuery, useAddPostMutation } = apiSlice;
