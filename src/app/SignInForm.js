@@ -4,7 +4,7 @@ import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { useGetUsersQuery, useAddUserMutation } from "../features/api/apiSlice";
-import "../styles/SignInForm";
+import "../styles/SignInForm.module.css";
 
 export const SignInForm = () => {
   const { data: users, isError } = useGetUsersQuery();
