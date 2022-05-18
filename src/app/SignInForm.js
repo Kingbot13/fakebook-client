@@ -49,7 +49,7 @@ export const SignInForm = () => {
   }, []);
 
   return (
-    <form>
+    <form className={styles.form}>
       <button type="button" onClick={(e) => googleSignIn(e)}>
         Sign-In With Google
       </button>
