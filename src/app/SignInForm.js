@@ -4,7 +4,7 @@ import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { useGetUsersQuery, useAddUserMutation } from "../features/api/apiSlice";
-import "../styles/SignInForm.module.css";
+import styles from "../styles/SignInForm.module.css";
 
 export const SignInForm = () => {
   const { data: users, isError } = useGetUsersQuery();
@@ -32,10 +32,6 @@ export const SignInForm = () => {
   const checkAndAddUser = async () => {
     try {
       const user = auth.currentUser;
-      console.log(user);
-      console.log(users);
-      console.log(isError);
-
       if (!users.find((item) => item.id === user.id) || !users)
         await addUser({
           name: user.displayName,
@@ -52,13 +48,6 @@ export const SignInForm = () => {
       .then((result) => {
         console.log(result);
         if (result) {
-          // if (!users.find((item) => item.id === user.id) || !users)
-          //   addUser({
-          //     name: user.displayName,
-          //     photo: user.photoURL,
-          //     id: user.uid,
-          //   });
-          // addUser(user);
           checkAndAddUser();
           navigate("/newsfeed");
         }
