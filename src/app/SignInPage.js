@@ -7,7 +7,7 @@ export const SignInPage = () => {
     <main className={styles.main}>
       <div>
         <h1 className={styles.h1}>fakebook</h1>
-        <h2>Connect with friends and the world around you on Facebook.</h2>
+        <h2 className={styles.h2}>Connect with friends and the world around you on Fakebook.</h2>
       </div>
       <SignInForm />
     </main>

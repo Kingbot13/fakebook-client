@@ -7,6 +7,18 @@
     align-items: center;
 }
 
+.main div:first-child {
+    padding-right: 32px;
+}
+
 .h1 {
     color: #1877f2;
+    font-size: 50px;
+}
+
+.h2 {
+    width: 30rem;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 32px;
 }
