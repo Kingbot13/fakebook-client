@@ -4,7 +4,7 @@ import { db } from "../../firebase";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
-  tagTypes: ['Posts', 'Users'],
+  tagTypes: ["Posts", "Users"],
   endpoints: (build) => ({
     getPosts: build.query({
       queryFn: async () => {
@@ -19,10 +19,10 @@ export const apiSlice = createApi({
           console.error(err);
         }
       },
-      providesTags: ['Posts'],
+      providesTags: ["Posts"],
     }),
     addPost: build.mutation({
-      queryFn: async ({name, content, photo, id}) => {
+      queryFn: async ({ name, content, photo, id }) => {
         try {
           await addDoc(collection(db, "posts"), {
             name: name,
@@ -30,12 +30,12 @@ export const apiSlice = createApi({
             photo: photo,
             userId: id,
           });
-          return {data: null};
+          return { data: null };
         } catch (err) {
           console.error(err);
         }
       },
-      invalidatesTags: ['Posts'],
+      invalidatesTags: ["Posts"],
     }),
     getUsers: build.query({
       queryFn: async () => {
@@ -50,22 +50,28 @@ export const apiSlice = createApi({
           console.error(err);
         }
       },
-      providesTags: ['Users'],
+      providesTags: ["Users"],
     }),
     addUser: build.mutation({
-      queryFn: async ({name, photo, id}) => {
+      queryFn: async ({ name, photo, id }) => {
         try {
           await setDoc(doc(db, "users", `${id}`), {
             name: name,
             photo: photo,
           });
-          return {data: null};
+          return { data: null };
         } catch (err) {
           console.error(err);
         }
-      }
+      },
+      invalidatesTags: ["Users"],
     }),
   }),
 });
 
-export const { useGetPostsQuery, useGetUsersQuery, useAddPostMutation, useAddUserMutation } = apiSlice;
+export const {
+  useGetPostsQuery,
+  useGetUsersQuery,
+  useAddPostMutation,
+  useAddUserMutation,
+} = apiSlice;
