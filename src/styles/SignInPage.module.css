@@ -1,6 +1,10 @@
 .main {
     background-color: #f0f2f5;
     height: 100vh;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
 }
 
 .h1 {

@@ -20,14 +20,6 @@ export const SignInForm = () => {
     }
   };
 
-  // const addUser = async (user) => {
-  //   if (!users.find((item) => item.id === user.id) || !users) {
-  //     await setDoc(doc(db, "users", `${user.uid}`), {
-  //       name: user.displayName,
-  //       photo: user.photoURL,
-  //     });
-  //   }
-  // };
 
   const checkAndAddUser = async () => {
     try {
