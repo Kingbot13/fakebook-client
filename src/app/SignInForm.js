@@ -4,7 +4,7 @@ import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { useGetUsersQuery, useAddUserMutation } from "../features/api/apiSlice";
-
+import "../styles/SignInForm";
 
 export const SignInForm = () => {
   const { data: users, isError } = useGetUsersQuery();
@@ -29,14 +29,37 @@ export const SignInForm = () => {
   //   }
   // };
 
+  const checkAndAddUser = async () => {
+    try {
+      const user = auth.currentUser;
+      console.log(user);
+      console.log(users);
+      console.log(isError);
+
+      if (!users.find((item) => item.id === user.id) || !users)
+        await addUser({
+          name: user.displayName,
+          photo: user.photoURL,
+          id: user.uid,
+        }).unwrap();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         console.log(result);
         if (result) {
-          const user = auth.currentUser;
-          if (!users.find((item) => item.id === user.id) || !users) addUser({name: user.displayName, photo: user.photoURL, id: user.uid});
+          // if (!users.find((item) => item.id === user.id) || !users)
+          //   addUser({
+          //     name: user.displayName,
+          //     photo: user.photoURL,
+          //     id: user.uid,
+          //   });
           // addUser(user);
+          checkAndAddUser();
           navigate("/newsfeed");
         }
       })

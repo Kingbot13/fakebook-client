@@ -45,6 +45,7 @@ export const apiSlice = createApi({
           request.forEach((doc) =>
             users.push({ data: doc.data(), id: doc.id })
           );
+          console.log(users);
           return { data: users };
         } catch (err) {
           console.error(err);
