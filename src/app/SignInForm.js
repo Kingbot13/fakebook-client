@@ -4,6 +4,7 @@ import { getRedirectResult, signInWithRedirect } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useGetUsersQuery, useAddUserMutation } from "../features/api/apiSlice";
 import styles from "../styles/SignInForm.module.css";
+import { SubmitBtn } from "../components/Button";
 
 export const SignInForm = () => {
   const { data: users, isError } = useGetUsersQuery();
@@ -50,9 +51,9 @@ export const SignInForm = () => {
 
   return (
     <form className={styles.form}>
-      <button type="button" onClick={(e) => googleSignIn(e)}>
+      <SubmitBtn type="button" onClick={(e) => googleSignIn(e)}>
         Sign-In With Google
-      </button>
+      </SubmitBtn>
     </form>
   );
 };
