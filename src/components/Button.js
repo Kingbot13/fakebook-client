@@ -11,6 +11,8 @@ export const SubmitBtn = styled.button`
     font-weight: 600;
     font-size: 0.9375rem;
     &:hover {
-        background-color: #1877F2;
+        background-color: #196cd5;
+        color: #f7f7f7;
     }
+    transition: background-color 0.5s, color 0.5s;
 `
