@@ -38,7 +38,6 @@ export const SignInForm = () => {
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
-        console.log(result);
         if (result) {
           checkAndAddUser();
           navigate("/newsfeed");
