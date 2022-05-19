@@ -2,9 +2,9 @@ import React from "react";
 import styled from 'styled-components';
 
 
-const Navbar = () => {
+const Navbar = ({className}) => {
     return (
-        <nav>
+        <nav className={className}>
             <div>link placeholder</div>
         </nav>
     )
