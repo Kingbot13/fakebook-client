@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-
+import styles from '../styles/Newsfeed.module.css';
 import { PostFormButton } from "../features/posts/PostFormButton";
 import { PostForm } from "../features/posts/PostForm";
 import { PostList } from "../features/posts/PostList";
@@ -48,7 +48,7 @@ export const Newsfeed = () => {
     if (content) setContent("");
   };
   return (
-    <main>
+    <main className={styles.main} >
       {showForm && (
         <PostForm
           toggle={toggleForm}
