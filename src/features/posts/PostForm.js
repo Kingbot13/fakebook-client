@@ -2,10 +2,11 @@ import React from "react";
 import { UserPhoto } from "../users/UserPhoto";
 import { auth } from "../../firebase";
 import { SubmitBtn } from "../../components/Button";
+import styles from '../../styles/PostForm.module.css';
 
 export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
   return (
-    <form>
+    <form className={styles.form}>
       <div>
         <h2>Create post</h2>
         <button type="button" onClick={toggle}>
