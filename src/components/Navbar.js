@@ -11,5 +11,5 @@ const Navbar = ({className}) => {
 }
 
 export const StyledNav = styled(Navbar)`
-    background-color: blue;
+    background-color: #fff;
 `
