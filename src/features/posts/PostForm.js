@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { UserPhoto } from "../users/UserPhoto";
 import { auth } from "../../firebase";
+import { SubmitBtn } from "../../components/Button";
 
 export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
   return (
@@ -27,9 +28,9 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
         <div>Add to your post</div>
         <div>icons</div>
       </div>
-      <button name="post-submit" type="button" onClick={(e) => handleSubmit(e)}>
+      <SubmitBtn name="post-submit" type="button" onClick={(e) => handleSubmit(e)}>
         Post
-      </button>
+      </SubmitBtn>
     </form>
   );
 };
