@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { StyledNav } from "./components/Navbar";
 import "./App.css";
@@ -7,9 +7,13 @@ import { SignInPage } from "./app/SignInPage";
 import { auth } from "./firebase";
 
 function App() {
+  const [showNav, setShowNav] = useState(false);
+  useEffect(() => {
+    if (auth.currentUser) setShowNav(true);
+  },[]);
   return (
     <Router>
-      {auth.currentUser && <StyledNav />}
+      {showNav && <StyledNav />}
       <Routes>
         <Route path="/" element={<SignInPage />} />
         <Route path="/newsfeed" element={<Newsfeed />} />
