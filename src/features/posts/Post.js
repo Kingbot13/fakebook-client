@@ -1,11 +1,12 @@
 import React from "react";
+import { StyledImg } from "../../components/Image";
 
 export const Post = ({ name, content, photo }) => {
   return (
     <div>
       <div>
         <div>
-          <img src={photo} alt="" />
+          <StyledImg src={photo} alt="" />
         </div>
         <div>{name}</div>
         <div>...</div>
