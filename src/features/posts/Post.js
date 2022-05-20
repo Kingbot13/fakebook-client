@@ -5,11 +5,11 @@ import styles from '../../styles/Post.module.css';
 export const Post = ({ name, content, photo }) => {
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
         </div>
-        <div>{name}</div>
+        <div><strong>{name}</strong></div>
         <div>...</div>
       </div>
       <p>{content}</p>
