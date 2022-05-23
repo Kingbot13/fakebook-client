@@ -10,7 +10,7 @@ function App() {
   const [showNav, setShowNav] = useState(false);
   useEffect(() => {
     if (auth.currentUser) setShowNav(true);
-  }, [showNav]);
+  }, []);
   return (
     <Router>
       {showNav && <StyledNav />}
