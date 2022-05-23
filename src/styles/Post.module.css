@@ -27,5 +27,24 @@
 
 /* container for more options div '...' */
 .user div:last-child {
-    width: 20px;
+    width: 36px;
+    height: 36px;
+    color: #65676b;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    transition: background-color 0.5s;
+    padding: 0 8px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.34;
+}
+
+.user div:last-child:hover {
+    background-color: #f0f2f5;
+}
+
+.content {
+    font-size: .9375rem;
+    margin: 4px 16px 16px;
 }

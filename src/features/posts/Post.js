@@ -12,7 +12,7 @@ export const Post = ({ name, content, photo }) => {
         <div><strong>{name}</strong></div>
         <div>...</div>
       </div>
-      <p>{content}</p>
+      <p className={styles.content}>{content}</p>
     </div>
   );
 };
