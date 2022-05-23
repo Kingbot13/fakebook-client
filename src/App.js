@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { StyledNav } from "./components/Navbar";
 import "./App.css";
@@ -10,7 +10,7 @@ function App() {
   const [showNav, setShowNav] = useState(false);
   useEffect(() => {
     if (auth.currentUser) setShowNav(true);
-  },[]);
+  }, [showNav]);
   return (
     <Router>
       {showNav && <StyledNav />}
