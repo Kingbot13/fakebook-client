@@ -22,4 +22,12 @@
     padding: 8px 12px;
     font-size: 1.0625rem;
     color: #65676b;
+    background-color: #f0f2f5;
+    transition: color 0.5s, background-color 0.5s;
+}
+
+.container button:hover {
+    color: #5d5f62;
+    background-color: #e6e9ee;
+
 }
