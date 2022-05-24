@@ -12,4 +12,7 @@ const Navbar = ({className}) => {
 
 export const StyledNav = styled(Navbar)`
     background-color: #fff;
+    height: 56px;
+    display: flex;
+    justify-content: center;
 `
