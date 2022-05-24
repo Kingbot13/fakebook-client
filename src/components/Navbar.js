@@ -1,10 +1,12 @@
 import React from "react";
 import styled from 'styled-components';
+import { StyledLogo } from "./Logo";
 
 
 const Navbar = ({className}) => {
     return (
         <nav className={className}>
+            <StyledLogo />
             <div>link placeholder</div>
         </nav>
     )
