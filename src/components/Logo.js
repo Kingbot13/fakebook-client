@@ -21,4 +21,5 @@ export const StyledLogo = styled(Logo)`
         font-size: 35px;
         font-weight: 700;
     }
+    align-self: flex-start;
 `
