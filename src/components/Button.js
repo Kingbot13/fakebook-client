@@ -16,3 +16,8 @@ export const SubmitBtn = styled.button`
     }
     transition: background-color 0.5s, color 0.5s;
 `
+
+export const UserOptionsBtn = styled.button`
+    border-radius: 50%;
+    border: none;
+`
