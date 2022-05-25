@@ -20,4 +20,7 @@ export const SubmitBtn = styled.button`
 export const UserOptionsBtn = styled.button`
     border-radius: 50%;
     border: none;
+    background-color: #E4E6EB;
+    height: 40px;
+    width: 40px;
 `
