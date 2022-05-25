@@ -4,13 +4,13 @@ import { StyledLogo } from "./Logo";
 import { UserOptionsBtn } from "./Button";
 
 
-const Navbar = ({className}) => {
+const Navbar = ({className, toggleCard}) => {
     return (
         <nav className={className}>
             <StyledLogo />
             <div>link placeholder</div>
             <div className="option-btns-container">
-                <UserOptionsBtn>Options</UserOptionsBtn>
+                <UserOptionsBtn onClick={() => toggleCard()}>Options</UserOptionsBtn>
             </div>
         </nav>
     )
