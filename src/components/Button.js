@@ -23,4 +23,11 @@ export const UserOptionsBtn = styled.button`
     background-color: var(--secondary-btn-color);
     height: 40px;
     width: 40px;
+    &:hover {
+        background-color: var(--secondary-btn-hover-color);
+    }
+    &:focus {
+        background-color: var(--primary-active-btn-color);
+    }
+    transition: background-color 0.2s;
 `
