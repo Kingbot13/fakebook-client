@@ -1,6 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 import { StyledLogo } from "./Logo";
+import { UserOptionsBtn } from "./Button";
 
 
 const Navbar = ({className}) => {
@@ -8,6 +9,9 @@ const Navbar = ({className}) => {
         <nav className={className}>
             <StyledLogo />
             <div>link placeholder</div>
+            <div className="option-btns-container">
+                <UserOptionsBtn>Options</UserOptionsBtn>
+            </div>
         </nav>
     )
 }
@@ -21,4 +25,13 @@ export const StyledNav = styled(Navbar)`
     position: fixed;
     width: 100%;
     margin: auto;
+    & .option-btns-container {
+        position: fixed;
+        right: 0;
+        top: 0;
+        margin-right: 16px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+    }
 `
