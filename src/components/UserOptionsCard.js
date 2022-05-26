@@ -25,7 +25,7 @@ export const UserOptionsCard = () => {
                 </div>
                 <div className={styles.textContainer}>
                     <div className={styles.userName}>
-                        {auth.currentUser.displayName}
+                        {auth && auth.currentUser.displayName}
                     </div>
                     <div>
                         see your profile
