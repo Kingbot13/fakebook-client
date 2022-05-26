@@ -2,8 +2,21 @@ import React from "react";
 import styles from '../styles/UserOptionsCard.module.css';
 import { UserPhoto } from "../features/users/UserPhoto";
 import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 export const UserOptionsCard = () => {
+
+    const navigate = useNavigate();
+
+    const logOut = async () => {
+        try {
+            await signOut(auth);
+            navigate('/');
+        } catch(err) {
+            console.error(err);
+        }
+    }
     return (
         <div className={styles.main}>
             <div className={styles.user}>
@@ -21,7 +34,7 @@ export const UserOptionsCard = () => {
             </div>
             <hr/>
             <ul className={styles.optionsContainer}>
-                <li>Log Out</li>
+                <li onClick={logOut}>Log Out</li>
             </ul>
         </div>
     )
