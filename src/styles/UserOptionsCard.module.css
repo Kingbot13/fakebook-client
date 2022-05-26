@@ -45,3 +45,26 @@
     border-width: 0;
     height: 1px;
 }
+
+.optionsContainer {
+    margin: 4px 0 8px;
+}
+
+.optionsContainer li {
+    margin: 0 8px;
+    padding: 0 8px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: .9375rem;
+    font-weight: 500;
+    line-height: 1.3333;
+    max-width: 100%;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.optionsContainer li:hover {
+    background-color: #eee;
+}

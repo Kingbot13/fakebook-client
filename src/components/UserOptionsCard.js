@@ -20,7 +20,7 @@ export const UserOptionsCard = () => {
                 </div>
             </div>
             <hr/>
-            <ul>
+            <ul className={styles.optionsContainer}>
                 <li>Log Out</li>
             </ul>
         </div>
