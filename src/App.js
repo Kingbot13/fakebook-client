@@ -13,6 +13,9 @@ function App() {
   const toggleOptionsCard = () => {
     setShowOptionsCard(!showOptionsCard ? true : false);
   }
+  const toggleNav = () => {
+    setShowNav(false);
+  }
   const location = useLocation();
   useEffect(() => {
     if (auth.currentUser) setShowNav(true);
@@ -20,7 +23,7 @@ function App() {
   return (
     <div>
       {showNav && <StyledNav toggleCard={toggleOptionsCard} />}
-      {showOptionsCard && <UserOptionsCard />}
+      {showOptionsCard && <UserOptionsCard toggleCard={toggleOptionsCard} toggleNav={toggleNav} />}
       <Routes>
         <Route path="/" element={<SignInPage />} />
         <Route path="/newsfeed" element={<Newsfeed />} />

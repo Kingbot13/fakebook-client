@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-export const UserOptionsCard = () => {
+export const UserOptionsCard = ({toggleCard, toggleNav}) => {
     const [name, setName] = useState('');
 
 
@@ -18,6 +18,8 @@ export const UserOptionsCard = () => {
     const logOut = async () => {
         try {
             await signOut(auth);
+            toggleCard();
+            toggleNav();
             navigate('/');
         } catch(err) {
             console.error(err);
