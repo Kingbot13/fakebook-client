@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styles from '../styles/UserOptionsCard.module.css';
 import { UserPhoto } from "../features/users/UserPhoto";
 import { auth } from "../firebase";
@@ -6,8 +6,14 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 export const UserOptionsCard = () => {
+    const [name, setName] = useState('');
+
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setName(auth.currentUser.displayName);
+    }, []);
 
     const logOut = async () => {
         try {
@@ -25,7 +31,7 @@ export const UserOptionsCard = () => {
                 </div>
                 <div className={styles.textContainer}>
                     <div className={styles.userName}>
-                        {auth && auth.currentUser.displayName}
+                        {name}
                     </div>
                     <div>
                         see your profile
