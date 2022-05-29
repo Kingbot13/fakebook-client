@@ -9,3 +9,29 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.headerContainer {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    justify-content: center;
+    position: relative;
+}
+
+.headerContainer h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.headerContainer button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    height: 36px;
+    width: 36px;
+    background-color: #e4e6eb;
+    border: none;
+    border-radius: 50%;
+}
