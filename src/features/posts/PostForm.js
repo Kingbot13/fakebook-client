@@ -19,11 +19,12 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
         </div>
         <div className={styles.username}>{auth.currentUser.displayName}</div>
       </div>
-      <textarea
+      <input
+        type="text"
         placeholder="What's on your mind?"
         onChange={(e) => handleChange(e)}
         value={content}
-      ></textarea>
+      ></input>
       <div></div>
       <div>
         <div>Add to your post</div>
