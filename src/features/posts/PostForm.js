@@ -13,11 +13,11 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
           X
         </button>
       </div>
-      <div>
-        <div>
+      <div className={styles.userContainer}>
+        <div className={styles.userPhotoContainer}>
           <UserPhoto />
         </div>
-        <div>{auth.currentUser.displayName} friend dropdown list here</div>
+        <div className={styles.username}>{auth.currentUser.displayName}</div>
       </div>
       <textarea
         placeholder="What's on your mind?"

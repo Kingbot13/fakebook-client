@@ -40,3 +40,20 @@
 .headerContainer button:hover {
     background-color: #dadde4;
 }
+
+.userContainer {
+    margin: 0 16px;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+}
+
+.userPhotoContainer {
+    margin-right: 11px;
+}
+
+.username {
+    font-weight: 600;
+    font-size: .9375rem;
+    line-height: 1.3333;
+}
