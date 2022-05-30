@@ -34,4 +34,9 @@
     background-color: #e4e6eb;
     border: none;
     border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.headerContainer button:hover {
+    background-color: #dadde4;
 }
