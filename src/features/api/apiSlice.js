@@ -29,6 +29,7 @@ export const apiSlice = createApi({
             content: content,
             photo: photo,
             userId: id,
+            date: new Date(),
           });
           return { data: null };
         } catch (err) {
