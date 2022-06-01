@@ -26,17 +26,19 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
         value={content}
       ></input>
       <div></div>
-      <div>
+      <div className={styles.addToPostContainer}>
         <div>Add to your post</div>
-        <div>icons</div>
+        <div className={styles.iconsContainer}>icons</div>
       </div>
-      <SubmitBtn
-        name="post-submit"
-        type="button"
-        onClick={(e) => handleSubmit(e)}
-      >
-        Post
-      </SubmitBtn>
+      <div className={styles.btnContainer}>
+        <SubmitBtn
+          name="post-submit"
+          type="button"
+          onClick={(e) => handleSubmit(e)}
+        >
+          Post
+        </SubmitBtn>
+      </div>
     </form>
   );
 };
