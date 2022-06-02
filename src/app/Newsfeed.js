@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../firebase";
-import styles from '../styles/Newsfeed.module.css';
+import styles from "../styles/Newsfeed.module.css";
 import { PostFormButton } from "../features/posts/PostFormButton";
 import { PostForm } from "../features/posts/PostForm";
 import { PostList } from "../features/posts/PostList";
@@ -28,14 +28,14 @@ export const Newsfeed = () => {
 
   useEffect(() => {
     getUserInfo();
-  },[]);
+  }, []);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       getUserInfo();
-      const photo = auth.currentUser.photoURL
-      await addPost({name, content, photo, id}).unwrap();
+      const photo = auth.currentUser.photoURL;
+      await addPost({ name, content, photo, id, date: Date() }).unwrap();
       setContent("");
       toggleForm();
     } catch (err) {
@@ -48,7 +48,7 @@ export const Newsfeed = () => {
     if (content) setContent("");
   };
   return (
-    <main className={styles.main} >
+    <main className={styles.main}>
       {showForm && (
         <PostForm
           toggle={toggleForm}
