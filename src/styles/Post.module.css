@@ -57,3 +57,14 @@
     font-size: .9375rem;
     margin: 4px 16px 16px;
 }
+
+.displayedReactions {
+    margin: 0 16px;
+    padding: 10px 0;
+    color: var(--secondary-text);
+    font-size: .9375rem;
+    display: flex;
+    align-items: center;
+    line-height: 1.3333;
+    border-bottom: 1px solid #ced0d4;
+}

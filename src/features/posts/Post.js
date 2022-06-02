@@ -18,6 +18,14 @@ export const Post = ({ name, content, photo, date }) => {
         <div className={styles.options}>...</div>
       </div>
       <p className={styles.content}>{content}</p>
+      <div>
+        <div className={styles.displayedReactions}>reactions div</div>
+        <div className={styles.reactionContainer}>
+          <div>Like button</div>
+          <div>comment</div>
+          <div>Share</div>
+        </div>
+      </div>
     </div>
   );
 };
