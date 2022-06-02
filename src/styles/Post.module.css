@@ -68,3 +68,30 @@
     line-height: 1.3333;
     border-bottom: 1px solid #ced0d4;
 }
+
+.reactionContainer {
+    margin: 0 12px;
+    display: flex;
+    padding: 4px;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.reactionContainer div {
+    display: flex;
+    padding: 6px 14px;
+    align-items: center;
+    height: 44px;
+    justify-content: center;
+    width: 100%;
+}
+
+.likeButton {
+    background-image: url(../images/fb-icons-2.png);
+    background-position: 0px -322px;
+    background-size: auto;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
