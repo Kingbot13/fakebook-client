@@ -21,16 +21,16 @@ export const Post = ({ name, content, photo, date }) => {
       <div>
         <div className={styles.displayedReactions}>reactions div</div>
         <div className={styles.reactionContainer} >
-          <div>
-            <div>
+          <div className={styles.secondaryContainer}>
+            <div className={styles.likeContainer}>
               <i className={styles.likeButton}></i>
             </div>
-            <div>
+            <div className={styles.likeContainer}>
               Like 
             </div>
           </div>
-          <div>comment</div>
-          <div>Share</div>
+          <div className={styles.secondaryContainer}>comment</div>
+          <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
     </div>
