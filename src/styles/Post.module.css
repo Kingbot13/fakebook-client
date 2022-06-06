@@ -83,6 +83,12 @@
     height: 44px;
     justify-content: center;
     width: 100%;
+    border-radius: 4px;
+    transition: background-color 0.1s;
+}
+
+.secondaryContainer:hover {
+    background-color: #eee;
 }
 
 .likeButton {
