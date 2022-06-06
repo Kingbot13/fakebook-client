@@ -89,6 +89,7 @@
 
 .secondaryContainer:hover {
     background-color: #eee;
+    cursor: pointer;
 }
 
 .likeButton {

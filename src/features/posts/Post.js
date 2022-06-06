@@ -3,7 +3,7 @@ import React from "react";
 import { StyledImg } from "../../components/Image";
 import styles from '../../styles/Post.module.css';
 
-export const Post = ({ name, content, photo, date }) => {
+export const Post = ({ name, content, photo, date, id }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   return (
     <div className={styles.container}>
@@ -21,7 +21,7 @@ export const Post = ({ name, content, photo, date }) => {
       <div>
         <div className={styles.displayedReactions}>reactions div</div>
         <div className={styles.reactionContainer} >
-          <div className={styles.secondaryContainer}>
+          <div className={styles.secondaryContainer} data-id={id} role='button'>
             <div className={styles.likeContainer}>
               <i className={styles.likeButton}></i>
             </div>

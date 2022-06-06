@@ -25,6 +25,7 @@ export const PostList = () => {
               content={post.data.content}
               photo={post.data.photo}
               date={post.data.date}
+              id={post.id}
             />
           ))
         : "Be the first to write a post!"}
