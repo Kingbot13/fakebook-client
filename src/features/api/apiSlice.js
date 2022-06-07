@@ -1,5 +1,12 @@
 import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import { addDoc, collection, getDocs, setDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 
 export const apiSlice = createApi({
@@ -67,6 +74,17 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Users"],
     }),
+    addReaction: build.mutation({
+      queryFn: async ({ id, reaction }) => {
+        try {
+          const ref = doc(db, "posts", id);
+          await updateDoc(ref, { reactions: reaction });
+          return { data: null };
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    }),
   }),
 });
 
@@ -75,4 +93,5 @@ export const {
   useGetUsersQuery,
   useAddPostMutation,
   useAddUserMutation,
+  useAddReactionMutation,
 } = apiSlice;
