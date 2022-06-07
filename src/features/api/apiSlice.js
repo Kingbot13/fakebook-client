@@ -75,10 +75,13 @@ export const apiSlice = createApi({
       invalidatesTags: ["Users"],
     }),
     addReaction: build.mutation({
-      queryFn: async ({ id, reaction }) => {
+      queryFn: async ({ id, reaction, userId }) => {
         try {
           const ref = doc(db, "posts", id);
-          await updateDoc(ref, { reactions: reaction });
+          await updateDoc(ref, {
+            reactions: reaction,
+            
+          });
           return { data: null };
         } catch (err) {
           console.error(err);

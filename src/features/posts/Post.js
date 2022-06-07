@@ -4,14 +4,16 @@ import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import { useAddReactionMutation } from "../api/apiSlice";
 import Proptypes from 'prop-types';
+import { auth } from "../../firebase";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const addReaction = useAddReactionMutation();
+  const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
-      const newLike = reactions.likes + 1;
-      await addReaction({ id, reaction: { likes: newLike } }).unwrap();
+      const newLike = reactions.likes.likes + 1 ?? 1;
+      await addReaction({ id, reaction: { likes: newLike }, userId }).unwrap();
     } catch (err) {
       console.error(err);
     }
