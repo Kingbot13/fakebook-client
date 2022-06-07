@@ -3,13 +3,15 @@ import React from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import { useAddReactionMutation } from "../api/apiSlice";
+import Proptypes from 'prop-types';
 
-export const Post = ({ name, content, photo, date, id, reactions }) => {
+const Post = ({ name, content, photo, date, id, reactions }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const addReaction = useAddReactionMutation();
   const toggleReaction = async (e) => {
     try {
-      await addReaction({ id, reaction: { likes: 0 } }).unwrap();
+      const newLike = reactions.likes + 1;
+      await addReaction({ id, reaction: { likes: newLike } }).unwrap();
     } catch (err) {
       console.error(err);
     }
@@ -48,3 +50,14 @@ export const Post = ({ name, content, photo, date, id, reactions }) => {
     </div>
   );
 };
+
+Post.propTypes = {
+  name: Proptypes.string,
+  content: Proptypes.string,
+  photo: Proptypes.string,
+  date: Proptypes.string,
+  id: Proptypes.string,
+  reactions: Proptypes.object
+}
+
+export {Post};
