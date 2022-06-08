@@ -12,8 +12,10 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
-      const newLike = reactions.likes.likes + 1 ?? 1;
-      await addReaction({ id, reaction: { likes: newLike }, userId }).unwrap();
+      // const newLike = reactions.likes.likes + 1 ?? 1;
+      if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
+        await addReaction({ id, reaction: 'likes', userId }).unwrap();
+      }
     } catch (err) {
       console.error(err);
     }

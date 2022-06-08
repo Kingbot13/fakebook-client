@@ -6,6 +6,7 @@ import {
   setDoc,
   doc,
   updateDoc,
+  FieldValue,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -77,10 +78,12 @@ export const apiSlice = createApi({
     addReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
+          const reactionPath = `reactions.${reaction}.${reaction}`;
+          const userArrayPath = `reactions.${reaction}.usersReacted`;
           const ref = doc(db, "posts", id);
           await updateDoc(ref, {
-            reactions: reaction,
-            
+            [reactionPath]: FieldValue.increment(1) ?? 1,
+            [userArrayPath]: FieldValue.arrayUnion(userId),
           });
           return { data: null };
         } catch (err) {
