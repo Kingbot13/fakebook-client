@@ -3,18 +3,19 @@ import React from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import { useAddReactionMutation } from "../api/apiSlice";
-import Proptypes from 'prop-types';
+import Proptypes from "prop-types";
 import { auth } from "../../firebase";
 
-const Post = ({ name, content, photo, date, id, reactions }) => {
+const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const addReaction = useAddReactionMutation();
-  const userId = auth.currentUser.uid;
+  // use the user prop for testing
+  const userId = auth.currentUser.uid ?? user;
   const toggleReaction = async (e) => {
     try {
       // const newLike = reactions.likes.likes + 1 ?? 1;
       if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
-        await addReaction({ id, reaction: 'likes', userId }).unwrap();
+        await addReaction({ id, reaction: "likes", userId }).unwrap();
       }
     } catch (err) {
       console.error(err);
@@ -34,13 +35,16 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       </div>
       <p className={styles.content}>{content}</p>
       <div>
-        <div className={styles.displayedReactions}>{reactions.likes}</div>
+        <div role="presentation" className={styles.displayedReactions}>
+          {reactions.likes.likes}
+        </div>
         <div className={styles.reactionContainer}>
           <div
             className={styles.secondaryContainer}
             onClick={toggleReaction}
             data-id={id}
             role="button"
+            name="like-button"
           >
             <div className={styles.likeContainer}>
               <i className={styles.likeButton}></i>
@@ -61,7 +65,7 @@ Post.propTypes = {
   photo: Proptypes.string,
   date: Proptypes.string,
   id: Proptypes.string,
-  reactions: Proptypes.object
-}
+  reactions: Proptypes.object,
+};
 
-export {Post};
+export { Post };
