@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
+import {auth} from "../../firebase";
 
 describe("post", () => {
   const initialData = {
@@ -14,6 +15,23 @@ describe("post", () => {
     id: 123,
     reactions: { likes: { likes: 1, usersReacted: [] } },
   };
+
+  // jest.mock('firebase', () => {
+  //   return {
+  //     auth: jest.fn().mockReturnValueOnce({
+  //       currentUser: {
+  //         uid: "1"
+  //       }
+  //     })
+  //   }
+  // });
+  
+  // auth = jest.fn().mockReturnValueOnce({
+  //   currentUser: {
+  //     uid: "1"
+  //   }
+  // });
+  
   test("clicking like button increase likes displayed by 1", async () => {
     render(
       <Provider store={store}>
