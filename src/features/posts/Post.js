@@ -6,11 +6,11 @@ import { useAddReactionMutation } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
 
-const Post = ({ name, content, photo, date, id, reactions, user }) => {
+const Post = ({ name, content, photo, date, id, reactions, }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const addReaction = useAddReactionMutation();
   // use the user prop for testing
-  const userId = auth.currentUser.uid ?? user;
+  const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
       // const newLike = reactions.likes.likes + 1 ?? 1;

@@ -5,6 +5,7 @@ import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
 import {auth} from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 describe("post", () => {
   const initialData = {
@@ -12,25 +13,20 @@ describe("post", () => {
     content: "Hello world",
     photo: null,
     date: "June 8, 2022",
-    id: 123,
+    id: "123",
     reactions: { likes: { likes: 1, usersReacted: [] } },
   };
 
-  // jest.mock('firebase', () => {
-  //   return {
-  //     auth: jest.fn().mockReturnValueOnce({
-  //       currentUser: {
-  //         uid: "1"
-  //       }
-  //     })
-  //   }
-  // });
-  
-  // auth = jest.fn().mockReturnValueOnce({
-  //   currentUser: {
-  //     uid: "1"
-  //   }
-  // });
+
+  beforeAll(async () => {
+    try{
+      await signInWithEmailAndPassword(auth, "test@test.com", "test123");
+
+    } catch(err) {
+      console.error(err);
+    }
+
+  });
   
   test("clicking like button increase likes displayed by 1", async () => {
     render(
@@ -42,15 +38,14 @@ describe("post", () => {
           date={initialData.date}
           id={initialData.id}
           reactions={initialData.reactions}
-          user="testUser"
         />
       </Provider>
     );
-    const likeButton = screen.getByRole("button", { name: "like-button" });
+    const likeButton = screen.getByRole("button", { name: "Like" });
     const displayedReactions = screen.getByRole("presentation");
 
     await userEvent.click(likeButton);
 
-    expect(displayedReactions).toHaveDisplayValue(2);
+    expect(displayedReactions).toHaveValue(2);
   });
 });
