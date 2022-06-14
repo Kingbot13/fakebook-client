@@ -88,6 +88,7 @@ export const apiSlice = createApi({
           return { data: null };
         } catch (err) {
           console.error(err);
+          return { error: "error adding reaction" };
         }
       },
     }),
