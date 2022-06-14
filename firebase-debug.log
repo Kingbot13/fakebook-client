@@ -1,0 +1,69 @@
+[debug] [2022-06-14T18:46:52.556Z] ----------------------------------------------------------------------
+[debug] [2022-06-14T18:46:52.558Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\wk4\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --export-on-exit=./src/test-data
+[debug] [2022-06-14T18:46:52.559Z] CLI Version:   11.1.0
+[debug] [2022-06-14T18:46:52.559Z] Platform:      win32
+[debug] [2022-06-14T18:46:52.559Z] Node Version:  v16.15.1
+[debug] [2022-06-14T18:46:52.560Z] Time:          Tue Jun 14 2022 13:46:52 GMT-0500 (Central Daylight Time)
+[debug] [2022-06-14T18:46:52.561Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-06-14T18:46:52.633Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-06-14T18:46:52.633Z] > authorizing via signed-in user (dylan.wesley.king@gmail.com)
+[debug] [2022-06-14T18:46:52.888Z] java version "17.0.3.1" 2022-04-22 LTS
+
+[debug] [2022-06-14T18:46:52.889Z] Java(TM) SE Runtime Environment (build 17.0.3.1+2-LTS-6)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.3.1+2-LTS-6, mixed mode, sharing)
+
+[debug] [2022-06-14T18:46:52.914Z] Parsed Java major version: 17
+[info] i  emulators: Starting emulators: auth, firestore, hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, firestore, hosting"}}
+[debug] [2022-06-14T18:46:53.002Z] [hub] writing locator at C:\Users\wk4\AppData\Local\Temp\hub-fakebook-6445f.json
+[info] i  firestore: downloading cloud-firestore-emulator-v1.14.3.jar... {"metadata":{"emulator":{"name":"firestore"},"message":"downloading cloud-firestore-emulator-v1.14.3.jar..."}}
+[debug] [2022-06-14T18:46:53.057Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.14.3.jar 
+[debug] [2022-06-14T18:46:53.693Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.14.3.jar 200
+[debug] [2022-06-14T18:46:53.693Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.14.3.jar [stream]
+[debug] [2022-06-14T18:47:33.998Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-06-14T18:47:33.999Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-06-14T18:47:33.999Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\wk4\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.14.3.jar","--host","localhost","--port",8080,"--rules","C:\\Users\\wk4\\Projects\\fakebook\\firestore.rules"],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator","seed_from_export"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\wk4\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.14.3.jar\",\"--host\",\"localhost\",\"--port\",8080,\"--rules\",\"C:\\\\Users\\\\wk4\\\\Projects\\\\fakebook\\\\firestore.rules\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"functions_emulator\",\"seed_from_export\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2022-06-14T18:47:43.722Z] > refreshing access token with scopes: []
+[debug] [2022-06-14T18:47:43.724Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-06-14T18:47:43.724Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-06-14T18:47:44.122Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-06-14T18:47:44.122Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-06-14T18:47:44.137Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fakebook-6445f/sites 
+[debug] [2022-06-14T18:47:45.091Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fakebook-6445f/sites 200
+[debug] [2022-06-14T18:47:45.092Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fakebook-6445f/sites {"sites":[{"name":"projects/fakebook-6445f/sites/fakebook-6445f","defaultUrl":"https://fakebook-6445f.web.app","appId":"1:13658216820:web:2a012e80f930227fb1f421","type":"DEFAULT_SITE"}]}
+[debug] [2022-06-14T18:47:45.092Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fakebook-6445f/webApps/1:13658216820:web:2a012e80f930227fb1f421/config [none]
+[debug] [2022-06-14T18:47:46.219Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fakebook-6445f/webApps/1:13658216820:web:2a012e80f930227fb1f421/config 200
+[debug] [2022-06-14T18:47:46.219Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fakebook-6445f/webApps/1:13658216820:web:2a012e80f930227fb1f421/config {"projectId":"fakebook-6445f","appId":"1:13658216820:web:2a012e80f930227fb1f421","storageBucket":"fakebook-6445f.appspot.com","locationId":"us-central","apiKey":"AIzaSyAKxM3t6InarqvRbw4K44pG086MyEjava8","authDomain":"fakebook-6445f.firebaseapp.com","messagingSenderId":"13658216820"}
+[info] i  hosting: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] +  hosting: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  ui: downloading ui-v1.7.0.zip... {"metadata":{"emulator":{"name":"ui"},"message":"downloading ui-v1.7.0.zip..."}}
+[debug] [2022-06-14T18:47:46.266Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.7.0.zip 
+[debug] [2022-06-14T18:47:46.569Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.7.0.zip 200
+[debug] [2022-06-14T18:47:46.569Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.7.0.zip [stream]
+[debug] [2022-06-14T18:47:49.713Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-06-14T18:47:49.714Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-06-14T18:47:49.714Z] Starting Emulator UI with command {"binary":"node","args":["--dns-result-order=ipv4first","C:\\Users\\wk4\\.cache\\firebase\\emulators\\ui-v1.7.0\\server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"--dns-result-order=ipv4first\",\"C:\\\\Users\\\\wk4\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.7.0\\\\server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2022-06-14T18:47:50.425Z] Web / API server started at localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://localhost:4000                │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ localhost:9099 │ http://localhost:4000/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ localhost:8080 │ http://localhost:4000/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ localhost:5000 │ n/a                             │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 

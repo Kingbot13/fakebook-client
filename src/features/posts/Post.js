@@ -17,7 +17,6 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
         console.log(addReaction);
       }
     } catch (err) {
-      console.log(addReaction);
       console.error(err);
     }
   };
@@ -36,7 +35,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       <p className={styles.content}>{content}</p>
       <div>
         <div role="presentation" className={styles.displayedReactions}>
-          {reactions && reactions.likes.likes}
+          {(reactions && reactions.likes.likes) || 0}
         </div>
         <div className={styles.reactionContainer}>
           <div

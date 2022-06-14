@@ -4,30 +4,28 @@ import userEvent from "@testing-library/user-event";
 import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
-import {auth} from "../../firebase";
+import { auth } from "../../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAddPostMutation } from "../api/apiSlice";
 
 describe("post", () => {
   const initialData = {
-    name: "Billy",
-    content: "Hello world",
+    name: "Link",
+    content: "hello world",
     photo: null,
-    date: "June 8, 2022",
-    id: "123",
-    reactions: { likes: { likes: 1, usersReacted: [] } },
+    date: "June 14, 2022",
+    id: "QIrY5G3B6inS03dCFnfL",
   };
-
+  // const [addPost] = useAddPostMutation();
 
   beforeAll(async () => {
-    try{
+    try {
       await signInWithEmailAndPassword(auth, "test@test.com", "test123");
-
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
-
   });
-  
+
   test("clicking like button increase likes displayed by 1", async () => {
     render(
       <Provider store={store}>
