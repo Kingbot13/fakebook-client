@@ -1,7 +1,7 @@
 import { Post } from "./Post";
-import { screen, render, waitFor } from "@testing-library/react";
+import { screen, render, waitFor, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
+import React from 'react';
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
 import { auth } from "../../firebase";
@@ -25,8 +25,10 @@ describe("post", () => {
       console.error(err);
     }
   });
+  afterEach(() => cleanup());
 
   test("clicking like button increase likes displayed by 1", async () => {
+    const user = userEvent.setup();
     render(
       <Provider store={store}>
         <Post
@@ -40,10 +42,9 @@ describe("post", () => {
       </Provider>
     );
     const likeButton = screen.getByRole("button", { name: "Like" });
-
-    await userEvent.click(likeButton);
-    const displayedReactions = await screen.findByRole("presentation");
-
-    await waitFor(() => expect(displayedReactions.innerHTML).toBe(1));
+    await user.click(likeButton);
+    // const displayedReactions = await screen.findByRole("presentation");
+    const displayedReactions = await waitFor(() => screen.findByText('1'));
+    await waitFor(expect(displayedReactions.textContent).toBe('1'));
   });
 });
