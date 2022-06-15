@@ -80,7 +80,6 @@ export const apiSlice = createApi({
     addReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
-          // const increment = FieldValue.increment(1);
           const reactionPath = `reactions.${reaction}.${reaction}`;
           const userArrayPath = `reactions.${reaction}.usersReacted`;
           const ref = doc(db, "posts", id);
@@ -94,6 +93,7 @@ export const apiSlice = createApi({
           return { error: "error adding reaction" };
         }
       },
+      invalidatesTags: ["Posts"],
     }),
   }),
 });

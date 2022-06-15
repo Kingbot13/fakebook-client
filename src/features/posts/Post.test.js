@@ -1,5 +1,5 @@
 import { Post } from "./Post";
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 import { Provider } from "react-redux";
@@ -20,7 +20,7 @@ describe("post", () => {
 
   beforeAll(async () => {
     try {
-      await signInWithEmailAndPassword(auth, "test@test.com", "test123");
+      return await signInWithEmailAndPassword(auth, "test@test.com", "test123");
     } catch (err) {
       console.error(err);
     }
@@ -40,10 +40,10 @@ describe("post", () => {
       </Provider>
     );
     const likeButton = screen.getByRole("button", { name: "Like" });
-    const displayedReactions = screen.getByRole("presentation");
 
     await userEvent.click(likeButton);
+    const displayedReactions = await screen.findByRole("presentation");
 
-    expect(displayedReactions).toHaveValue(2);
+    await waitFor(() => expect(displayedReactions.innerHTML).toBe(1));
   });
 });

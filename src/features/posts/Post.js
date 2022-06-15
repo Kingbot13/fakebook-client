@@ -14,7 +14,6 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     try {
       if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
         await addReaction({ id, reaction: "likes", userId }).unwrap();
-        console.log(addReaction);
       }
     } catch (err) {
       console.error(err);
@@ -34,7 +33,11 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       </div>
       <p className={styles.content}>{content}</p>
       <div>
-        <div role="presentation" className={styles.displayedReactions}>
+        <div
+          role="presentation"
+          name="reactions"
+          className={styles.displayedReactions}
+        >
           {(reactions && reactions.likes.likes) || 0}
         </div>
         <div className={styles.reactionContainer}>
