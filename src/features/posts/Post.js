@@ -16,10 +16,16 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
+      const thumbsUp = document.querySelector("i");
+      const reactionName = document.querySelector("div[name='reaction-name']");
       if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
         await addReaction({ id, reaction: "likes", userId }).unwrap();
+        thumbsUp.classList.add("blue-filter");
+        reactionName.classList.add("blue-filter");
       } else if (reactions.likes.usersReacted.includes(userId)) {
         await removeReaction({ id, reaction: "likes", userId }).unwrap();
+        thumbsUp.classList.remove("blue-filter");
+        reactionName.classList.remove("blue-filter");
       }
     } catch (err) {
       console.error(err);
@@ -57,7 +63,9 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
             <div className={styles.likeContainer}>
               <i className={styles.likeButton}></i>
             </div>
-            <div className={styles.likeContainer}>Like</div>
+            <div name="reaction-name" className={styles.likeContainer}>
+              Like
+            </div>
           </div>
           <div className={styles.secondaryContainer}>comment</div>
           <div className={styles.secondaryContainer}>Share</div>
