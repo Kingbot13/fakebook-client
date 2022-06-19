@@ -2,18 +2,24 @@ import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
-import { useAddReactionMutation } from "../api/apiSlice";
+import {
+  useAddReactionMutation,
+  useRemoveReactionMutation,
+} from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
+  const [removeReaction] = useRemoveReactionMutation();
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
       if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
         await addReaction({ id, reaction: "likes", userId }).unwrap();
+      } else if (reactions.likes.usersReacted.includes(userId)) {
+        await removeReaction({ id, reaction: "likes", userId }).unwrap();
       }
     } catch (err) {
       console.error(err);
