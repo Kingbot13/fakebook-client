@@ -9,6 +9,7 @@ import {
   FieldValue,
   increment,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -95,6 +96,24 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Posts"],
     }),
+    removeReaction: build.mutation({
+      queryFn: async ({ id, reaction, userId }) => {
+        try {
+          const reactionPath = `reactions.${reaction}.${reaction}`;
+          const userArrayPath = `reactions.${reaction}.usersReacted`;
+          const ref = doc(db, "posts", id);
+          await updateDoc(ref, {
+            [reactionPath]: increment(-1) ?? 1,
+            [userArrayPath]: arrayRemove(userId),
+          });
+          return { data: null };
+        } catch (err) {
+          console.error(err);
+          return { error: "error removing reaction" };
+        }
+      },
+      invalidatesTags: ["Posts"],
+    }),
   }),
 });
 
@@ -104,4 +123,5 @@ export const {
   useAddPostMutation,
   useAddUserMutation,
   useAddReactionMutation,
+  useRemoveReactionMutation,
 } = apiSlice;
