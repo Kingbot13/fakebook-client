@@ -114,6 +114,19 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Posts"],
     }),
+    addComment: build.mutation({
+      queryFn: async ({userId, content, postId}) => {
+        try {
+          const ref = doc(db, 'posts', postId);
+          await updateDoc(ref, {
+            'comments': arrayUnion({'userId': userId, 'content': content})
+          });
+        } catch (err) {
+          console.error("could not add comment: ", err);
+        }
+      },
+      invalidatesTags: ["Posts"]
+    })
   }),
 });
 
@@ -124,4 +137,5 @@ export const {
   useAddUserMutation,
   useAddReactionMutation,
   useRemoveReactionMutation,
+  useAddCommentMutation
 } = apiSlice;
