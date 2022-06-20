@@ -12,6 +12,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
@@ -119,8 +120,9 @@ export const apiSlice = createApi({
         try {
           const ref = doc(db, 'posts', postId);
           await updateDoc(ref, {
-            'comments': arrayUnion({'userId': userId, 'content': content})
+            'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4()})
           });
+          return {data: null};
         } catch (err) {
           console.error("could not add comment: ", err);
         }
