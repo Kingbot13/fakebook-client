@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import {
@@ -8,11 +8,13 @@ import {
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
+import { CommentInput } from "./CommentInput";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
+  const [value, setValue] = useState('');
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
@@ -31,6 +33,9 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       console.error(err);
     }
   };
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  }
   return (
     <div className={styles.container}>
       <div className={styles.user}>
@@ -71,6 +76,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
+      <CommentInput value={value} onChange={handleChange} />
     </div>
   );
 };
