@@ -59,7 +59,8 @@ export const apiSlice = createApi({
         } catch (err) {
           console.error('could not update post: ', err);
         }
-      }
+      },
+      invalidatesTags: ['Posts']
     }),
     getUsers: build.query({
       queryFn: async () => {
