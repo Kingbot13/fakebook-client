@@ -50,6 +50,17 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Posts"],
     }),
+    editPost: build.mutation({
+      queryFn: async (postId, content) => {
+        try {
+          const ref = doc(db, 'posts', postId);
+          await updateDoc(ref, {'content': content});
+          return {data: null}
+        } catch (err) {
+          console.error('could not update post: ', err);
+        }
+      }
+    }),
     getUsers: build.query({
       queryFn: async () => {
         try {
@@ -139,5 +150,6 @@ export const {
   useAddUserMutation,
   useAddReactionMutation,
   useRemoveReactionMutation,
-  useAddCommentMutation
+  useAddCommentMutation,
+  useEditPostMutation,
 } = apiSlice;
