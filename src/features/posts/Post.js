@@ -91,7 +91,11 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      <CommentInput value={value} onChange={handleChange} />
+      <CommentInput
+        value={value}
+        onChange={handleChange}
+        onFocus={handleSubmit}
+      />
     </div>
   );
 };
