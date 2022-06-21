@@ -5,6 +5,7 @@ import styles from "../../styles/Post.module.css";
 import {
   useAddCommentMutation,
   useAddReactionMutation,
+  useEditPostMutation,
   useRemoveReactionMutation,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
@@ -19,7 +20,9 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
   const [addComment] = useAddCommentMutation();
+  const [editPost] = useEditPostMutation();
   const [value, setValue] = useState("");
+  const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const userId = auth.currentUser.uid;
@@ -62,10 +65,21 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const togglePostForm = () => {
     setShowForm(!showForm ? true : false);
   }
+  const handleEditPostSubmit = async () => {
+    try {
+      await editPost({postId: id, content: contentData});
+    } catch (err) {
+      console.error('problem submitting post edit: ', err);
+    }
+  }
+  const handleContentChange = (e) => {
+    setContentData(e.target.value)
+  }
+
   return (
     <div className={styles.container}>
       {showOptions && <PostOptionsCard toggleForm={togglePostForm} />}
-      {showForm && <PostForm title='Edit post' content={value} />}
+      {showForm && <PostForm title='Edit post' content={content} handleChange={handleContentChange} handleSubmit={handleEditPostSubmit} />}
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />

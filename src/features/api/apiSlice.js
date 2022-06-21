@@ -51,7 +51,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     editPost: build.mutation({
-      queryFn: async (postId, content) => {
+      queryFn: async ({postId, content}) => {
         try {
           const ref = doc(db, 'posts', postId);
           await updateDoc(ref, {'content': content});
