@@ -56,7 +56,7 @@ export const Newsfeed = () => {
           setContent={setContent}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-          title='Create Post'
+          title='Create post'
         />
       )}
       <PostFormButton onClick={toggleForm} />

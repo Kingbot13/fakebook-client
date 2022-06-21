@@ -12,6 +12,7 @@ import { auth } from "../../firebase";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
+import { PostForm } from "./PostForm";
 
 const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
@@ -20,6 +21,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const [addComment] = useAddCommentMutation();
   const [value, setValue] = useState("");
   const [showOptions, setShowOptions] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
@@ -57,9 +59,13 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);
   }
+  const togglePostForm = () => {
+    setShowForm(!showForm ? true : false);
+  }
   return (
     <div className={styles.container}>
-      {showOptions && <PostOptionsCard />}
+      {showOptions && <PostOptionsCard toggleForm={togglePostForm} />}
+      {showForm && <PostForm title='Edit post' content={value} />}
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
