@@ -11,6 +11,7 @@ import Proptypes from "prop-types";
 import { auth } from "../../firebase";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
+import { PostOptionsCard } from "./PostOptionsCard";
 
 const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
@@ -18,6 +19,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const [removeReaction] = useRemoveReactionMutation();
   const [addComment] = useAddCommentMutation();
   const [value, setValue] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
@@ -52,8 +54,12 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
       console.error("error submitting comment: ", err);
     }
   };
+  const toggleOptionsCard = () => {
+    setShowOptions(!showOptions ? true : false);
+  }
   return (
     <div className={styles.container}>
+      {showOptions && <PostOptionsCard />}
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
@@ -62,7 +68,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
           <strong>{name}</strong>
           <div className={styles.time}>{formattedDate}</div>
         </div>
-        <div className={styles.options}>...</div>
+        <div role='button' onClick={toggleOptionsCard} className={styles.options}>...</div>
       </div>
       <p className={styles.content}>{content}</p>
       <div>
