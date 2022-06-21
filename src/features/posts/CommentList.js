@@ -19,3 +19,5 @@ const CommentList = ({ comments }) => {
 CommentList.propTypes = {
   comments: Proptypes.array,
 };
+
+export { CommentList };

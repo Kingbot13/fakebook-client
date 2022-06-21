@@ -27,6 +27,7 @@ export const PostList = () => {
               date={post.data.date}
               id={post.id}
               reactions={post.data.reactions}
+              comments={post.data.comments}
             />
           ))
         : "Be the first to write a post!"}

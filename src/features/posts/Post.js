@@ -10,8 +10,9 @@ import {
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
 import { CommentInput } from "./CommentInput";
+import { CommentList } from "./CommentList";
 
-const Post = ({ name, content, photo, date, id, reactions }) => {
+const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
@@ -91,6 +92,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
+      {comments && <CommentList comments={comments} />}
       <CommentInput
         value={value}
         onChange={handleChange}
