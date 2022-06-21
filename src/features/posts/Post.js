@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import {
+  useAddCommentMutation,
   useAddReactionMutation,
   useRemoveReactionMutation,
 } from "../api/apiSlice";
@@ -14,7 +15,8 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
-  const [value, setValue] = useState('');
+  const [addComment] = useAddCommentMutation();
+  const [value, setValue] = useState("");
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
@@ -35,7 +37,20 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
   const handleChange = (e) => {
     setValue(e.target.value);
-  }
+  };
+  const handleSubmit = async (e) => {
+    try {
+      const keyEvent = async (e) => {
+        if (e.code === "Enter") {
+          await addComment({ userId, content: value, postId: id }).unwrap();
+          document.removeEventListener("keydown", keyEvent);
+        }
+      };
+      await keyEvent();
+    } catch (err) {
+      console.error("error submitting comment: ", err);
+    }
+  };
   return (
     <div className={styles.container}>
       <div className={styles.user}>
