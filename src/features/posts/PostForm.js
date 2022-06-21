@@ -4,11 +4,11 @@ import { auth } from "../../firebase";
 import { SubmitBtn } from "../../components/Button";
 import styles from "../../styles/PostForm.module.css";
 
-export const PostForm = ({ toggle, content, handleSubmit, handleChange }) => {
+export const PostForm = ({ toggle, content, handleSubmit, handleChange, title }) => {
   return (
     <form className={styles.form}>
       <div className={styles.headerContainer}>
-        <h2>Create post</h2>
+        <h2>{title}</h2>
         <button type="button" onClick={toggle}>
           X
         </button>
