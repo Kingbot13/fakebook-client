@@ -5,6 +5,7 @@ import styles from "../../styles/Post.module.css";
 import {
   useAddCommentMutation,
   useAddReactionMutation,
+  useDeletePostMutation,
   useEditPostMutation,
   useRemoveReactionMutation,
 } from "../api/apiSlice";
@@ -21,6 +22,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   const [removeReaction] = useRemoveReactionMutation();
   const [addComment] = useAddCommentMutation();
   const [editPost] = useEditPostMutation();
+  const [deletePost] = useDeletePostMutation();
   const [value, setValue] = useState("");
   const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
@@ -76,9 +78,17 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
     setContentData(e.target.value)
   }
 
+  const handleDeletePost = async () => {
+    try {
+      await deletePost({postId: id}).unwrap();
+    } catch (err) {
+      console.error("problem handling post deletion: ", err);
+    }
+  }
+
   return (
     <div className={styles.container}>
-      {showOptions && <PostOptionsCard toggleForm={togglePostForm} />}
+      {showOptions && <PostOptionsCard toggleForm={togglePostForm} deletePost={handleDeletePost} />}
       {showForm && <PostForm title='Edit post' content={content} handleChange={handleContentChange} handleSubmit={handleEditPostSubmit} />}
       <div className={styles.user}>
         <div>
