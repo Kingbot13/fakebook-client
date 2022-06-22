@@ -10,6 +10,7 @@ import {
   increment,
   arrayUnion,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -61,6 +62,16 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ['Posts']
+    }),
+    deletePost: build.mutation({
+      queryFn: async ({postId}) => {
+        try {
+          await deleteDoc(doc(db, 'posts', postId));
+          return {data: null};
+        } catch (err) {
+          console.error('problem deleting post: ', err);
+        }
+      }
     }),
     getUsers: build.query({
       queryFn: async () => {
@@ -153,4 +164,5 @@ export const {
   useRemoveReactionMutation,
   useAddCommentMutation,
   useEditPostMutation,
+  useDeletePostMutation
 } = apiSlice;
