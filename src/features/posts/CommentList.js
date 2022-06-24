@@ -12,6 +12,7 @@ const CommentList = ({ comments }) => {
         content={comment.content}
         userId={comment.userId}
         id={comment.id}
+        date={comment.date}
       />
     );
   });
