@@ -52,7 +52,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
     try {
       const keyEvent = async (e) => {
         if (e.code === "Enter") {
-          await addComment({ userId, content: value, postId: id }).unwrap();
+          await addComment({ userId, content: value, postId: id, date: Date() }).unwrap();
           document.removeEventListener("keydown", keyEvent);
         }
       };

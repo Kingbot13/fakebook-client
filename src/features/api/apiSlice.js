@@ -139,11 +139,11 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     addComment: build.mutation({
-      queryFn: async ({userId, content, postId}) => {
+      queryFn: async ({userId, content, postId, date}) => {
         try {
           const ref = doc(db, 'posts', postId);
           await updateDoc(ref, {
-            'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4()})
+            'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4(), 'date': date})
           });
           return {data: null};
         } catch (err) {
