@@ -151,6 +151,13 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ["Posts"]
+    }),
+    addCommentReaction: build.mutation({
+      queryFn: async ({postId, commentId, userId, reaction}) => {
+        try {
+
+        }
+      }
     })
   }),
 });
