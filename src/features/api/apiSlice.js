@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Posts", "Users"],
+  tagTypes: ["Posts", "Users", "Comments"],
   endpoints: (build) => ({
     getPosts: build.query({
       queryFn: async () => {
@@ -52,26 +52,26 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     editPost: build.mutation({
-      queryFn: async ({postId, content}) => {
+      queryFn: async ({ postId, content }) => {
         try {
-          const ref = doc(db, 'posts', postId);
-          await updateDoc(ref, {'content': content});
-          return {data: null}
+          const ref = doc(db, "posts", postId);
+          await updateDoc(ref, { content: content });
+          return { data: null };
         } catch (err) {
-          console.error('could not update post: ', err);
+          console.error("could not update post: ", err);
         }
       },
-      invalidatesTags: ['Posts']
+      invalidatesTags: ["Posts"],
     }),
     deletePost: build.mutation({
-      queryFn: async ({postId}) => {
+      queryFn: async ({ postId }) => {
         try {
-          await deleteDoc(doc(db, 'posts', postId));
-          return {data: null};
+          await deleteDoc(doc(db, "posts", postId));
+          return { data: null };
         } catch (err) {
-          console.error('problem deleting post: ', err);
+          console.error("problem deleting post: ", err);
         }
-      }
+      },
     }),
     getUsers: build.query({
       queryFn: async () => {
@@ -105,13 +105,14 @@ export const apiSlice = createApi({
     addReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
-          const reactionPath = `reactions.${reaction}.${reaction}`;
-          const userArrayPath = `reactions.${reaction}.usersReacted`;
+          // const reactionPath = `reactions.${reaction}.${reaction}`;
+          // const userArrayPath = `reactions.${reaction}.usersReacted`;
           const ref = doc(db, "posts", id);
-          await updateDoc(ref, {
-            [reactionPath]: increment(1) ?? 1,
-            [userArrayPath]: arrayUnion(userId),
-          });
+          // await updateDoc(ref, {
+          //   [reactionPath]: increment(1) ?? 1,
+          //   [userArrayPath]: arrayUnion(userId),
+          // });
+          await updateDoc(ref, { reaction: reaction, id: userId });
           return { data: null };
         } catch (err) {
           console.error(err);
@@ -123,13 +124,17 @@ export const apiSlice = createApi({
     removeReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
-          const reactionPath = `reactions.${reaction}.${reaction}`;
-          const userArrayPath = `reactions.${reaction}.usersReacted`;
+          // const reactionPath = `reactions.${reaction}.${reaction}`;
+          // const userArrayPath = `reactions.${reaction}.usersReacted`;
           const ref = doc(db, "posts", id);
-          await updateDoc(ref, {
-            [reactionPath]: increment(-1) ?? 1,
-            [userArrayPath]: arrayRemove(userId),
-          });
+          // await updateDoc(ref, {
+          //   [reactionPath]: increment(-1) ?? 1,
+          //   [userArrayPath]: arrayRemove(userId),
+          // });
+          const selectedReaction = ref.reactions.find(
+            (item) => item.id === userId
+          );
+          await updateDoc(ref, { reaction: arrayRemove(selectedReaction) });
           return { data: null };
         } catch (err) {
           console.error(err);
@@ -138,27 +143,56 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Posts"],
     }),
-    addComment: build.mutation({
-      queryFn: async ({userId, content, postId, date}) => {
+    getComments: build.query({
+      queryFn: async () => {
         try {
-          const ref = doc(db, 'posts', postId);
-          await updateDoc(ref, {
-            'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4(), 'date': date})
+          let comments = [];
+          const request = await getDocs(collection(db, "comments"));
+          request.forEach((doc) =>
+            comments.push({ id: doc.id, data: doc.data() })
+          );
+          return { data: comments };
+        } catch (err) {
+          console.error(err);
+          return { error: "error fetching posts" };
+        }
+      },
+      providesTags: ["Comments"],
+    }),
+    addComment: build.mutation({
+      queryFn: async ({ userId, content, postId, date }) => {
+        try {
+          // const ref = doc(db, 'posts', postId);
+          // await updateDoc(ref, {
+          //   'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4(), 'date': date})
+          // });
+          await addDoc(collection(db, "comments"), {
+            content: content,
+            date: date,
+            postId: postId,
+            userId: userId,
           });
-          return {data: null};
+          return { data: null };
         } catch (err) {
           console.error("could not add comment: ", err);
         }
       },
-      invalidatesTags: ["Posts"]
+      invalidatesTags: ["Comments"],
     }),
     addCommentReaction: build.mutation({
-      queryFn: async ({postId, commentId, userId, reaction}) => {
+      queryFn: async ({ commentId, userId, reaction }) => {
         try {
-
+          const ref = doc(db, "comments", commentId);
+          await updateDoc(ref, {
+            reactions: arrayUnion({ reaction: reaction, id: userId }),
+          });
+          return { data: null };
+        } catch (err) {
+          console.error("could not add comment: ", err);
         }
-      }
-    })
+      },
+      invalidatesTags: ["Comments"],
+    }),
   }),
 });
 
@@ -171,5 +205,7 @@ export const {
   useRemoveReactionMutation,
   useAddCommentMutation,
   useEditPostMutation,
-  useDeletePostMutation
+  useDeletePostMutation,
+  useGetCommentsQuery,
+  useAddCommentReactionMutation,
 } = apiSlice;
