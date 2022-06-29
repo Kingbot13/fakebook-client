@@ -77,7 +77,8 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
   const handleEditPostSubmit = async () => {
     try {
-      await editPost({ postId: id, content: contentData });
+      await editPost({ postId: id, content: contentData }).unwrap();
+      togglePostForm();
     } catch (err) {
       console.error("problem submitting post edit: ", err);
     }
@@ -133,7 +134,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           name="reactions"
           className={styles.displayedReactions}
         >
-          {(reactions && reactions.likes.likes) || 0}
+          {(reactions && reactions.length) || 0}
         </div>
         <div className={styles.reactionContainer}>
           <div
@@ -170,7 +171,7 @@ Post.propTypes = {
   photo: Proptypes.string,
   date: Proptypes.string,
   id: Proptypes.string,
-  reactions: Proptypes.object,
+  reactions: Proptypes.array,
 };
 
 export { Post };
