@@ -8,6 +8,7 @@ import {
   useDeletePostMutation,
   useEditPostMutation,
   useRemoveReactionMutation,
+  useGetCommentsQuery,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -16,7 +17,9 @@ import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 
-const Post = ({ name, content, photo, date, id, reactions, comments }) => {
+const Post = ({ name, content, photo, date, id, reactions }) => {
+  const { data: comments } = useGetCommentsQuery();
+  const filteredComments = comments.filter((item) => item.data.postId === id);
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
@@ -52,7 +55,12 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
     try {
       const keyEvent = async (e) => {
         if (e.code === "Enter") {
-          await addComment({ userId, content: value, postId: id, date: Date() }).unwrap();
+          await addComment({
+            userId,
+            content: value,
+            postId: id,
+            date: Date(),
+          }).unwrap();
           document.removeEventListener("keydown", keyEvent);
         }
       };
@@ -63,33 +71,45 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
   };
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);
-  }
+  };
   const togglePostForm = () => {
     setShowForm(!showForm ? true : false);
-  }
+  };
   const handleEditPostSubmit = async () => {
     try {
-      await editPost({postId: id, content: contentData});
+      await editPost({ postId: id, content: contentData });
     } catch (err) {
-      console.error('problem submitting post edit: ', err);
+      console.error("problem submitting post edit: ", err);
     }
-  }
+  };
   const handleContentChange = (e) => {
-    setContentData(e.target.value)
-  }
+    setContentData(e.target.value);
+  };
 
   const handleDeletePost = async () => {
     try {
-      await deletePost({postId: id}).unwrap();
+      await deletePost({ postId: id }).unwrap();
     } catch (err) {
       console.error("problem handling post deletion: ", err);
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
-      {showOptions && <PostOptionsCard toggleForm={togglePostForm} deletePost={handleDeletePost} />}
-      {showForm && <PostForm title='Edit post' content={content} handleChange={handleContentChange} handleSubmit={handleEditPostSubmit} />}
+      {showOptions && (
+        <PostOptionsCard
+          toggleForm={togglePostForm}
+          deletePost={handleDeletePost}
+        />
+      )}
+      {showForm && (
+        <PostForm
+          title="Edit post"
+          content={content}
+          handleChange={handleContentChange}
+          handleSubmit={handleEditPostSubmit}
+        />
+      )}
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
@@ -98,7 +118,13 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
           <strong>{name}</strong>
           <div className={styles.time}>{formattedDate}</div>
         </div>
-        <div role='button' onClick={toggleOptionsCard} className={styles.options}>...</div>
+        <div
+          role="button"
+          onClick={toggleOptionsCard}
+          className={styles.options}
+        >
+          ...
+        </div>
       </div>
       <p className={styles.content}>{content}</p>
       <div>
@@ -128,7 +154,7 @@ const Post = ({ name, content, photo, date, id, reactions, comments }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      {comments && <CommentList comments={comments} />}
+      {comments && <CommentList comments={filteredComments} />}
       <CommentInput
         value={value}
         onChange={handleChange}
