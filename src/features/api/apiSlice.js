@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
+import { async } from "@firebase/util";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
@@ -179,6 +180,15 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Comments"],
     }),
+    removeComment: build.mutation({
+      queryFn: async ({commentId}) => {
+        try {
+          await deleteDoc(db, "comments", commentId);
+        } catch (err) {
+          console.error("could not delete comment: ", err);
+        }
+      }
+    }),
     addCommentReaction: build.mutation({
       queryFn: async ({ commentId, userId, reaction }) => {
         try {
@@ -205,7 +215,8 @@ export const apiSlice = createApi({
         } catch (err) {
           console.error("could not remove comment reaction: ");
         }
-      }
+      },
+      invalidatesTags: ["Comments"]
     })
   }),
 });
@@ -222,5 +233,6 @@ export const {
   useDeletePostMutation,
   useGetCommentsQuery,
   useAddCommentReactionMutation,
-  useRemoveCommentReactionMutation
+  useRemoveCommentReactionMutation,
+  useRemoveCommentMutation
 } = apiSlice;
