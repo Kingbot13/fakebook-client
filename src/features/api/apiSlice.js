@@ -180,6 +180,16 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Comments"],
     }),
+    editComment: build.mutation({
+      queryFn: async ({commentId, content}) => {
+        try {
+          const ref = doc(db, "comments", commentId);
+          await updateDoc(ref, {content: content});
+        } catch (err) {
+          console.error("could not update comment: ", err);
+        }
+      }
+    }),
     removeComment: build.mutation({
       queryFn: async ({commentId}) => {
         try {
@@ -234,5 +244,6 @@ export const {
   useGetCommentsQuery,
   useAddCommentReactionMutation,
   useRemoveCommentReactionMutation,
-  useRemoveCommentMutation
+  useRemoveCommentMutation,
+  useEditCommentMutation
 } = apiSlice;
