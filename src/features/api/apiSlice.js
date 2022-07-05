@@ -188,11 +188,25 @@ export const apiSlice = createApi({
           });
           return { data: null };
         } catch (err) {
-          console.error("could not add comment: ", err);
+          console.error("could not add comment reaction : ", err);
         }
       },
       invalidatesTags: ["Comments"],
     }),
+    removeCommentReaction: build.mutation({
+      queryFn: async ({commentId, userId}) => {
+        try {
+          const ref = doc(db, "comments", commentId);
+          const foundReaction = ref.reactions.find(item => item.userId === userId);
+          await updateDoc(ref, {
+            reactions: arrayRemove(foundReaction)
+          });
+          return {data: null};
+        } catch (err) {
+          console.error("could not remove comment reaction: ");
+        }
+      }
+    })
   }),
 });
 
@@ -208,4 +222,5 @@ export const {
   useDeletePostMutation,
   useGetCommentsQuery,
   useAddCommentReactionMutation,
+  useRemoveCommentReactionMutation
 } = apiSlice;
