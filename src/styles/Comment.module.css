@@ -1,0 +1,9 @@
+.optionsBtn i {
+    background-image: url(../images/fb-icons.png);
+    background-position: 0px -689px;
+    background-size: auto;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+}

@@ -3,6 +3,7 @@ import { useGetUsersQuery } from "../api/apiSlice";
 import { UserPhoto } from "../users/UserPhoto";
 import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
+import styles from '../../styles/Comment.module.css';
 
 const Comment = ({ userId, content, id, date }) => {
   const { data: users } = useGetUsersQuery();
@@ -25,6 +26,11 @@ const Comment = ({ userId, content, id, date }) => {
         <div role='button'>Like</div>
         <div role='button'>Reply</div>
         <div>{formattedDate}</div>
+      </div>
+      <div>
+        <div role='button'className={styles.optionsBtn}>
+          <i/>
+        </div>
       </div>
     </div>
   );
