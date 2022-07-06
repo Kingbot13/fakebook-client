@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 16px;
+    flex-wrap: nowrap;
+}
+
+.photoContainer {
+    align-self: flex-start;
+    margin: 2px 6px 0 0;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
+.photoContainer img {
+    height: 32px;
+    width: 32px;
+}
+
+input[name='comment-input'] {
+    border-radius: 18px;
+    outline: none;
+    padding: 8px 12px;
+    font-size: .9375rem;
+    font-weight: 400;
+    border: none;
+    background-color: var(--comment-background);
+    width: 100%;
+}

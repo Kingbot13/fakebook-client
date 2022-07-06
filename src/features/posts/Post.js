@@ -19,7 +19,10 @@ import { PostForm } from "./PostForm";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const { data: comments } = useGetCommentsQuery();
-  const filteredComments = comments.filter((item) => item.data.postId === id);
+  let filteredComments;
+  if (comments) {
+    filteredComments = comments.filter((item) => item.data.postId === id);
+  }
   const formattedDate = formatDistanceToNow(new Date(date));
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
