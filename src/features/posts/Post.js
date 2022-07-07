@@ -38,14 +38,16 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     try {
       const thumbsUp = document.querySelector("i");
       const reactionName = document.querySelector("div[name='reaction-name']");
-      if (!reactions || !reactions.likes.usersReacted.includes(userId)) {
+      if (!reactions || !reactions.includes(userId)) {
         await addReaction({ id, reaction: "likes", userId }).unwrap();
         thumbsUp.classList.add("blue-filter");
         reactionName.classList.add("blue-filter");
-      } else if (reactions.likes.usersReacted.includes(userId)) {
-        await removeReaction({ id, reaction: "likes", userId }).unwrap();
+      } else if (reactions.includes(userId)) {
+        await removeReaction({ id, userId }).unwrap();
         thumbsUp.classList.remove("blue-filter");
         reactionName.classList.remove("blue-filter");
+      } else {
+        throw new Error('could not update reaction');
       }
     } catch (err) {
       console.error(err);

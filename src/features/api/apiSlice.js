@@ -106,14 +106,8 @@ export const apiSlice = createApi({
     addReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
-          // const reactionPath = `reactions.${reaction}.${reaction}`;
-          // const userArrayPath = `reactions.${reaction}.usersReacted`;
           const ref = doc(db, "posts", id);
-          // await updateDoc(ref, {
-          //   [reactionPath]: increment(1) ?? 1,
-          //   [userArrayPath]: arrayUnion(userId),
-          // });
-          await updateDoc(ref, { reaction: reaction, id: userId });
+          await updateDoc(ref, { reactions: arrayUnion({reaction: reaction, id: userId })});
           return { data: null };
         } catch (err) {
           console.error(err);
@@ -123,7 +117,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     removeReaction: build.mutation({
-      queryFn: async ({ id, reaction, userId }) => {
+      queryFn: async ({ id, userId }) => {
         try {
           // const reactionPath = `reactions.${reaction}.${reaction}`;
           // const userArrayPath = `reactions.${reaction}.usersReacted`;
