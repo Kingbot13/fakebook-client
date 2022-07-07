@@ -36,14 +36,15 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
-      const thumbsUp = document.querySelector("i");
+      console.log('event fired');
+      const thumbsUp = document.querySelector("i[name='like-icon']");
       const reactionName = document.querySelector("div[name='reaction-name']");
-      if (!reactions || !reactions.includes(userId)) {
-        await addReaction({ id, reaction: "likes", userId }).unwrap();
+      if (!reactions || !reactions.find(item => item.id === userId)) {
+        await addReaction({ id, reaction: "like", userId }).unwrap();
         thumbsUp.classList.add("blue-filter");
         reactionName.classList.add("blue-filter");
-      } else if (reactions.includes(userId)) {
-        await removeReaction({ id, userId }).unwrap();
+      } else if (reactions.find(item => item.id === userId)) {
+        await removeReaction({ id, userId, reaction: 'like' }).unwrap();
         thumbsUp.classList.remove("blue-filter");
         reactionName.classList.remove("blue-filter");
       } else {
@@ -150,7 +151,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
             name="like-button"
           >
             <div className={styles.likeContainer}>
-              <i className={styles.likeButton}></i>
+              <i name='like-icon' className={styles.likeButton}></i>
             </div>
             <div name="reaction-name" className={styles.likeContainer}>
               Like

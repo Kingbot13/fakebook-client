@@ -117,7 +117,7 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     removeReaction: build.mutation({
-      queryFn: async ({ id, userId }) => {
+      queryFn: async ({ id, userId, reaction }) => {
         try {
           // const reactionPath = `reactions.${reaction}.${reaction}`;
           // const userArrayPath = `reactions.${reaction}.usersReacted`;
@@ -126,10 +126,11 @@ export const apiSlice = createApi({
           //   [reactionPath]: increment(-1) ?? 1,
           //   [userArrayPath]: arrayRemove(userId),
           // });
-          const selectedReaction = ref.reactions.find(
-            (item) => item.id === userId
-          );
-          await updateDoc(ref, { reaction: arrayRemove(selectedReaction) });
+          // const selectedReaction = ref.reactions.find(
+          //   (item) => item.id === userId
+          // );
+          const obj = {reaction: reaction, id: userId};
+          await updateDoc(ref, { reactions: arrayRemove(obj) });
           return { data: null };
         } catch (err) {
           console.error(err);
