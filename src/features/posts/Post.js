@@ -37,8 +37,8 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const toggleReaction = async (e) => {
     try {
       console.log('event fired');
-      const thumbsUp = document.querySelector("i[name='like-icon']");
-      const reactionName = document.querySelector("div[name='reaction-name']");
+      const thumbsUp = document.querySelector(`i[name='like-icon'][data-id='${id}']`);
+      const reactionName = document.querySelector(`div[name='reaction-name'][data-id='${id}']`);
       if (!reactions || !reactions.find(item => item.id === userId)) {
         await addReaction({ id, reaction: "like", userId }).unwrap();
         thumbsUp.classList.add("blue-filter");
@@ -151,9 +151,9 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
             name="like-button"
           >
             <div className={styles.likeContainer}>
-              <i name='like-icon' className={styles.likeButton}></i>
+              <i name='like-icon' data-id={id} className={styles.likeButton}></i>
             </div>
-            <div name="reaction-name" className={styles.likeContainer}>
+            <div name="reaction-name" data-id={id} className={styles.likeContainer}>
               Like
             </div>
           </div>
