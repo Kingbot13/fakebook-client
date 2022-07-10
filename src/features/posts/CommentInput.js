@@ -11,8 +11,8 @@ export const CommentInput = ({ onClick, value, onChange, onFocus }) => {
       <input
         name="comment-input"
         type="text"
-        onFocus={() => onFocus()}
-        onClick={() => onClick()}
+        onFocus={(e) => onFocus(e)}
+        // onClick={() => onClick()}
         onChange={(e) => onChange(e)}
         value={value}
         placeholder="Write a comment..."

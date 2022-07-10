@@ -62,20 +62,21 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+  const keyEvent = async (e) => {
+    if (e.code === "Enter") {
+      await addComment({
+        userId,
+        content: value,
+        postId: id,
+        date: Date(),
+      }).unwrap();
+      document.removeEventListener("keydown", keyEvent);
+    }
+  };
+
   const handleSubmit = async (e) => {
     try {
-      const keyEvent = async (e) => {
-        if (e.code === "Enter") {
-          await addComment({
-            userId,
-            content: value,
-            postId: id,
-            date: Date(),
-          }).unwrap();
-          document.removeEventListener("keydown", keyEvent);
-        }
-      };
-      await keyEvent();
+      await keyEvent(e);
     } catch (err) {
       console.error("error submitting comment: ", err);
     }
