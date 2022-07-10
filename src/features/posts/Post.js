@@ -36,19 +36,22 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const userId = auth.currentUser.uid;
   const toggleReaction = async (e) => {
     try {
-      console.log('event fired');
-      const thumbsUp = document.querySelector(`i[name='like-icon'][data-id='${id}']`);
-      const reactionName = document.querySelector(`div[name='reaction-name'][data-id='${id}']`);
-      if (!reactions || !reactions.find(item => item.id === userId)) {
+      const thumbsUp = document.querySelector(
+        `i[name='like-icon'][data-id='${id}']`
+      );
+      const reactionName = document.querySelector(
+        `div[name='reaction-name'][data-id='${id}']`
+      );
+      if (!reactions || !reactions.find((item) => item.id === userId)) {
         await addReaction({ id, reaction: "like", userId }).unwrap();
-        thumbsUp.classList.add("blue-filter");
+        thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
-      } else if (reactions.find(item => item.id === userId)) {
-        await removeReaction({ id, userId, reaction: 'like' }).unwrap();
-        thumbsUp.classList.remove("blue-filter");
+      } else if (reactions.find((item) => item.id === userId)) {
+        await removeReaction({ id, userId, reaction: "like" }).unwrap();
+        thumbsUp.classList.remove("blue-filter", "solid-like-btn");
         reactionName.classList.remove("blue-filter");
       } else {
-        throw new Error('could not update reaction');
+        throw new Error("could not update reaction");
       }
     } catch (err) {
       console.error(err);
@@ -151,9 +154,17 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
             name="like-button"
           >
             <div className={styles.likeContainer}>
-              <i name='like-icon' data-id={id} className={styles.likeButton}></i>
+              <i
+                name="like-icon"
+                data-id={id}
+                className={styles.likeButton}
+              ></i>
             </div>
-            <div name="reaction-name" data-id={id} className={styles.likeContainer}>
+            <div
+              name="reaction-name"
+              data-id={id}
+              className={styles.likeContainer}
+            >
               Like
             </div>
           </div>
