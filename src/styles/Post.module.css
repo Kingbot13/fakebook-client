@@ -92,17 +92,18 @@
     cursor: pointer;
 }
 
-.likeButton {
-    background-image: url(../images/fb-icons-2.png);
-    background-position: 0px -322px;
-    background-size: auto;
-    width: 18px;
-    height: 18px;
-    background-repeat: no-repeat;
-    display: inline-block;
-}
 
 .likeContainer {
     padding: 6px 4px;
 
+}
+
+.commentIcon {
+    background-image: url(../images/fb-icons-2.png);
+    background-position: 0 -302px;
+    background-size: 25px 838px;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    display: inline-block;
 }

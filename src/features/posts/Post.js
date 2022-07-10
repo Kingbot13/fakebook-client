@@ -44,11 +44,13 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       );
       if (!reactions || !reactions.find((item) => item.id === userId)) {
         await addReaction({ id, reaction: "like", userId }).unwrap();
+        thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
       } else if (reactions.find((item) => item.id === userId)) {
         await removeReaction({ id, userId, reaction: "like" }).unwrap();
         thumbsUp.classList.remove("blue-filter", "solid-like-btn");
+        thumbsUp.classList.add("like-btn");
         reactionName.classList.remove("blue-filter");
       } else {
         throw new Error("could not update reaction");
@@ -154,11 +156,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
             name="like-button"
           >
             <div className={styles.likeContainer}>
-              <i
-                name="like-icon"
-                data-id={id}
-                className={styles.likeButton}
-              ></i>
+              <i name="like-icon" data-id={id} className="like-btn"></i>
             </div>
             <div
               name="reaction-name"
@@ -168,7 +166,12 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
               Like
             </div>
           </div>
-          <div className={styles.secondaryContainer}>comment</div>
+          <div className={styles.secondaryContainer}>
+            <div className={styles.likeContainer}>
+              <i className={styles.commentIcon}></i>
+            </div>
+            <div className={styles.likeContainer}>Comment</div>
+          </div>
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>

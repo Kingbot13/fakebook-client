@@ -10,7 +10,6 @@ export const PostList = () => {
   if (posts) sortedPosts = [...posts];
   useEffect(() => {
     if (posts && posts.length > 1) {
-      console.log(posts);
       sortedPosts.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
     }
   }, [posts]);
