@@ -63,23 +63,26 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     setValue(e.target.value);
   };
   const keyEvent = async (e) => {
-    if (e.code === "Enter") {
-      await addComment({
-        userId,
-        content: value,
-        postId: id,
-        date: Date(),
-      }).unwrap();
-      document.removeEventListener("keydown", keyEvent);
+    try {
+      console.log(e.code)
+      if (e.code === "Enter") {
+        await addComment({
+          userId,
+          content: value,
+          postId: id,
+          date: Date(),
+        }).unwrap();
+        e.target.removeEventListener("keydown", keyEvent);
+      }
+
+    } catch(err) {
+      console.error('issue with keyEvent function: ', err);
     }
   };
 
-  const handleSubmit = async (e) => {
-    try {
-      await keyEvent(e);
-    } catch (err) {
-      console.error("error submitting comment: ", err);
-    }
+  const handleSubmit = (e) => {
+      e.target.addEventListener('keydown', keyEvent);
+      // await keyEvent(e);
   };
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);
