@@ -24,7 +24,7 @@ export const SignInForm = () => {
   const checkAndAddUser = async () => {
     try {
       const user = auth.currentUser;
-      if (!users.find((item) => item.id === user.id) || !users)
+      if (!users || !users.find((item) => item.id === user.id))
         await addUser({
           name: user.displayName,
           photo: user.photoURL,
