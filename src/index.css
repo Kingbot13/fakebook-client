@@ -11,6 +11,7 @@
   --secondary-text: #65676b;
   --comment-background: #f0f2f5;
   --filter-accent: invert(39%) sepia(57%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(200%) saturate(147.75%) hue-rotate(202deg) brightness(97%) contrast(96%);
+  --divider: #ced0d4;
 }
 
 body {

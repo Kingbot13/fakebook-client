@@ -1,22 +1,30 @@
 import React from "react";
 import { Comment } from "./Comment";
 import Proptypes from "prop-types";
+import styles from '../../styles/CommentList.module.css';
 
 const CommentList = ({ comments }) => {
   const sortedComments = [...comments];
-  sortedComments.sort((a, b) => new Date(a.date) - new Date(b.date));
+  sortedComments.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
   const mapComments = sortedComments.map((comment) => {
     return (
       <Comment
         key={comment.id}
-        content={comment.content}
-        userId={comment.userId}
-        id={comment.id}
-        date={comment.date}
+        content={comment.data.content}
+        userId={comment.data.userId}
+        id={comment.data.id}
+        date={comment.data.date}
       />
     );
   });
-  return <div>{mapComments}</div>;
+  return (
+    <div>
+      <hr className={styles.divider}/>
+      <div>
+        {mapComments}
+      </div>
+    </div>
+  ); 
 };
 
 CommentList.propTypes = {

@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetUsersQuery, useRemoveCommentMutation } from "../api/apiSlice";
 import { UserPhoto } from "../users/UserPhoto";
 import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import styles from '../../styles/Comment.module.css';
 import { CommentOptionsCard } from "./CommentOptionsCard";
+import { useSelector } from "react-redux";
+import { selectUserById } from "../users/usersSlice";
 
 const Comment = ({ userId, content, id, date }) => {
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
-  const foundUser = users.find((user) => user.id === userId);
-  const name = foundUser.data.name;
+  let foundUser;
+  if (users) {
+
+    foundUser = users.find((user) => user.id === userId);
+  } 
+  // const user = useSelector(state => selectUserById(state, userId));
+  // const name = foundUser.data.name;
+  // useEffect(() => {
+  //   console.log(user);
+  // },[]);
   const formattedDate = formatDistanceToNow(new Date(date));
   const [showCard, setShowCard] = useState(false);
   const toggleCard = () => setShowCard(!showCard ? true : false);
@@ -29,7 +39,7 @@ const Comment = ({ userId, content, id, date }) => {
       <div>
         <div>
           <div>
-            <div>{name}</div>
+            <div>{users && foundUser.data.name}</div>
             <p>{content}</p>
           </div>
         </div>
