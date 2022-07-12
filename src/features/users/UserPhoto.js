@@ -10,5 +10,5 @@ export const UserPhoto = () => {
     setPhotoURL(user.photoURL);
   }, []);
 
-  return <img className={styles.img} src={photoURL} alt="" />;
+  return <img className={styles.img} src={photoURL} alt="" name='profile-img' />;
 };

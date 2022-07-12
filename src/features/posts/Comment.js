@@ -13,14 +13,9 @@ const Comment = ({ userId, content, id, date }) => {
   const { data: users } = useGetUsersQuery();
   let foundUser;
   if (users) {
-
     foundUser = users.find((user) => user.id === userId);
   } 
-  // const user = useSelector(state => selectUserById(state, userId));
-  // const name = foundUser.data.name;
-  // useEffect(() => {
-  //   console.log(user);
-  // },[]);
+
   const formattedDate = formatDistanceToNow(new Date(date));
   const [showCard, setShowCard] = useState(false);
   const toggleCard = () => setShowCard(!showCard ? true : false);
@@ -33,26 +28,31 @@ const Comment = ({ userId, content, id, date }) => {
     }
   }
   return (
-    <div>
+    <div className={styles.mainContainer}>
       {showCard && <CommentOptionsCard deleteComment={deleteComment}/>}
-      <UserPhoto />
-      <div>
-        <div>
+      <div className={styles.profileContainer}>
+        <UserPhoto />
+      </div>
+      <div className={styles.secondaryContainer}>
+        <div className={styles.commentCard}>
           <div>
-            <div>{users && foundUser.data.name}</div>
-            <p>{content}</p>
+            <div>
+              <div className={styles.userName}>{users && foundUser.data.name}</div>
+              <p className={styles.contentContainer}>{content}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <div role='button'>Like</div>
-        <div role='button'>Reply</div>
-        <div>{formattedDate}</div>
-      </div>
-      <div>
-        <div role='button'className={styles.optionsBtn} onClick={toggleCard}>
-          <i/>
+        <div>
+          <div role='button'>Like</div>
+          <div role='button'>Reply</div>
+          <div>{formattedDate}</div>
         </div>
+        <div>
+          <div role='button'className={styles.optionsBtn} onClick={toggleCard}>
+            <i/>
+          </div>
+        </div>
+
       </div>
     </div>
   );

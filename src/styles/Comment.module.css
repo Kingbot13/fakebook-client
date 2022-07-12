@@ -7,3 +7,46 @@
     background-repeat: no-repeat;
     display: inline-block;
 }
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 0 0 16px;
+}
+
+.profileContainer {
+    margin: 2px 6px 0 0;
+}
+
+.profileContainer img {
+    height: 32px;
+    width: 32px;
+}
+
+/* secondaryContainer excludes profileContainer */
+
+.secondaryContainer {
+    padding-right: 16px;
+    flex-grow: 1;
+}
+
+.commentCard {
+    border-radius: 18px;
+    background-color: var(--comment-background);
+    display: inline-block;
+    padding: 8px 12px;
+}
+
+.userName {
+    font-weight: 600;
+    line-height: 1.2308;
+    font-size: .8125rem;
+
+}
+
+.contentContainer {
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.3333;
+    padding: 4px 0;
+}
