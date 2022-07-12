@@ -1,3 +1,10 @@
+.optionsBtn {
+    display: inline-block;
+    border-radius: 50%;
+    inset: -8px;
+    background-color: rgba(0,0,0,0.05);
+}
+
 .optionsBtn i {
     background-image: url(../images/fb-icons.png);
     background-position: 0px -689px;

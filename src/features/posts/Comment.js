@@ -42,15 +42,15 @@ const Comment = ({ userId, content, id, date }) => {
             </div>
           </div>
         </div>
+        <div role='button'className={styles.optionsBtn} onClick={toggleCard}>
+          <i></i>
+        </div>
         <div>
           <div role='button'>Like</div>
           <div role='button'>Reply</div>
           <div>{formattedDate}</div>
         </div>
         <div>
-          <div role='button'className={styles.optionsBtn} onClick={toggleCard}>
-            <i/>
-          </div>
         </div>
 
       </div>
