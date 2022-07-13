@@ -49,10 +49,10 @@ const Comment = ({ userId, content, id, date }) => {
             <i></i>
           </div>
         </div>
-        <div>
-          <div role="button">Like</div>
-          <div role="button">Reply</div>
-          <div>{formattedDate}</div>
+        <div className={styles.likeReplyContainer}>
+          <div className={styles.actions} role="button">Like</div>
+          <div className={styles.actions} role="button">Reply</div>
+          <div className={styles.date}>{formattedDate}</div>
         </div>
         <div></div>
       </div>

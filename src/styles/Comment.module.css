@@ -75,3 +75,26 @@
     line-height: 1.3333;
     padding: 4px 0;
 }
+
+.likeReplyContainer {
+    min-height: 15px;
+    margin: 0 -8px 0 4px;
+    line-height: 12px;
+    padding-top: 3px;
+    display: flex;
+}
+
+.actions {
+    margin: 0 8px;
+    font-weight: bold;
+    color: var(--secondary-text);
+    font-size: 12px;
+}
+
+.date {
+    margin: 0 8px;
+    font-weight: normal;
+    color: var(--secondary-text);
+    font-size: 12px;
+
+}
