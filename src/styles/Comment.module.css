@@ -1,13 +1,30 @@
 .optionsBtn {
     display: inline-block;
+    position: relative;
+    /* top: -8px;
+    bottom: -8px;
+    left: -8px;
+    right: -8px; */
+    left: 8px;
+    bottom: 8px;
     border-radius: 50%;
-    inset: -8px;
+    /* inset: -8px; */
+    height: 32px;
+    width: 32px;
     background-color: rgba(0,0,0,0.05);
 }
 
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
 .optionsBtn i {
-    background-image: url(../images/fb-icons.png);
-    background-position: 0px -689px;
+    background-image: url(../images/fb-icons-new.png);
+    background-position: 0px -710px;
     background-size: auto;
     width: 16px;
     height: 16px;
@@ -35,6 +52,7 @@
 .secondaryContainer {
     padding-right: 16px;
     flex-grow: 1;
+    position: relative;
 }
 
 .commentCard {
