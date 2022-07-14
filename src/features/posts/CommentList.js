@@ -1,7 +1,7 @@
 import React from "react";
 import { Comment } from "./Comment";
 import Proptypes from "prop-types";
-import styles from '../../styles/CommentList.module.css';
+import styles from "../../styles/CommentList.module.css";
 
 const CommentList = ({ comments }) => {
   const sortedComments = [...comments];
@@ -12,19 +12,17 @@ const CommentList = ({ comments }) => {
         key={comment.id}
         content={comment.data.content}
         userId={comment.data.userId}
-        id={comment.data.id}
+        id={comment.id}
         date={comment.data.date}
       />
     );
   });
   return (
     <div>
-      <hr className={styles.divider}/>
-      <div>
-        {mapComments}
-      </div>
+      <hr className={styles.divider} />
+      <div>{mapComments}</div>
     </div>
-  ); 
+  );
 };
 
 CommentList.propTypes = {
