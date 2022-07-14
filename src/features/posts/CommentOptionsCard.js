@@ -10,8 +10,8 @@ export const CommentOptionsCard = ({ deleteComment, position }) => {
         transform: `translate(${position.x}px,${position.y}px)translate(-50%, -100%)`,
       }}
     >
-      <div>Edit</div>
-      <div role="button" onClick={() => deleteComment()}>
+      <div className={styles.optionsContainer}>Edit</div>
+      <div className={styles.optionsContainer} role="button" onClick={() => deleteComment()}>
         Delete
       </div>
     </div>
