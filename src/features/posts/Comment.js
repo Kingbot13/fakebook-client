@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useGetUsersQuery, useRemoveCommentMutation } from "../api/apiSlice";
+import { useEditCommentMutation, useGetUsersQuery, useRemoveCommentMutation } from "../api/apiSlice";
 import { UserPhoto } from "../users/UserPhoto";
 import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
-import { useSelector } from "react-redux";
-import { selectUserById } from "../users/usersSlice";
-import { DocumentReference } from "firebase/firestore";
+
 
 const Comment = ({ userId, content, id, date }) => {
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
+  const [editComment] = useEditCommentMutation();
   let foundUser;
   if (users) {
     foundUser = users.find((user) => user.id === userId);
@@ -38,16 +37,6 @@ const Comment = ({ userId, content, id, date }) => {
     setShowCard(!showCard ? true : false);
   };
 
-  useEffect(() => {
-    if (showCard) {
-      const optionsCard = document.querySelector(
-        "div[name='comment-options-container']"
-      );
-      optionsCard.style.top = cardPosition.y;
-      optionsCard.style.left = cardPosition.x;
-      console.log(optionsCard.style.top);
-    }
-  }, [showCard]);
   const [removeComment] = useRemoveCommentMutation();
   const deleteComment = async () => {
     try {
@@ -56,6 +45,14 @@ const Comment = ({ userId, content, id, date }) => {
       console.error("could not delete comment at Comment.js: ", err);
     }
   };
+
+  const changeComment = async () => {
+    try {
+      toggleCard();
+    } catch (err) {
+      console.error('error editing comment', err);
+    }
+  }
   return (
     <div
       className={styles.mainContainer}
