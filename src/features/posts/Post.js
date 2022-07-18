@@ -9,6 +9,7 @@ import {
   useEditPostMutation,
   useRemoveReactionMutation,
   useGetCommentsQuery,
+  useEditCommentMutation
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -19,6 +20,8 @@ import { PostForm } from "./PostForm";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const { data: comments } = useGetCommentsQuery();
+  const [editComment] = useEditCommentMutation();
+
   let filteredComments;
   if (comments) {
     filteredComments = comments.filter((item) => item.data.postId === id);
@@ -33,12 +36,14 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const userId = auth.currentUser.uid;
   const [showCard, setShowCard] = useState(false);
+  const [showInput, setShowInput] = useState(false);
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
-  const toggleCard = (e) => {
+  const userId = auth.currentUser.uid;
+  // toggle comment options card
+  const toggleCard = (e, commentId) => {
     const optionsBtn = document.querySelector(
-      `div[name='comment-options-btn'][data-id='${id}']`
+      `div[name='comment-options-btn'][data-id='${commentId}']`
     );
 
     const mainContainer = document.querySelector(
@@ -53,6 +58,11 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     });
     setShowCard(!showCard ? true : false);
   };
+
+  const toggleInput = () => {
+    setShowInput(!showInput ? true: false);
+    setShowCard(false);
+  }
 
   const toggleReaction = async (e) => {
     try {
@@ -82,16 +92,22 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-  const keyEvent = async (e) => {
+  const keyEvent = async (e, action, commentId, content) => {
     try {
       console.log(e.code)
       if (e.code === "Enter") {
-        await addComment({
-          userId,
-          content: value,
-          postId: id,
-          date: Date(),
-        }).unwrap();
+        if (action === 'add') {
+          await addComment({
+            userId,
+            content: value,
+            postId: id,
+            date: Date(),
+          }).unwrap();
+        } else if (action === 'edit') {
+          await editComment({id: commentId, content}).unwrap();
+        } else {
+          throw new Error('action in keyEvent function not set');
+        }
         e.target.removeEventListener("keydown", keyEvent);
       }
 
@@ -100,9 +116,12 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     }
   };
 
+  const handleCommentEdit = (e, commentId, content) => {
+    e.target.addEventListener('keydown', keyEvent(e, 'edit', commentId, e.target.value));
+  }
+
   const handleSubmit = (e) => {
-      e.target.addEventListener('keydown', keyEvent);
-      // await keyEvent(e);
+      e.target.addEventListener('keydown', keyEvent(e, 'add'));
   };
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);
@@ -199,7 +218,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      {comments && <CommentList comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} />}
+      {comments && <CommentList toggleEdit={toggleInput} onFocus={handleCommentEdit} onChange={handleChange} value={value} comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} show={showInput} />}
       <CommentInput
         value={value}
         onChange={handleChange}

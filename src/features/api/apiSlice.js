@@ -149,10 +149,6 @@ export const apiSlice = createApi({
     addComment: build.mutation({
       queryFn: async ({ userId, content, postId, date }) => {
         try {
-          // const ref = doc(db, 'posts', postId);
-          // await updateDoc(ref, {
-          //   'comments': arrayUnion({'userId': userId, 'content': content, 'id': uuidv4(), 'date': date})
-          // });
           await addDoc(collection(db, "comments"), {
             content: content,
             date: date,
@@ -174,7 +170,8 @@ export const apiSlice = createApi({
         } catch (err) {
           console.error("could not update comment: ", err);
         }
-      }
+      },
+      invalidatesTags: ["Comments"],
     }),
     removeComment: build.mutation({
       queryFn: async ({commentId}) => {
@@ -183,7 +180,8 @@ export const apiSlice = createApi({
         } catch (err) {
           console.error("could not delete comment: ", err);
         }
-      }
+      },
+      invalidatesTags: ["Comments"],
     }),
     addCommentReaction: build.mutation({
       queryFn: async ({ commentId, userId, reaction }) => {

@@ -18,10 +18,10 @@ const Comment = ({
   showCard,
   position,
   toggleCard,
+  toggleEdit
 }) => {
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
-  const [editComment] = useEditCommentMutation();
   let foundUser;
   if (users) {
     foundUser = users.find((user) => user.id === userId);
@@ -38,13 +38,13 @@ const Comment = ({
     }
   };
 
-  const changeComment = async () => {
-    try {
-      toggleCard();
-    } catch (err) {
-      console.error("error editing comment", err);
-    }
-  };
+  // const changeComment = async () => {
+  //   try {
+  //     toggleCard();
+  //   } catch (err) {
+  //     console.error("error editing comment", err);
+  //   }
+  // };
   return (
     <div
       className={styles.mainContainer}
@@ -52,7 +52,7 @@ const Comment = ({
       data-id={id}
     >
       {showCard && (
-        <CommentOptionsCard deleteComment={deleteComment} position={position} />
+        <CommentOptionsCard deleteComment={deleteComment} toggleEdit={toggleEdit} position={position} />
       )}
       <div className={styles.profileContainer}>
         <UserPhoto />
@@ -71,7 +71,7 @@ const Comment = ({
         <div
           role="button"
           className={styles.optionsBtn}
-          onClick={(e) => toggleCard(e)}
+          onClick={(e) => toggleCard(e, id)}
           name="comment-options-btn"
           data-id={id}
         >

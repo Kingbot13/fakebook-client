@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/CommentOptionsCard.module.css";
 
-export const CommentOptionsCard = ({ deleteComment, position }) => {
+export const CommentOptionsCard = ({ deleteComment, toggleEdit, position }) => {
   return (
     <div
       className={styles.mainContainer}
@@ -10,7 +10,7 @@ export const CommentOptionsCard = ({ deleteComment, position }) => {
         transform: `translate(${position.x}px,${position.y}px)translate(-50%, -100%)`,
       }}
     >
-      <div className={styles.optionsContainer}>Edit</div>
+      <div className={styles.optionsContainer} role='button' onClick={() => toggleEdit()}>Edit</div>
       <div className={styles.optionsContainer} role="button" onClick={() => deleteComment()}>
         Delete
       </div>
