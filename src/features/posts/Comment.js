@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useEditCommentMutation, useGetUsersQuery, useRemoveCommentMutation } from "../api/apiSlice";
+import {
+  useEditCommentMutation,
+  useGetUsersQuery,
+  useRemoveCommentMutation,
+} from "../api/apiSlice";
 import { UserPhoto } from "../users/UserPhoto";
 import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
 
-
-const Comment = ({ userId, content, id, date }) => {
+const Comment = ({
+  userId,
+  content,
+  id,
+  date,
+  showCard,
+  position,
+  toggleCard,
+}) => {
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
   const [editComment] = useEditCommentMutation();
@@ -17,25 +28,6 @@ const Comment = ({ userId, content, id, date }) => {
   }
 
   const formattedDate = formatDistanceToNow(new Date(date));
-  const [showCard, setShowCard] = useState(false);
-  const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
-  const toggleCard = (e) => {
-    const optionsBtn = document.querySelector(
-      `div[name='comment-options-btn'][data-id='${id}']`
-    );
-
-    const mainContainer = document.querySelector(
-      `div[name='main-comment-container'][data-id=${id}]`
-    );
-    const mainRect = mainContainer.getBoundingClientRect();
-
-    const rect = optionsBtn.getBoundingClientRect();
-    setCardPosition({
-      x: rect.left - mainRect.left,
-      y: rect.top - mainRect.top,
-    });
-    setShowCard(!showCard ? true : false);
-  };
 
   const [removeComment] = useRemoveCommentMutation();
   const deleteComment = async () => {
@@ -50,9 +42,9 @@ const Comment = ({ userId, content, id, date }) => {
     try {
       toggleCard();
     } catch (err) {
-      console.error('error editing comment', err);
+      console.error("error editing comment", err);
     }
-  }
+  };
   return (
     <div
       className={styles.mainContainer}
@@ -60,10 +52,7 @@ const Comment = ({ userId, content, id, date }) => {
       data-id={id}
     >
       {showCard && (
-        <CommentOptionsCard
-          deleteComment={deleteComment}
-          position={cardPosition}
-        />
+        <CommentOptionsCard deleteComment={deleteComment} position={position} />
       )}
       <div className={styles.profileContainer}>
         <UserPhoto />
@@ -110,6 +99,9 @@ Comment.propTypes = {
   content: Proptypes.string,
   id: Proptypes.string,
   date: Proptypes.string,
+  showCard: Proptypes.bool,
+  position: Proptypes.object,
+  toggleCard: Proptypes.func,
 };
 
 export { Comment };

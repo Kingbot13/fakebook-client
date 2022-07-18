@@ -34,6 +34,26 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const userId = auth.currentUser.uid;
+  const [showCard, setShowCard] = useState(false);
+  const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
+  const toggleCard = (e) => {
+    const optionsBtn = document.querySelector(
+      `div[name='comment-options-btn'][data-id='${id}']`
+    );
+
+    const mainContainer = document.querySelector(
+      `div[name='main-comment-container'][data-id=${id}]`
+    );
+    const mainRect = mainContainer.getBoundingClientRect();
+
+    const rect = optionsBtn.getBoundingClientRect();
+    setCardPosition({
+      x: rect.left - mainRect.left,
+      y: rect.top - mainRect.top,
+    });
+    setShowCard(!showCard ? true : false);
+  };
+
   const toggleReaction = async (e) => {
     try {
       const thumbsUp = document.querySelector(
@@ -179,7 +199,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      {comments && <CommentList comments={filteredComments} />}
+      {comments && <CommentList comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} />}
       <CommentInput
         value={value}
         onChange={handleChange}
