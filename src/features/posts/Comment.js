@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  useEditCommentMutation,
   useGetUsersQuery,
   useRemoveCommentMutation,
 } from "../api/apiSlice";
@@ -37,14 +36,6 @@ const Comment = ({
       console.error("could not delete comment at Comment.js: ", err);
     }
   };
-
-  // const changeComment = async () => {
-  //   try {
-  //     toggleCard();
-  //   } catch (err) {
-  //     console.error("error editing comment", err);
-  //   }
-  // };
   return (
     <div
       className={styles.mainContainer}
@@ -71,7 +62,7 @@ const Comment = ({
         <div
           role="button"
           className={styles.optionsBtn}
-          onClick={(e) => toggleCard(e, id)}
+          onClick={() => toggleCard(id)}
           name="comment-options-btn"
           data-id={id}
         >

@@ -39,13 +39,17 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const [showCard, setShowCard] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
+  // set commentId to use when editing comments
+  const [commentId, setCommentId] = useState('');
   const userId = auth.currentUser.uid;
   // toggle comment options card
-  const toggleCard = (e, commentId) => {
+  const toggleCard = (commentId) => {
+    // set commentId as soon as commentOptionsCard is toggled
+    setCommentId(commentId);
     const optionsBtn = document.querySelector(
       `div[name='comment-options-btn'][data-id='${commentId}']`
     );
-
+    // main comment container
     const mainContainer = document.querySelector(
       `div[name='main-comment-container'][data-id=${id}]`
     );
@@ -105,6 +109,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           }).unwrap();
         } else if (action === 'edit') {
           await editComment({id: commentId, content}).unwrap();
+          setValue('');
         } else {
           throw new Error('action in keyEvent function not set');
         }
@@ -117,6 +122,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
 
   const handleCommentEdit = (e, commentId, content) => {
+    setValue(content);
     e.target.addEventListener('keydown', keyEvent(e, 'edit', commentId, e.target.value));
   }
 
@@ -218,7 +224,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      {comments && <CommentList toggleEdit={toggleInput} onFocus={handleCommentEdit} onChange={handleChange} value={value} comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} show={showInput} />}
+      {comments && <CommentList commentId={commentId} toggleEdit={toggleInput} onFocus={handleCommentEdit} onChange={handleChange} value={value} comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} show={showInput} />}
       <CommentInput
         value={value}
         onChange={handleChange}
