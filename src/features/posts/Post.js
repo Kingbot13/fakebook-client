@@ -20,8 +20,7 @@ import { PostForm } from "./PostForm";
 
 const Post = ({ name, content, photo, date, id, reactions }) => {
   const { data: comments } = useGetCommentsQuery();
-  const [editComment] = useEditCommentMutation();
-
+  
   let filteredComments;
   if (comments) {
     filteredComments = comments.filter((item) => item.data.postId === id);
@@ -30,6 +29,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
   const [addComment] = useAddCommentMutation();
+  const [editComment] = useEditCommentMutation();
   const [editPost] = useEditPostMutation();
   const [deletePost] = useDeletePostMutation();
   const [value, setValue] = useState("");
@@ -43,11 +43,12 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const [commentId, setCommentId] = useState('');
   const userId = auth.currentUser.uid;
   // toggle comment options card
-  const toggleCard = (commentId) => {
+  const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
-    setCommentId(commentId);
+    setCommentId(id);
+    console.log(commentId);
     const optionsBtn = document.querySelector(
-      `div[name='comment-options-btn'][data-id='${commentId}']`
+      `div[name='comment-options-btn'][data-id='${id}']`
     );
     // main comment container
     const mainContainer = document.querySelector(
@@ -96,9 +97,9 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-  const keyEvent = async (e, action, commentId, content) => {
+  const keyEvent = async (e, action, content) => {
     try {
-      console.log(e.code)
+      // console.log(e.code);
       if (e.code === "Enter") {
         if (action === 'add') {
           await addComment({
@@ -109,11 +110,12 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
           }).unwrap();
         } else if (action === 'edit') {
           await editComment({id: commentId, content}).unwrap();
-          setValue('');
         } else {
           throw new Error('action in keyEvent function not set');
         }
         e.target.removeEventListener("keydown", keyEvent);
+        setShowCard(false);
+        setShowInput(false);
       }
 
     } catch(err) {
@@ -121,9 +123,10 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
     }
   };
 
-  const handleCommentEdit = (e, commentId, content) => {
-    setValue(content);
-    e.target.addEventListener('keydown', keyEvent(e, 'edit', commentId, e.target.value));
+  const handleCommentEdit = (e, content) => {
+    e.target.addEventListener('keydown', (e) => {
+      keyEvent(e, 'edit', content);
+    });
   }
 
   const handleSubmit = (e) => {

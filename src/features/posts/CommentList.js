@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Comment } from "./Comment";
 import Proptypes from "prop-types";
 import styles from "../../styles/CommentList.module.css";
 import { CommentInput } from "./CommentInput";
 
-const CommentList = ({ comments, commentId, showCard, position, toggleCard, show, toggleEdit, onFocus, onChange, value }) => {
+const CommentList = ({ comments, commentId, showCard, position, toggleCard, show, toggleEdit, onFocus, onChange, }) => {
+  const [content, setContent] = useState('');
   const sortedComments = [...comments];
   sortedComments.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
   const mapComments = sortedComments.map((comment) => {
@@ -22,14 +23,22 @@ const CommentList = ({ comments, commentId, showCard, position, toggleCard, show
       />
     );
   });
-  let filteredComment;
-  if (commentId) {
-    filteredComment = sortedComments.filter(item => item.id === commentId);
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
   }
+
+  useEffect(() => {
+    let filteredComment;
+    if (commentId) {
+      filteredComment = sortedComments.filter(item => item.id === commentId);
+      setContent(filteredComment[0].data.content);
+    }
+  },[commentId]);
   return (
     <div>
       <hr className={styles.divider} />
-      {show && <CommentInput onChange={(e) => onChange(e)} onFocus={(e) => onFocus(e, filteredComment.data.content)} value={value} />}
+      {show && <CommentInput onChange={handleChange} onFocus={onFocus} value={content}  />}
       <div>{mapComments}</div>
     </div>
   );

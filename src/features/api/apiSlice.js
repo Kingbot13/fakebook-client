@@ -163,11 +163,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["Comments"],
     }),
     editComment: build.mutation({
-      queryFn: async ({commentId, content}) => {
+      queryFn: async ({id, content}) => {
         try {
-          const ref = doc(db, "comments", commentId);
+          console.log(id, content);
+          const ref = doc(db, "comments", id);
+          // console.log(ref);
           await updateDoc(ref, {content: content});
+          
         } catch (err) {
+          console.log(id, content);
           console.error("could not update comment: ", err);
         }
       },
