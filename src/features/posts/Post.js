@@ -46,7 +46,6 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
     setCommentId(id);
-    console.log(commentId);
     const optionsBtn = document.querySelector(
       `div[name='comment-options-btn'][data-id='${id}']`
     );
@@ -99,7 +98,6 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
   const keyEvent = async (e, action, content) => {
     try {
-      // console.log(e.code);
       if (e.code === "Enter") {
         if (action === 'add') {
           await addComment({
@@ -124,9 +122,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
 
   const handleCommentEdit = (e, content) => {
-    e.target.addEventListener('keydown', (e) => {
-      keyEvent(e, 'edit', content);
-    });
+    e.target.addEventListener('keydown', keyEvent(e, 'edit', content));
   }
 
   const handleSubmit = (e) => {

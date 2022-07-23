@@ -6,15 +6,12 @@ import {
   setDoc,
   doc,
   updateDoc,
-  FieldValue,
   increment,
   arrayUnion,
   arrayRemove,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { v4 as uuidv4 } from "uuid";
-import { async } from "@firebase/util";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
@@ -169,9 +166,8 @@ export const apiSlice = createApi({
           const ref = doc(db, "comments", id);
           // console.log(ref);
           await updateDoc(ref, {content: content});
-          
+          return {data: null};
         } catch (err) {
-          console.log(id, content);
           console.error("could not update comment: ", err);
         }
       },
@@ -181,6 +177,8 @@ export const apiSlice = createApi({
       queryFn: async ({commentId}) => {
         try {
           await deleteDoc(db, "comments", commentId);
+          return {data: null};
+
         } catch (err) {
           console.error("could not delete comment: ", err);
         }
