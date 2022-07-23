@@ -3,7 +3,7 @@ import { Post } from "./Post";
 import { useGetPostsQuery } from "../api/apiSlice";
 import styles from "../../styles/PostList.module.css";
 
-export const PostList = () => {
+export const PostList = ({toggle}) => {
   const { data: posts, isError } = useGetPostsQuery();
 
   let sortedPosts;
@@ -26,6 +26,7 @@ export const PostList = () => {
               date={post.data.date}
               id={post.id}
               reactions={post.data.reactions}
+              toggle={toggle}
             />
           ))
         : "Be the first to write a post!"}

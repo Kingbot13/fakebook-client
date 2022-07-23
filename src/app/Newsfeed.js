@@ -60,7 +60,7 @@ export const Newsfeed = () => {
         />
       )}
       <PostFormButton onClick={toggleForm} />
-      <PostList />
+      <PostList toggle={toggleForm} />
     </main>
   );
 };

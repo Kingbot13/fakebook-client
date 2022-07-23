@@ -18,7 +18,7 @@ import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 
-const Post = ({ name, content, photo, date, id, reactions }) => {
+const Post = ({ name, content, photo, date, id, reactions, toggle }) => {
   const { data: comments } = useGetCommentsQuery();
   
   let filteredComments;
@@ -133,6 +133,7 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
   };
   const togglePostForm = () => {
     setShowForm(!showForm ? true : false);
+    setShowOptions(false);
   };
   const handleEditPostSubmit = async () => {
     try {
@@ -165,9 +166,10 @@ const Post = ({ name, content, photo, date, id, reactions }) => {
       {showForm && (
         <PostForm
           title="Edit post"
-          content={content}
+          content={contentData}
           handleChange={handleContentChange}
           handleSubmit={handleEditPostSubmit}
+          toggle={togglePostForm}
         />
       )}
       <div className={styles.user}>
