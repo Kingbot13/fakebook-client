@@ -27,6 +27,7 @@ export const PostList = ({toggle}) => {
               id={post.id}
               reactions={post.data.reactions}
               toggle={toggle}
+              user={post.data.userId}
             />
           ))
         : "Be the first to write a post!"}

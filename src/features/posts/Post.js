@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import {
@@ -18,7 +18,7 @@ import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 
-const Post = ({ name, content, photo, date, id, reactions, toggle }) => {
+const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const { data: comments } = useGetCommentsQuery();
   
   let filteredComments;
@@ -154,6 +154,21 @@ const Post = ({ name, content, photo, date, id, reactions, toggle }) => {
       console.error("problem handling post deletion: ", err);
     }
   };
+
+  useEffect(() => {
+    if (reactions && reactions.filter(item => item.id === userId)) {
+      const thumbsUp = document.querySelector(
+        `i[name='like-icon'][data-id='${id}']`
+      );
+      const reactionName = document.querySelector(
+        `div[name='reaction-name'][data-id='${id}']`
+      );
+      thumbsUp.classList.remove("like-btn");
+      thumbsUp.classList.add("blue-filter", "solid-like-btn");
+      reactionName.classList.add("blue-filter");
+
+    }
+  },[]);
 
   return (
     <div className={styles.container}>
