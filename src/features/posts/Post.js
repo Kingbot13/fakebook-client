@@ -154,7 +154,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
       console.error("problem handling post deletion: ", err);
     }
   };
-
+  // if userId is contained in reactions array, render like button with blue filter and solid thumb image
   useEffect(() => {
     if (reactions && reactions.filter(item => item.id === userId)) {
       const thumbsUp = document.querySelector(
