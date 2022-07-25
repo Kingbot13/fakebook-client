@@ -70,6 +70,7 @@ export const apiSlice = createApi({
           console.error("problem deleting post: ", err);
         }
       },
+      invalidatesTags: ["Posts"],
     }),
     getUsers: build.query({
       queryFn: async () => {
