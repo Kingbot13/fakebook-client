@@ -114,6 +114,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
         e.target.removeEventListener("keydown", keyEvent);
         setShowCard(false);
         setShowInput(false);
+        setValue('');
       }
 
     } catch(err) {
