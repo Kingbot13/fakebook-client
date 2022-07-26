@@ -9,6 +9,8 @@ import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
 import { StyledReactions } from "../../components/ReactionsContainer";
+import { useAddCommentReactionMutation, useRemoveCommentReactionMutation } from "../api/apiSlice";
+
 
 const Comment = ({
   userId,
@@ -31,6 +33,9 @@ const Comment = ({
   const formattedDate = formatDistanceToNow(new Date(date));
 
   const [removeComment] = useRemoveCommentMutation();
+  const [addReaction] = useAddCommentReactionMutation();
+  const [removeReaction] = useRemoveCommentReactionMutation();
+
   const deleteComment = async () => {
     try {
       await removeComment({ commentId: id }).unwrap();
@@ -38,6 +43,25 @@ const Comment = ({
       console.error("could not delete comment at Comment.js: ", err);
     }
   };
+  const toggleReaction = async () => {
+    try {
+      const reactionName = document.querySelector(
+        `div[name='comment-reaction-name'][data-id='${id}']`
+      );
+      if (!reactions || !reactions.find((item) => item.id === userId)) {
+        await addReaction({ commentId: id, reaction: "like", userId }).unwrap();
+        reactionName.classList.add("blue-filter");
+      } else if (reactions.find((item) => item.id === userId)) {
+        await removeReaction({ commentId: id, userId }).unwrap();
+        reactionName.classList.remove("blue-filter");
+      } else {
+        throw new Error("could not update reaction");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div
       className={styles.mainContainer}
@@ -74,7 +98,7 @@ const Comment = ({
           </div>
         </div>
         <div className={styles.likeReplyContainer}>
-          <div className={styles.actions} role="button">
+          <div name="comment-reaction-name" className={styles.actions} onClick={toggleReaction} role="button" data-id={id}>
             Like
           </div>
           <div className={styles.actions} role="button">
