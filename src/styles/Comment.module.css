@@ -1,17 +1,17 @@
 .optionsBtn {
     display: inline-block;
     position: relative;
-    /* top: -8px;
-    bottom: -8px;
-    left: -8px;
-    right: -8px; */
     left: 8px;
     bottom: 8px;
     border-radius: 50%;
-    /* inset: -8px; */
     height: 32px;
     width: 32px;
     background-color: rgba(0,0,0,0.05);
+    transition: background-color 0.5s;
+}
+
+.optionsBtn:hover {
+    background-color: rgba(0,0,0,0.08);
 }
 
 .iconContainer {
