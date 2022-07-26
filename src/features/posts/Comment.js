@@ -8,6 +8,7 @@ import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
+import { StyledReactions } from "../../components/ReactionsContainer";
 
 const Comment = ({
   userId,
@@ -17,7 +18,8 @@ const Comment = ({
   showCard,
   position,
   toggleCard,
-  toggleEdit
+  toggleEdit,
+  reactions
 }) => {
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
@@ -58,6 +60,7 @@ const Comment = ({
               <p className={styles.contentContainer}>{content}</p>
             </div>
           </div>
+          {reactions && <StyledReactions reactions={reactions} />}
         </div>
         <div
           role="button"
