@@ -214,6 +214,21 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ["Comments"]
+    }),
+    addReply: build.mutation({
+      queryFn: async ({ userId, content, commentId, date}) => {
+        try {
+          await addDoc(collection(db, 'replies'), {
+            content: content,
+            userId: userId,
+            date: date,
+            commentId: commentId
+          });
+          return {data: null}
+        } catch (err) {
+          console.error(err);
+        }
+      }
     })
   }),
 });
@@ -232,5 +247,6 @@ export const {
   useAddCommentReactionMutation,
   useRemoveCommentReactionMutation,
   useRemoveCommentMutation,
-  useEditCommentMutation
+  useEditCommentMutation,
+  useAddReplyMutation
 } = apiSlice;
