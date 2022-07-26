@@ -177,7 +177,7 @@ export const apiSlice = createApi({
     removeComment: build.mutation({
       queryFn: async ({commentId}) => {
         try {
-          await deleteDoc(db, "comments", commentId);
+          await deleteDoc(doc(db, "comments", commentId));
           return {data: null};
 
         } catch (err) {
