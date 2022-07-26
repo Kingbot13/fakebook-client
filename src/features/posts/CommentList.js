@@ -4,7 +4,7 @@ import Proptypes from "prop-types";
 import styles from "../../styles/CommentList.module.css";
 import { CommentInput } from "./CommentInput";
 
-const CommentList = ({ comments, commentId, showCard, position, toggleCard, show, toggleEdit, onFocus, onChange, }) => {
+const CommentList = ({ comments, commentId, showCard, position, toggleCard, show, toggleEdit, onFocus}) => {
   const [content, setContent] = useState('');
   const sortedComments = [...comments];
   sortedComments.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
@@ -20,6 +20,7 @@ const CommentList = ({ comments, commentId, showCard, position, toggleCard, show
         position={position}
         toggleCard={toggleCard}
         toggleEdit={toggleEdit}
+        reactions={comment.data.reactions}
       />
     );
   });
