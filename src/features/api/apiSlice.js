@@ -163,9 +163,7 @@ export const apiSlice = createApi({
     editComment: build.mutation({
       queryFn: async ({id, content}) => {
         try {
-          console.log(id, content);
           const ref = doc(db, "comments", id);
-          // console.log(ref);
           await updateDoc(ref, {content: content});
           return {data: null};
         } catch (err) {
@@ -243,6 +241,29 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ["Replies"]
+    }),
+    editReply: build.mutation({
+      queryFn: async ({id, content}) => {
+        try {
+          const ref = doc(db, 'replies', id);
+          await updateDoc(ref, {content: content});
+          return {data: null};
+        } catch (err) {
+          console.error(err);
+        }
+      },
+      invalidatesTags: ["Replies"]
+    }),
+    removeReply: build.mutation({
+      queryFn: async ({id}) => {
+        try {
+          await deleteDoc(doc(db, "replies", id));
+          return {data: null};
+        } catch (err) {
+          console.error(err);
+        }
+      },
+      invalidatesTags: ["Replies"]
     })
   }),
 });
@@ -264,4 +285,6 @@ export const {
   useEditCommentMutation,
   useAddReplyMutation,
   useGetRepliesQuery,
+  useEditReplyMutation,
+  useRemoveReplyMutation,
 } = apiSlice;
