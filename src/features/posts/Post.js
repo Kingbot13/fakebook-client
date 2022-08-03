@@ -9,7 +9,10 @@ import {
   useEditPostMutation,
   useRemoveReactionMutation,
   useGetCommentsQuery,
-  useEditCommentMutation
+  useEditCommentMutation,
+  useAddReplyMutation,
+  useEditReplyMutation,
+  useRemoveReplyMutation
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -32,6 +35,8 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const [editComment] = useEditCommentMutation();
   const [editPost] = useEditPostMutation();
   const [deletePost] = useDeletePostMutation();
+  const [addReply] = useAddReplyMutation();
+  const [editReply] = useEditReplyMutation();
   const [value, setValue] = useState("");
   const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
@@ -96,38 +101,55 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-  const keyEvent = async (e, action, content) => {
+  const keyEvent = async (e, action, content, isReply, idForReply) => {
     try {
-      if (e.code === "Enter") {
+      if (isReply === undefined || !isReply) {
+        if (e.code === "Enter") {
+          if (action === 'add') {
+            await addComment({
+              userId,
+              content: value,
+              postId: id,
+              date: Date(),
+            }).unwrap();
+          } else if (action === 'edit') {
+            await editComment({id: commentId, content}).unwrap();
+          } else {
+            throw new Error('action in keyEvent function not set');
+          }
+        }   
+      } else {
+        if (e.code === "Enter") {
         if (action === 'add') {
-          await addComment({
+          await addReply({
             userId,
             content: value,
-            postId: id,
+            commentId: idForReply,
             date: Date(),
           }).unwrap();
         } else if (action === 'edit') {
-          await editComment({id: commentId, content}).unwrap();
+          await editReply({id: commentId, content}).unwrap();
         } else {
           throw new Error('action in keyEvent function not set');
         }
-        e.target.removeEventListener("keydown", keyEvent);
-        setShowCard(false);
-        setShowInput(false);
-        setValue('');
+        }
       }
+      e.target.removeEventListener("keydown", keyEvent);
+      setShowCard(false);
+      setShowInput(false);
+      setValue('');
 
-    } catch(err) {
+   } catch(err) {
       console.error('issue with keyEvent function: ', err);
     }
   };
 
-  const handleCommentEdit = (e, content) => {
-    e.target.addEventListener('keydown', keyEvent(e, 'edit', content));
+  const handleCommentEdit = (e, content, isReply,) => {
+    e.target.addEventListener('keydown', keyEvent(e, 'edit', content, isReply));
   }
 
-  const handleSubmit = (e) => {
-      e.target.addEventListener('keydown', keyEvent(e, 'add'));
+  const handleSubmit = (e, isReply, idForReply) => {
+      e.target.addEventListener('keydown', keyEvent(e, 'add', isReply, idForReply));
   };
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);

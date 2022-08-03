@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import {
-  useGetUsersQuery,
-  useRemoveCommentMutation,
-} from "../api/apiSlice";
+import { useGetUsersQuery, useRemoveCommentMutation } from "../api/apiSlice";
 import { UserPhoto } from "../users/UserPhoto";
 import Proptypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
 import { StyledReactions } from "../../components/ReactionsContainer";
-import {CommentList} from './CommentList';
-import { useAddCommentReactionMutation, useRemoveCommentReactionMutation, useGetRepliesQuery, useAddReplyMutation, useRemoveReplyMutation, useEditReplyMutation } from "../api/apiSlice";
-
+import { CommentList } from "./CommentList";
+import {
+  useAddCommentReactionMutation,
+  useRemoveCommentReactionMutation,
+  useGetRepliesQuery,
+  useAddReplyMutation,
+  useRemoveReplyMutation,
+  useEditReplyMutation,
+} from "../api/apiSlice";
 
 const Comment = ({
   userId,
@@ -23,13 +26,14 @@ const Comment = ({
   toggleCard,
   toggleEdit,
   reactions,
-  isReply
+  isReply,
+  commentId,
 }) => {
   // get replies and filter based on comment id
-  const {data: replies} = useGetRepliesQuery();
+  const { data: replies } = useGetRepliesQuery();
   let filteredReplies;
   if (replies) {
-    filteredReplies = replies.filter(item => item.data.commentId === id);
+    filteredReplies = replies.filter((item) => item.data.commentId === id);
   }
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
@@ -77,7 +81,11 @@ const Comment = ({
       data-id={id}
     >
       {showCard && (
-        <CommentOptionsCard deleteComment={deleteComment} toggleEdit={toggleEdit} position={position} />
+        <CommentOptionsCard
+          deleteComment={deleteComment}
+          toggleEdit={toggleEdit}
+          position={position}
+        />
       )}
       <div className={styles.profileContainer}>
         <UserPhoto />
@@ -106,7 +114,13 @@ const Comment = ({
           </div>
         </div>
         <div className={styles.likeReplyContainer}>
-          <div name="comment-reaction-name" className={styles.actions} onClick={toggleReaction} role="button" data-id={id}>
+          <div
+            name="comment-reaction-name"
+            className={styles.actions}
+            onClick={toggleReaction}
+            role="button"
+            data-id={id}
+          >
             Like
           </div>
           <div className={styles.actions} role="button">
@@ -116,7 +130,17 @@ const Comment = ({
         </div>
         <div></div>
       </div>
-      {!isReply && <CommentList comments={filteredReplies} />}
+      {!isReply && (
+        <CommentList
+          comments={filteredReplies}
+          isReply={true}
+          showCard={showCard}
+          position={position}
+          toggleCard={toggleCard}
+          toggleEdit={toggleEdit}
+          commentId={commentId}
+        />
+      )}
     </div>
   );
 };
