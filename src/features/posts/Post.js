@@ -12,7 +12,7 @@ import {
   useEditCommentMutation,
   useAddReplyMutation,
   useEditReplyMutation,
-  useRemoveReplyMutation
+  useRemoveReplyMutation,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -23,7 +23,7 @@ import { PostForm } from "./PostForm";
 
 const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const { data: comments } = useGetCommentsQuery();
-  
+
   let filteredComments;
   if (comments) {
     filteredComments = comments.filter((item) => item.data.postId === id);
@@ -45,7 +45,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const [showInput, setShowInput] = useState(false);
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
   // set commentId to use when editing comments
-  const [commentId, setCommentId] = useState('');
+  const [commentId, setCommentId] = useState("");
   const userId = auth.currentUser.uid;
   // toggle comment options card
   const toggleCard = (id) => {
@@ -69,9 +69,9 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   };
 
   const toggleInput = () => {
-    setShowInput(!showInput ? true: false);
+    setShowInput(!showInput ? true : false);
     setShowCard(false);
-  }
+  };
 
   const toggleReaction = async (e) => {
     try {
@@ -105,51 +105,53 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
     try {
       if (isReply === undefined || !isReply) {
         if (e.code === "Enter") {
-          if (action === 'add') {
+          if (action === "add") {
             await addComment({
               userId,
               content: value,
               postId: id,
               date: Date(),
             }).unwrap();
-          } else if (action === 'edit') {
-            await editComment({id: commentId, content}).unwrap();
+          } else if (action === "edit") {
+            await editComment({ id: commentId, content }).unwrap();
           } else {
-            throw new Error('action in keyEvent function not set');
+            throw new Error("action in keyEvent function not set");
           }
-        }   
+        }
       } else {
         if (e.code === "Enter") {
-        if (action === 'add') {
-          await addReply({
-            userId,
-            content: value,
-            commentId: idForReply,
-            date: Date(),
-          }).unwrap();
-        } else if (action === 'edit') {
-          await editReply({id: commentId, content}).unwrap();
-        } else {
-          throw new Error('action in keyEvent function not set');
-        }
+          if (action === "add") {
+            await addReply({
+              userId,
+              content: value,
+              commentId: idForReply,
+              date: Date(),
+            }).unwrap();
+          } else if (action === "edit") {
+            await editReply({ id: commentId, content }).unwrap();
+          } else {
+            throw new Error("action in keyEvent function not set");
+          }
         }
       }
       e.target.removeEventListener("keydown", keyEvent);
       setShowCard(false);
       setShowInput(false);
-      setValue('');
-
-   } catch(err) {
-      console.error('issue with keyEvent function: ', err);
+      setValue("");
+    } catch (err) {
+      console.error("issue with keyEvent function: ", err);
     }
   };
 
-  const handleCommentEdit = (e, content, isReply,) => {
-    e.target.addEventListener('keydown', keyEvent(e, 'edit', content, isReply));
-  }
+  const handleCommentEdit = (e, content, isReply) => {
+    e.target.addEventListener("keydown", keyEvent(e, "edit", content, isReply));
+  };
 
   const handleSubmit = (e, isReply, idForReply) => {
-      e.target.addEventListener('keydown', keyEvent(e, 'add', isReply, idForReply));
+    e.target.addEventListener(
+      "keydown",
+      keyEvent(e, "add", isReply, idForReply)
+    );
   };
   const toggleOptionsCard = () => {
     setShowOptions(!showOptions ? true : false);
@@ -179,7 +181,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   };
   // if userId is contained in reactions array, render like button with blue filter and solid thumb image
   useEffect(() => {
-    if (reactions && reactions.filter(item => item.id === userId)) {
+    if (reactions && reactions.filter((item) => item.id === userId)) {
       const thumbsUp = document.querySelector(
         `i[name='like-icon'][data-id='${id}']`
       );
@@ -189,9 +191,8 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
       thumbsUp.classList.remove("like-btn");
       thumbsUp.classList.add("blue-filter", "solid-like-btn");
       reactionName.classList.add("blue-filter");
-
     }
-  },[]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -263,7 +264,21 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
-      {comments && <CommentList commentId={commentId} toggleEdit={toggleInput} onFocus={handleCommentEdit} onChange={handleChange} value={value} comments={filteredComments} showCard={showCard} position={cardPosition} toggleCard={toggleCard} show={showInput} />}
+      {comments && (
+        <CommentList
+          handleSubmit={handleSubmit}
+          commentId={commentId}
+          toggleEdit={toggleInput}
+          onFocus={handleCommentEdit}
+          onChange={handleChange}
+          value={value}
+          comments={filteredComments}
+          showCard={showCard}
+          position={cardPosition}
+          toggleCard={toggleCard}
+          show={showInput}
+        />
+      )}
       <CommentInput
         value={value}
         onChange={handleChange}

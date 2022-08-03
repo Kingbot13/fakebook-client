@@ -2,7 +2,13 @@ import React from "react";
 import { UserPhoto } from "../users/UserPhoto";
 import styles from "../../styles/CommentInput.module.css";
 
-export const CommentInput = ({ value, onChange, onFocus,  }) => {
+export const CommentInput = ({
+  value,
+  onChange,
+  onFocus,
+  isReply,
+  idForReply,
+}) => {
   return (
     <div className={styles.container}>
       <div className={styles.photoContainer}>
@@ -11,7 +17,7 @@ export const CommentInput = ({ value, onChange, onFocus,  }) => {
       <input
         name="comment-input"
         type="text"
-        onKeyDown={(e) => onFocus(e, value)}
+        onKeyDown={(e) => onFocus(e, value, isReply, idForReply)}
         onChange={(e) => onChange(e)}
         value={value}
         placeholder="Write a comment..."

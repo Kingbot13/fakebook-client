@@ -7,6 +7,7 @@ import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
 import { StyledReactions } from "../../components/ReactionsContainer";
 import { CommentList } from "./CommentList";
+import { CommentInput } from "./CommentInput";
 import {
   useAddCommentReactionMutation,
   useRemoveCommentReactionMutation,
@@ -28,7 +29,12 @@ const Comment = ({
   reactions,
   isReply,
   commentId,
+  show,
+  handleSubmit,
+  onChange,
+  value,
 }) => {
+  const [showInput, setShowInput] = useState(false);
   // get replies and filter based on comment id
   const { data: replies } = useGetRepliesQuery();
   let filteredReplies;
@@ -72,6 +78,10 @@ const Comment = ({
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const toggleInput = () => {
+    setShowInput(!showInput ? true : false);
   };
 
   return (
@@ -123,7 +133,7 @@ const Comment = ({
           >
             Like
           </div>
-          <div className={styles.actions} role="button">
+          <div className={styles.actions} role="button" onClick={toggleInput}>
             Reply
           </div>
           <div className={styles.date}>{formattedDate}</div>
@@ -139,6 +149,16 @@ const Comment = ({
           toggleCard={toggleCard}
           toggleEdit={toggleEdit}
           commentId={commentId}
+          show={show}
+        />
+      )}
+      {showInput && (
+        <CommentInput
+          onFocus={handleSubmit}
+          onChange={onChange}
+          value={value}
+          isReply={true}
+          idForReply={id}
         />
       )}
     </div>

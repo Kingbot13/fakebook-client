@@ -14,6 +14,9 @@ const CommentList = ({
   toggleEdit,
   onFocus,
   isReply,
+  handleSubmit,
+  onChange,
+  value,
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -33,6 +36,10 @@ const CommentList = ({
         reactions={comment.data.reactions}
         isReply={isReply}
         commentId={commentId}
+        show={show}
+        handleSubmit={handleSubmit}
+        onChange={onChange}
+        value={value}
       />
     );
   });
