@@ -15,7 +15,7 @@ import { db } from "../../firebase";
 
 export const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
-  tagTypes: ["Posts", "Users", "Comments"],
+  tagTypes: ["Posts", "Users", "Comments", "Replies"],
   endpoints: (build) => ({
     getPosts: build.query({
       queryFn: async () => {
@@ -215,6 +215,19 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["Comments"]
     }),
+    getReplies: build.query({
+      queryFn: async () => {
+        try {
+          let replies = [];
+          const req = await getDocs(collection(db, 'replies'));
+          req.forEach(doc => replies.push({id: doc.id, data: doc.data()}));
+          return {data: replies};
+        } catch (err) {
+          console.error(err);
+        }
+      },
+      providesTags: ["Replies"]
+    }),
     addReply: build.mutation({
       queryFn: async ({ userId, content, commentId, date}) => {
         try {
@@ -228,7 +241,8 @@ export const apiSlice = createApi({
         } catch (err) {
           console.error(err);
         }
-      }
+      },
+      invalidatesTags: ["Replies"]
     })
   }),
 });
@@ -248,5 +262,6 @@ export const {
   useRemoveCommentReactionMutation,
   useRemoveCommentMutation,
   useEditCommentMutation,
-  useAddReplyMutation
+  useAddReplyMutation,
+  useGetRepliesQuery,
 } = apiSlice;
