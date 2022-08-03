@@ -9,7 +9,8 @@ import { formatDistanceToNow } from "date-fns";
 import styles from "../../styles/Comment.module.css";
 import { CommentOptionsCard } from "./CommentOptionsCard";
 import { StyledReactions } from "../../components/ReactionsContainer";
-import { useAddCommentReactionMutation, useRemoveCommentReactionMutation } from "../api/apiSlice";
+import {CommentList} from './CommentList';
+import { useAddCommentReactionMutation, useRemoveCommentReactionMutation, useGetRepliesQuery, useAddReplyMutation, useRemoveReplyMutation, useEditReplyMutation } from "../api/apiSlice";
 
 
 const Comment = ({
@@ -21,8 +22,15 @@ const Comment = ({
   position,
   toggleCard,
   toggleEdit,
-  reactions
+  reactions,
+  isReply
 }) => {
+  // get replies and filter based on comment id
+  const {data: replies} = useGetRepliesQuery();
+  let filteredReplies;
+  if (replies) {
+    filteredReplies = replies.filter(item => item.data.commentId === id);
+  }
   // get the name of who posted comment
   const { data: users } = useGetUsersQuery();
   let foundUser;
@@ -108,6 +116,7 @@ const Comment = ({
         </div>
         <div></div>
       </div>
+      {!isReply && <CommentList comments={filteredReplies} />}
     </div>
   );
 };
