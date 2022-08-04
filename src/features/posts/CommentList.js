@@ -55,7 +55,7 @@ const CommentList = ({
     }
   }, [commentId]);
   return (
-    <div>
+    <div className={styles.mainContainer}>
       {show && (
         <CommentInput
           onChange={handleChange}
