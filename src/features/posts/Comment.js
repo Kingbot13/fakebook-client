@@ -36,7 +36,8 @@ const Comment = ({
   showInput,
   setShowInput,
   replyContent,
-  setReplyContent
+  setReplyContent,
+  toggleInput
 }) => {
   // get replies and filter based on comment id
   const { data: replies } = useGetRepliesQuery();
@@ -87,9 +88,6 @@ const Comment = ({
     }
   };
 
-  const toggleInput = () => {
-    setShowInput(!showInput ? true : false);
-  };
 
   return (
     <div
@@ -140,7 +138,7 @@ const Comment = ({
           >
             Like
           </div>
-          <div className={styles.actions} role="button" onClick={toggleInput}>
+          <div className={styles.actions} role="button" onClick={() => toggleInput()}>
             Reply
           </div>
           <div className={styles.date}>{formattedDate}</div>

@@ -78,6 +78,11 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
     setShowCard(false);
   };
 
+  const toggleReplyInput = () => {
+    setShowReplyInput(!showReplyInput ? true : false);
+  };
+
+
   const toggleReaction = async (e) => {
     try {
       const thumbsUp = document.querySelector(
@@ -289,6 +294,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           setShowInput={setShowReplyInput} 
           setReplyContent={setReplyContent}
           replyContent={replyContent}
+          toggleInput={toggleReplyInput}
         />
       )}
       <CommentInput

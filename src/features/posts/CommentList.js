@@ -16,6 +16,8 @@ const CommentList = ({
   handleSubmit,
   onChange,
   value,
+  toggleInput,
+  showInput
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -39,6 +41,8 @@ const CommentList = ({
         handleSubmit={handleSubmit}
         onChange={onChange}
         value={value}
+        toggleInput={toggleInput}
+        showInput={showInput}
       />
     );
   });
