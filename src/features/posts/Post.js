@@ -20,6 +20,7 @@ import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
+import { Divider } from "../../components/Divider";
 
 const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const { data: comments } = useGetCommentsQuery();
@@ -270,6 +271,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           <div className={styles.secondaryContainer}>Share</div>
         </div>
       </div>
+      <Divider />
       {comments && (
         <CommentList
           handleSubmit={handleSubmit}

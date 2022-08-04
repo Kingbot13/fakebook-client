@@ -3,7 +3,6 @@ import { Comment } from "./Comment";
 import Proptypes from "prop-types";
 import styles from "../../styles/CommentList.module.css";
 import { CommentInput } from "./CommentInput";
-
 const CommentList = ({
   comments,
   commentId,
@@ -57,7 +56,6 @@ const CommentList = ({
   }, [commentId]);
   return (
     <div>
-      <hr className={styles.divider} />
       {show && (
         <CommentInput
           onChange={handleChange}
