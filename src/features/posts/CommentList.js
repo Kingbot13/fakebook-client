@@ -17,7 +17,8 @@ const CommentList = ({
   onChange,
   value,
   toggleInput,
-  showInput
+  showInput,
+  handleReplyChange,
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -43,6 +44,7 @@ const CommentList = ({
         value={value}
         toggleInput={toggleInput}
         showInput={showInput}
+        handleReplyChange={handleReplyChange}
       />
     );
   });

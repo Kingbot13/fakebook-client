@@ -37,7 +37,8 @@ const Comment = ({
   setShowInput,
   replyContent,
   setReplyContent,
-  toggleInput
+  toggleInput,
+  handleReplyChange
 }) => {
   // get replies and filter based on comment id
   const { data: replies } = useGetRepliesQuery();
@@ -58,9 +59,6 @@ const Comment = ({
   const [addReaction] = useAddCommentReactionMutation();
   const [removeReaction] = useRemoveCommentReactionMutation();
 
-  const handleChange = (e) => {
-    setReplyContent(e.target.value);
-  } 
 
   const deleteComment = async () => {
     try {
@@ -160,7 +158,7 @@ const Comment = ({
       {showInput && (
         <CommentInput
           onFocus={handleSubmit}
-          onChange={handleChange}
+          onChange={(e) => handleReplyChange(e)}
           value={replyContent}
           isReply={true}
           idForReply={id}

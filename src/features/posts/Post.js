@@ -127,13 +127,20 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           } else {
             throw new Error("action in keyEvent function not set");
           }
+          e.target.removeEventListener("keydown", keyEvent);
+          setShowCard(false);
+          setShowInput(false);
+          setShowReplyInput(false);
+          setValue("");
+          setReplyContent('');
+    
         }
       } else {
         if (e.code === "Enter") {
           if (action === "add") {
             await addReply({
               userId,
-              content: value,
+              content: replyContent,
               commentId: idForReply,
               date: Date(),
             }).unwrap();
@@ -142,14 +149,15 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           } else {
             throw new Error("action in keyEvent function not set");
           }
+          e.target.removeEventListener("keydown", keyEvent);
+          setShowCard(false);
+          setShowInput(false);
+          setShowReplyInput(false);
+          setValue("");
+          setReplyContent('');
+    
         }
       }
-      e.target.removeEventListener("keydown", keyEvent);
-      setShowCard(false);
-      setShowInput(false);
-      setShowReplyInput(false);
-      setValue("");
-      setReplyContent('')
     } catch (err) {
       console.error("issue with keyEvent function: ", err);
     }
@@ -183,6 +191,11 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const handleContentChange = (e) => {
     setContentData(e.target.value);
   };
+
+  const handleReplyChange = (e) => {
+    setReplyContent(e.target.value);
+  } 
+
 
   const handleDeletePost = async () => {
     try {
@@ -295,6 +308,7 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           setReplyContent={setReplyContent}
           replyContent={replyContent}
           toggleInput={toggleReplyInput}
+          handleReplyChange={handleReplyChange}
         />
       )}
       <CommentInput
