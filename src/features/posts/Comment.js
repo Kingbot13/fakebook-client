@@ -33,8 +33,11 @@ const Comment = ({
   handleSubmit,
   onChange,
   value,
+  showInput,
+  setShowInput,
+  replyContent,
+  setReplyContent
 }) => {
-  const [showInput, setShowInput] = useState(false);
   // get replies and filter based on comment id
   const { data: replies } = useGetRepliesQuery();
   let filteredReplies;
@@ -53,6 +56,10 @@ const Comment = ({
   const [removeComment] = useRemoveCommentMutation();
   const [addReaction] = useAddCommentReactionMutation();
   const [removeReaction] = useRemoveCommentReactionMutation();
+
+  const handleChange = (e) => {
+    setReplyContent(e.target.value);
+  } 
 
   const deleteComment = async () => {
     try {
@@ -155,8 +162,8 @@ const Comment = ({
       {showInput && (
         <CommentInput
           onFocus={handleSubmit}
-          onChange={onChange}
-          value={value}
+          onChange={handleChange}
+          value={replyContent}
           isReply={true}
           idForReply={id}
         />

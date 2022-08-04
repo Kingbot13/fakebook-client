@@ -38,11 +38,15 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
   const [addReply] = useAddReplyMutation();
   const [editReply] = useEditReplyMutation();
   const [value, setValue] = useState("");
+  const [replyContent, setReplyContent] = useState('');
+
   const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [showInput, setShowInput] = useState(false);
+  const [showReplyInput, setShowReplyInput] = useState(false);
+
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
   // set commentId to use when editing comments
   const [commentId, setCommentId] = useState("");
@@ -137,7 +141,9 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
       e.target.removeEventListener("keydown", keyEvent);
       setShowCard(false);
       setShowInput(false);
+      setShowReplyInput(false);
       setValue("");
+      setReplyContent('')
     } catch (err) {
       console.error("issue with keyEvent function: ", err);
     }
@@ -147,10 +153,10 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
     e.target.addEventListener("keydown", keyEvent(e, "edit", content, isReply));
   };
 
-  const handleSubmit = (e, isReply, idForReply) => {
+  const handleSubmit = (e, content, isReply, idForReply) => {
     e.target.addEventListener(
       "keydown",
-      keyEvent(e, "add", isReply, idForReply)
+      keyEvent(e, "add", content, isReply, idForReply)
     );
   };
   const toggleOptionsCard = () => {
@@ -277,6 +283,10 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
           position={cardPosition}
           toggleCard={toggleCard}
           show={showInput}
+          showInput={showReplyInput}
+          setShowInput={setShowReplyInput} 
+          setReplyContent={setReplyContent}
+          replyContent={replyContent}
         />
       )}
       <CommentInput
