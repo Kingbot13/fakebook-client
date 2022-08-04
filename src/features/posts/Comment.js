@@ -140,7 +140,7 @@ const Comment = ({
         </div>
         <div></div>
       </div>
-      {!isReply && (
+      {!isReply && replies && (
         <CommentList
           comments={filteredReplies}
           isReply={true}
