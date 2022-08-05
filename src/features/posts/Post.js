@@ -22,7 +22,7 @@ import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 import { Divider } from "../../components/Divider";
 
-const Post = ({ name, content, photo, date, id, reactions, user }) => {
+const Post = ({ name, content, photo, date, id, reactions, user, share, shareId }) => {
   const { data: comments } = useGetCommentsQuery();
 
   let filteredComments;
@@ -253,6 +253,10 @@ const Post = ({ name, content, photo, date, id, reactions, user }) => {
         </div>
       </div>
       <p className={styles.content}>{content}</p>
+      {share && 
+      <div>
+        <Post />  
+      </div>}
       <div>
         <div
           role="presentation"
