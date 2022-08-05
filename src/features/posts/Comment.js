@@ -153,6 +153,7 @@ const Comment = ({
           toggleEdit={toggleEdit}
           commentId={commentId}
           show={show}
+          toggleInput={toggleInput}
         />
       )}
       {showInput && (
