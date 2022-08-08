@@ -14,6 +14,7 @@ import {
   useEditReplyMutation,
   useRemoveReplyMutation,
   useAddPostMutation,
+  useGetPostsQuery,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -42,6 +43,12 @@ const Post = ({
     id: id,
     reactions: reactions,
   };
+  const { data: posts } = useGetPostsQuery();
+  let filteredPost;
+  if (posts && share) {
+    const filteredPostArray = posts.filter((post) => post.id === shareId);
+    filteredPost = filteredPostArray[0];
+  }
   const { data: comments } = useGetCommentsQuery();
 
   let filteredComments;
@@ -199,6 +206,9 @@ const Post = ({
     setShowForm(!showForm ? true : false);
     setShowOptions(false);
   };
+  const toggleShareForm = () => {
+    setShowShareForm(!showShareForm ? true : false);
+  };
   const handleEditPostSubmit = async () => {
     try {
       await editPost({ postId: id, content: contentData }).unwrap();
@@ -279,7 +289,7 @@ const Post = ({
           handleSubmit={handleShareSubmit}
           share={true}
           postInfo={postInfo}
-          toggle={togglePostForm}
+          toggle={toggleShareForm}
         />
       )}
       <div className={styles.user}>
@@ -301,7 +311,14 @@ const Post = ({
       <p className={styles.content}>{content}</p>
       {share && (
         <div>
-          <Post />
+          <Post
+            name={filteredPost.data.name}
+            content={filteredPost.data.content}
+            photo={filteredPost.data.photo}
+            date={filteredPost.data.date}
+            id={shareId}
+            reactions={filteredPost.data.reactions}
+          />
         </div>
       )}
       <div>
