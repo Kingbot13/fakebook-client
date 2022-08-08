@@ -2,9 +2,10 @@ import React from "react";
 import { UserPhoto } from "../users/UserPhoto";
 import { auth } from "../../firebase";
 import { SubmitBtn } from "../../components/Button";
+import {Post} from "./Post";
 import styles from "../../styles/PostForm.module.css";
 
-export const PostForm = ({ toggle, content, handleSubmit, handleChange, title }) => {
+export const PostForm = ({ toggle, content, handleSubmit, handleChange, title, share }) => {
   return (
     <form className={styles.form}>
       <div className={styles.headerContainer}>
@@ -25,7 +26,10 @@ export const PostForm = ({ toggle, content, handleSubmit, handleChange, title })
         onChange={(e) => handleChange(e)}
         value={content}
       ></input>
-      <div></div>
+      { share && 
+        <div>
+          <Post />
+        </div>}
       <div className={styles.addToPostContainer}>
         <div>Add to your post</div>
         <div className={styles.iconsContainer}>icons</div>

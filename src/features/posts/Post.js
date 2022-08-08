@@ -13,6 +13,7 @@ import {
   useAddReplyMutation,
   useEditReplyMutation,
   useRemoveReplyMutation,
+  useAddPostMutation,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { auth } from "../../firebase";
@@ -23,6 +24,14 @@ import { PostForm } from "./PostForm";
 import { Divider } from "../../components/Divider";
 
 const Post = ({ name, content, photo, date, id, reactions, user, share, shareId }) => {
+  const postInfo = {
+    name: name,
+    content: content,
+    photo: photo,
+    date: date,
+    id: id,
+    reactions: reactions,
+  }
   const { data: comments } = useGetCommentsQuery();
 
   let filteredComments;
@@ -30,6 +39,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
     filteredComments = comments.filter((item) => item.data.postId === id);
   }
   const formattedDate = formatDistanceToNow(new Date(date));
+  const [addPost] = useAddPostMutation();
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();
   const [addComment] = useAddCommentMutation();
@@ -47,11 +57,13 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
   const [showCard, setShowCard] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
+  const [showShareForm, setShowShareForm] = useState(false);
 
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
   // set commentId to use when editing comments
   const [commentId, setCommentId] = useState("");
   const userId = auth.currentUser.uid;
+  const userName = auth.currentUser.displayName;
   // toggle comment options card
   const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
@@ -196,6 +208,14 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
     setReplyContent(e.target.value);
   } 
 
+  const handleShareSubmit = async () => {
+    try {
+      await addPost({name: userName, content: value, photo: null, id: userId, date: Date(), share: true, shareId: id}).unwrap();
+      setValue('');
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   const handleDeletePost = async () => {
     try {
@@ -236,6 +256,9 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
           toggle={togglePostForm}
         />
       )}
+      {showShareForm && 
+      <PostForm title='Create post' content={value} handleChange={handleChange} />
+      }
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />

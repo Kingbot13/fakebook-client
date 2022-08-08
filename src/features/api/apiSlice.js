@@ -33,7 +33,7 @@ export const apiSlice = createApi({
       providesTags: ["Posts"],
     }),
     addPost: build.mutation({
-      queryFn: async ({ name, content, photo, id, date }) => {
+      queryFn: async ({ name, content, photo, id, date, share, shareId }) => {
         try {
           await addDoc(collection(db, "posts"), {
             name: name,
@@ -41,6 +41,8 @@ export const apiSlice = createApi({
             photo: photo,
             userId: id,
             date: date,
+            share: share ?? false,
+            shareId: share ? shareId : null,
           });
           return { data: null };
         } catch (err) {
