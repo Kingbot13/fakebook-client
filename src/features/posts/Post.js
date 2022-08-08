@@ -23,7 +23,17 @@ import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 import { Divider } from "../../components/Divider";
 
-const Post = ({ name, content, photo, date, id, reactions, user, share, shareId }) => {
+const Post = ({
+  name,
+  content,
+  photo,
+  date,
+  id,
+  reactions,
+  user,
+  share,
+  shareId,
+}) => {
   const postInfo = {
     name: name,
     content: content,
@@ -31,7 +41,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
     date: date,
     id: id,
     reactions: reactions,
-  }
+  };
   const { data: comments } = useGetCommentsQuery();
 
   let filteredComments;
@@ -49,7 +59,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
   const [addReply] = useAddReplyMutation();
   const [editReply] = useEditReplyMutation();
   const [value, setValue] = useState("");
-  const [replyContent, setReplyContent] = useState('');
+  const [replyContent, setReplyContent] = useState("");
 
   const [contentData, setContentData] = useState(content);
   const [showOptions, setShowOptions] = useState(false);
@@ -93,7 +103,6 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
   const toggleReplyInput = () => {
     setShowReplyInput(!showReplyInput ? true : false);
   };
-
 
   const toggleReaction = async (e) => {
     try {
@@ -144,8 +153,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
           setShowInput(false);
           setShowReplyInput(false);
           setValue("");
-          setReplyContent('');
-    
+          setReplyContent("");
         }
       } else {
         if (e.code === "Enter") {
@@ -166,8 +174,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
           setShowInput(false);
           setShowReplyInput(false);
           setValue("");
-          setReplyContent('');
-    
+          setReplyContent("");
         }
       }
     } catch (err) {
@@ -206,16 +213,24 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
 
   const handleReplyChange = (e) => {
     setReplyContent(e.target.value);
-  } 
+  };
 
   const handleShareSubmit = async () => {
     try {
-      await addPost({name: userName, content: value, photo: null, id: userId, date: Date(), share: true, shareId: id}).unwrap();
-      setValue('');
+      await addPost({
+        name: userName,
+        content: value,
+        photo: null,
+        id: userId,
+        date: Date(),
+        share: true,
+        shareId: id,
+      }).unwrap();
+      setValue("");
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const handleDeletePost = async () => {
     try {
@@ -256,9 +271,17 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
           toggle={togglePostForm}
         />
       )}
-      {showShareForm && 
-      <PostForm title='Create post' content={value} handleChange={handleChange} />
-      }
+      {showShareForm && (
+        <PostForm
+          title="Create post"
+          content={value}
+          handleChange={handleChange}
+          handleSubmit={handleShareSubmit}
+          share={true}
+          postInfo={postInfo}
+          toggle={togglePostForm}
+        />
+      )}
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
@@ -276,10 +299,11 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
         </div>
       </div>
       <p className={styles.content}>{content}</p>
-      {share && 
-      <div>
-        <Post />  
-      </div>}
+      {share && (
+        <div>
+          <Post />
+        </div>
+      )}
       <div>
         <div
           role="presentation"
@@ -331,7 +355,7 @@ const Post = ({ name, content, photo, date, id, reactions, user, share, shareId 
           toggleCard={toggleCard}
           show={showInput}
           showInput={showReplyInput}
-          setShowInput={setShowReplyInput} 
+          setShowInput={setShowReplyInput}
           setReplyContent={setReplyContent}
           replyContent={replyContent}
           toggleInput={toggleReplyInput}
