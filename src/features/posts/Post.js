@@ -23,6 +23,7 @@ import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
 import { PostForm } from "./PostForm";
 import { Divider } from "../../components/Divider";
+import { UpperPost } from "../../components/UpperPost";
 
 const Post = ({
   name,
@@ -292,7 +293,7 @@ const Post = ({
           toggle={toggleShareForm}
         />
       )}
-      <div className={styles.user}>
+      {/* <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />
         </div>
@@ -320,7 +321,17 @@ const Post = ({
             reactions={filteredPost.data.reactions}
           />
         </div>
-      )}
+      )} */}
+      <UpperPost
+        name={name}
+        photo={photo}
+        formattedDate={formattedDate}
+        toggleOptionsCard={toggleOptionsCard}
+        content={content}
+        share={share}
+        shareId={shareId}
+        filteredPost={filteredPost}
+      />
       <div>
         <div
           role="presentation"
