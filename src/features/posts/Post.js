@@ -354,7 +354,9 @@ const Post = ({
             </div>
             <div className={styles.likeContainer}>Comment</div>
           </div>
-          <div className={styles.secondaryContainer}>Share</div>
+          <div className={styles.secondaryContainer} onClick={toggleShareForm}>
+            Share
+          </div>
         </div>
       </div>
       <Divider />

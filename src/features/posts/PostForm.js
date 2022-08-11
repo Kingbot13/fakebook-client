@@ -35,7 +35,7 @@ export const PostForm = ({
         value={content}
       ></input>
       {share && (
-        <div>
+        <div className={styles.sharePost}>
           <Post
             name={postInfo.name}
             content={postInfo.content}

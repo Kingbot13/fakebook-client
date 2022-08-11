@@ -81,6 +81,14 @@
 
 }
 
+.sharePost {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+    max-height: 100px;
+}
+
 .addToPostContainer {
     display: flex;
     margin: 16px 16px 0;
