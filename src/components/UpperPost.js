@@ -1,6 +1,5 @@
 import React from "react";
 import { StyledImg } from "./Image";
-import { Post } from "../features/posts/Post";
 import styles from "../styles/UpperPost.module.css";
 export const UpperPost = ({
   name,
@@ -33,13 +32,12 @@ export const UpperPost = ({
       <p className={styles.content}>{content}</p>
       {share && (
         <div>
-          <Post
+          <UpperPost
             name={filteredPost.data.name}
             content={filteredPost.data.content}
             photo={filteredPost.data.photo}
             date={filteredPost.data.date}
             id={shareId}
-            reactions={filteredPost.data.reactions}
           />
         </div>
       )}

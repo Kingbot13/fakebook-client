@@ -1,6 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { StyledImg } from "../../components/Image";
 import styles from "../../styles/Post.module.css";
 import {
   useAddCommentMutation,
@@ -293,35 +292,6 @@ const Post = ({
           toggle={toggleShareForm}
         />
       )}
-      {/* <div className={styles.user}>
-        <div>
-          <StyledImg src={photo} alt="" />
-        </div>
-        <div className={styles.nameContainer}>
-          <strong>{name}</strong>
-          <div className={styles.time}>{formattedDate}</div>
-        </div>
-        <div
-          role="button"
-          onClick={toggleOptionsCard}
-          className={styles.options}
-        >
-          ...
-        </div>
-      </div>
-      <p className={styles.content}>{content}</p>
-      {share && (
-        <div>
-          <Post
-            name={filteredPost.data.name}
-            content={filteredPost.data.content}
-            photo={filteredPost.data.photo}
-            date={filteredPost.data.date}
-            id={shareId}
-            reactions={filteredPost.data.reactions}
-          />
-        </div>
-      )} */}
       <UpperPost
         name={name}
         photo={photo}
