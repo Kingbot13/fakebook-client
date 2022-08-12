@@ -337,7 +337,10 @@ const Post = ({
             <div className={styles.likeContainer}>Comment</div>
           </div>
           <div className={styles.secondaryContainer} onClick={toggleShareForm}>
-            Share
+            <div className={styles.likeContainer}>
+              <i className={styles.shareIcon}></i>
+            </div>
+            <div className={styles.likeContainer}>Share</div>
           </div>
         </div>
       </div>
