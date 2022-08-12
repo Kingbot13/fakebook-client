@@ -237,6 +237,7 @@ const Post = ({
         shareId: id,
       }).unwrap();
       setValue("");
+      toggleShareForm();
     } catch (err) {
       console.error(err);
     }
