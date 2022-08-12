@@ -13,7 +13,7 @@ export const UpperPost = ({
   filteredPost,
 }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.user}>
         <div>
           <StyledImg src={photo} alt="" />

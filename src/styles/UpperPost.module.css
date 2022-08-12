@@ -1,3 +1,9 @@
+.container {
+    min-width: 70%;
+    position: relative;
+}
+
+
 /* container for user info in posts */
 .user {
     display: flex;

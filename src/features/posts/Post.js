@@ -36,11 +36,12 @@ const Post = ({
   share,
   shareId,
 }) => {
+  const formattedDate = formatDistanceToNow(new Date(date));
   const postInfo = {
     name: name,
     content: content,
     photo: photo,
-    date: date,
+    date: formattedDate,
     id: id,
     reactions: reactions,
   };
@@ -56,7 +57,6 @@ const Post = ({
   if (comments) {
     filteredComments = comments.filter((item) => item.data.postId === id);
   }
-  const formattedDate = formatDistanceToNow(new Date(date));
   const [addPost] = useAddPostMutation();
   const [addReaction] = useAddReactionMutation();
   const [removeReaction] = useRemoveReactionMutation();

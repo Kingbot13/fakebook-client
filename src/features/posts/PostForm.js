@@ -3,6 +3,7 @@ import { UserPhoto } from "../users/UserPhoto";
 import { auth } from "../../firebase";
 import { SubmitBtn } from "../../components/Button";
 import { Post } from "./Post";
+import { UpperPost } from "../../components/UpperPost";
 import styles from "../../styles/PostForm.module.css";
 
 export const PostForm = ({
@@ -36,13 +37,12 @@ export const PostForm = ({
       ></input>
       {share && (
         <div className={styles.sharePost}>
-          <Post
+          <UpperPost
             name={postInfo.name}
             content={postInfo.content}
             photo={postInfo.photo}
             date={postInfo.date}
             id={postInfo.id}
-            reactions={postInfo.reactions}
           />
         </div>
       )}
