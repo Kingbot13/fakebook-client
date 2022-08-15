@@ -6,6 +6,7 @@ import "./App.css";
 import { Newsfeed } from "./app/Newsfeed";
 import { SignInPage } from "./app/SignInPage";
 import { auth } from "./firebase";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -26,7 +27,7 @@ function App() {
       {showOptionsCard && <UserOptionsCard toggleCard={toggleOptionsCard} toggleNav={toggleNav} />}
       <Routes>
         <Route path="/" element={<SignInPage />} />
-        <Route path="/newsfeed" element={<Newsfeed />} />
+        <Route path="/newsfeed" element={<ProtectedRoute user={auth.currentUser}><Newsfeed /></ProtectedRoute>} />
       </Routes>
     </div>
 
