@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { StyledLogo } from "./Logo";
 import { UserOptionsBtn } from "./Button";
+import { UserPhoto } from "../features/users/UserPhoto";
 
 const Navbar = ({ className, toggleCard }) => {
   return (
@@ -9,7 +10,7 @@ const Navbar = ({ className, toggleCard }) => {
       <StyledLogo />
       <div>link placeholder</div>
       <div className="option-btns-container">
-        <UserOptionsBtn onClick={() => toggleCard()}>Options</UserOptionsBtn>
+        <UserOptionsBtn onClick={() => toggleCard()}><UserPhoto /></UserOptionsBtn>
       </div>
     </nav>
   );
