@@ -100,6 +100,7 @@ const Post = ({
       y: rect.top - mainRect.top,
     });
     setShowCard(!showCard ? true : false);
+    // document.addEventListener("click", (e) => clickOff(e));
   };
 
   const toggleInput = () => {
@@ -110,6 +111,16 @@ const Post = ({
   const toggleReplyInput = () => {
     setShowReplyInput(!showReplyInput ? true : false);
   };
+
+  // const clickOff = (e) => {
+  //   const comment = document.querySelector(`p[data-id="${commentId}"]`);
+  //   if (e.target !== comment && showCard) {
+  //     setShowCard(false);
+  //     e.target.removeEventListener("click", clickOff);
+  //   } else if (!showCard) {
+  //     e.target.removeEventListener("click", clickOff);
+  //   }
+  // };
 
   const toggleReaction = async (e) => {
     try {
