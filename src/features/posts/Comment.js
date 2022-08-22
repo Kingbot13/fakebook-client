@@ -91,7 +91,7 @@ const Comment = ({
       name="main-comment-container"
       data-id={id}
     >
-      {showCard && (
+      {showCard && commentId === id && (
         <CommentOptionsCard
           deleteComment={deleteComment}
           toggleEdit={toggleEdit}

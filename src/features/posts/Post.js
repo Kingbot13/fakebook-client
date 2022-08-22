@@ -83,6 +83,7 @@ const Post = ({
   const userName = auth.currentUser.displayName;
   // toggle comment options card
   const toggleCard = (id) => {
+    console.log("togglecard");
     // set commentId as soon as commentOptionsCard is toggled
     setCommentId(id);
     const optionsBtn = document.querySelector(
