@@ -38,7 +38,7 @@ const Comment = ({
   replyContent,
   setReplyContent,
   toggleInput,
-  handleReplyChange
+  handleReplyChange,
 }) => {
   // get replies and filter based on comment id
   const { data: replies } = useGetRepliesQuery();
@@ -58,7 +58,6 @@ const Comment = ({
   const [removeComment] = useRemoveCommentMutation();
   const [addReaction] = useAddCommentReactionMutation();
   const [removeReaction] = useRemoveCommentReactionMutation();
-
 
   const deleteComment = async () => {
     try {
@@ -86,7 +85,6 @@ const Comment = ({
     }
   };
 
-
   return (
     <div
       className={styles.mainContainer}
@@ -110,7 +108,9 @@ const Comment = ({
               <div className={styles.userName}>
                 {users && foundUser.data.name}
               </div>
-              <p className={styles.contentContainer}>{content}</p>
+              <p className={styles.contentContainer} data-id={id}>
+                {content}
+              </p>
             </div>
           </div>
           {reactions && <StyledReactions reactions={reactions} />}
@@ -136,7 +136,11 @@ const Comment = ({
           >
             Like
           </div>
-          <div className={styles.actions} role="button" onClick={() => toggleInput()}>
+          <div
+            className={styles.actions}
+            role="button"
+            onClick={() => toggleInput()}
+          >
             Reply
           </div>
           <div className={styles.date}>{formattedDate}</div>

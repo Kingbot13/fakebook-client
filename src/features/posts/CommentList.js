@@ -54,10 +54,11 @@ const CommentList = ({
   };
 
   useEffect(() => {
-    let filteredComment;
     if (commentId) {
-      filteredComment = sortedComments.filter((item) => item.id === commentId);
-      setContent(filteredComment[0].data.content);
+      const commentContent = document.querySelector(
+        `p[data-id='${commentId}']`
+      );
+      setContent(commentContent);
     }
   }, [commentId]);
   return (
