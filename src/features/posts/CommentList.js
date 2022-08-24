@@ -60,7 +60,7 @@ const CommentList = ({
       );
       setContent(commentContent);
     }
-  }, []);
+  }, [commentId]);
   return (
     <div className={styles.mainContainer}>
       {show && (
