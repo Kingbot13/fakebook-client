@@ -58,7 +58,7 @@ const CommentList = ({
       const commentContent = document.querySelector(
         `p[data-id='${commentId}']`
       );
-      setContent(commentContent);
+      setContent(commentContent.textContent);
     }
   }, [commentId]);
   return (
