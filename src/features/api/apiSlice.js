@@ -251,7 +251,7 @@ export const apiSlice = createApi({
           await updateDoc(ref, {content: content});
           return {data: null};
         } catch (err) {
-          console.error(err);
+          console.error("could not update reply", err);
         }
       },
       invalidatesTags: ["Replies"]
