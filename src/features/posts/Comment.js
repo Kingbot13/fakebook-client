@@ -56,12 +56,17 @@ const Comment = ({
   const formattedDate = formatDistanceToNow(new Date(date));
 
   const [removeComment] = useRemoveCommentMutation();
+  const [removeReply] = useRemoveReplyMutation();
   const [addReaction] = useAddCommentReactionMutation();
   const [removeReaction] = useRemoveCommentReactionMutation();
 
   const deleteComment = async () => {
     try {
-      await removeComment({ commentId: id }).unwrap();
+      if (!isReply) {
+        await removeComment({ commentId: id }).unwrap();
+      } else if (isReply) {
+        await removeReply({id}).unwrap();
+      }
     } catch (err) {
       console.error("could not delete comment at Comment.js: ", err);
     }
