@@ -263,7 +263,7 @@ const Post = ({
   };
   // if userId is contained in reactions array, render like button with blue filter and solid thumb image
   useEffect(() => {
-    if (reactions && reactions.filter((item) => item.id === userId)) {
+    if (reactions && reactions.find((item) => item.id === userId)) {
       const thumbsUp = document.querySelector(
         `i[name='like-icon'][data-id='${id}']`
       );
@@ -274,7 +274,7 @@ const Post = ({
       thumbsUp.classList.add("blue-filter", "solid-like-btn");
       reactionName.classList.add("blue-filter");
     }
-  }, []);
+  }, [reactions, userId]);
 
   return (
     <div className={styles.container}>
