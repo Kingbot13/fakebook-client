@@ -3,14 +3,21 @@ import styled from "styled-components";
 import { StyledLogo } from "./Logo";
 import { UserOptionsBtn } from "./Button";
 import { UserPhoto } from "../features/users/UserPhoto";
-
+import { HomeIcon } from "./HomeIcon";
+import { NavLink } from "react-router-dom";
 const Navbar = ({ className, toggleCard }) => {
   return (
     <nav className={className}>
       <StyledLogo />
-      <div>link placeholder</div>
+      <div>
+        <NavLink to="/newsfeed">
+          <HomeIcon />
+        </NavLink>
+      </div>
       <div className="option-btns-container">
-        <UserOptionsBtn onClick={() => toggleCard()}><UserPhoto /></UserOptionsBtn>
+        <UserOptionsBtn onClick={() => toggleCard()}>
+          <UserPhoto />
+        </UserOptionsBtn>
       </div>
     </nav>
   );
@@ -21,6 +28,7 @@ export const StyledNav = styled(Navbar)`
   height: 56px;
   display: flex;
   justify-content: center;
+  align-items: center;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   position: fixed;
   width: 100%;
