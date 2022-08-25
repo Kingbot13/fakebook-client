@@ -1,0 +1,5 @@
+.svg {
+    color: var(--primary-btn-color);
+    display: block;
+    cursor: pointer;
+}
