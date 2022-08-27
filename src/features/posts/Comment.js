@@ -90,6 +90,18 @@ const Comment = ({
     }
   };
 
+  useEffect(() => {
+    if (reactions && reactions.find((item) => item.id === userId)) {
+
+      const reactionName = document.querySelector(
+        `div[name='comment-reaction-name'][data-id='${id}']`
+      );
+
+      reactionName.classList.add("blue-filter");
+    }
+  }, [reactions, userId]);
+
+
   return (
     <div
       className={styles.mainContainer}
