@@ -19,6 +19,7 @@ const CommentList = ({
   toggleInput,
   showInput,
   handleReplyChange,
+  id,
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -45,9 +46,12 @@ const CommentList = ({
         toggleInput={toggleInput}
         showInput={showInput}
         handleReplyChange={handleReplyChange}
+        onFocus={onFocus}
       />
     );
   });
+
+  const replyInput = document.querySelector(`input[data-id="${id}"]`);
 
   const handleChange = (e) => {
     setContent(e.target.value);
@@ -63,11 +67,12 @@ const CommentList = ({
   }, [commentId]);
   return (
     <div className={styles.mainContainer}>
-      {show && (
+      {show && document.activeElement === replyInput && (
         <CommentInput
           onChange={handleChange}
           onFocus={onFocus}
           value={content}
+          id={id}
         />
       )}
       <div>{mapComments}</div>

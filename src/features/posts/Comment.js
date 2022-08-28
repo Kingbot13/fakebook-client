@@ -31,7 +31,7 @@ const Comment = ({
   commentId,
   show,
   handleSubmit,
-  onChange,
+  onFocus,
   value,
   showInput,
   setShowInput,
@@ -65,7 +65,7 @@ const Comment = ({
       if (!isReply) {
         await removeComment({ commentId: id }).unwrap();
       } else if (isReply) {
-        await removeReply({id}).unwrap();
+        await removeReply({ id }).unwrap();
       }
     } catch (err) {
       console.error("could not delete comment at Comment.js: ", err);
@@ -92,7 +92,6 @@ const Comment = ({
 
   useEffect(() => {
     if (reactions && reactions.find((item) => item.id === userId)) {
-
       const reactionName = document.querySelector(
         `div[name='comment-reaction-name'][data-id='${id}']`
       );
@@ -100,7 +99,6 @@ const Comment = ({
       reactionName.classList.add("blue-filter");
     }
   }, [reactions, userId]);
-
 
   return (
     <div
@@ -113,6 +111,7 @@ const Comment = ({
           deleteComment={deleteComment}
           toggleEdit={toggleEdit}
           position={position}
+          activeInputId={id}
         />
       )}
       <div className={styles.profileContainer}>
@@ -175,6 +174,8 @@ const Comment = ({
           commentId={commentId}
           show={show}
           toggleInput={toggleInput}
+          onFocus={onFocus}
+          id={id}
         />
       )}
       {showInput && (

@@ -8,6 +8,7 @@ export const CommentInput = ({
   onFocus,
   isReply,
   idForReply,
+  id,
 }) => {
   return (
     <div className={styles.container}>
@@ -21,6 +22,7 @@ export const CommentInput = ({
         onChange={(e) => onChange(e)}
         value={value}
         placeholder="Write a comment..."
+        data-id={id}
       />
     </div>
   );

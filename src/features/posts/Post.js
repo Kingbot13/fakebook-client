@@ -69,6 +69,7 @@ const Post = ({
   const [replyContent, setReplyContent] = useState("");
 
   const [contentData, setContentData] = useState(content);
+  const [isReplyBool, setIsReplyBool] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showCard, setShowCard] = useState(false);
@@ -103,9 +104,11 @@ const Post = ({
     // document.addEventListener("click", (e) => clickOff(e));
   };
 
-  const toggleInput = () => {
+  const toggleInput = (activeInputId) => {
     setShowInput(!showInput ? true : false);
     setShowCard(false);
+    if (activeInputId)
+      document.querySelector(`input[data-id="${activeInputId}"]`).focus();
   };
 
   const toggleReplyInput = () => {
@@ -377,11 +380,13 @@ const Post = ({
           handleReplyChange={handleReplyChange}
         />
       )}
-      <CommentInput
-        value={value}
-        onChange={handleChange}
-        onFocus={handleSubmit}
-      />
+      {!isReplyBool && (
+        <CommentInput
+          value={value}
+          onChange={handleChange}
+          onFocus={handleSubmit}
+        />
+      )}
     </div>
   );
 };
