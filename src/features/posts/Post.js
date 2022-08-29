@@ -104,9 +104,16 @@ const Post = ({
     setShowCard(!showCard ? true : false);
     // document.addEventListener("click", (e) => clickOff(e));
   };
-
+  // toggle input used for editing replies and comments
   const toggleInput = (activeInputId) => {
     setShowInput(!showInput ? true : false);
+    setReplyContent(
+      document.querySelector(`p[data-id="${activeInputId}"]`).textContent
+    );
+    console.log(
+      document.querySelector(`p[data-id="${activeInputId}"]`).textContent
+    );
+
     setShowCard(false);
     // if (activeInputId) {
     //   const el = document.querySelector(`input[data-id="${activeInputId}"]`);
@@ -114,9 +121,13 @@ const Post = ({
     //   document.querySelector(`input[data-id="${activeInputId}"]`).focus();
     // }
   };
-
-  const toggleReplyInput = () => {
+  // toggle input used to create new replies
+  const toggleReplyInput = (id) => {
     setShowReplyInput(!showReplyInput ? true : false);
+
+    console.log(showReplyInput);
+
+    setShowCard(false);
   };
 
   // const clickOff = (e) => {

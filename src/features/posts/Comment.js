@@ -176,8 +176,11 @@ const Comment = ({
           toggleInput={toggleInput}
           onFocus={onFocus}
           id={id}
+          replyContent={replyContent}
+          handleReplyChange={handleReplyChange}
         />
       )}
+      {/* CommentInput below is used for adding new replies */}
       {showInput && commentId === id && (
         <CommentInput
           onFocus={handleSubmit}
@@ -185,6 +188,16 @@ const Comment = ({
           value={replyContent}
           isReply={true}
           idForReply={id}
+        />
+      )}
+      {/* CommentInput below is used for editing current replies */}
+      {show && commentId === id && (
+        <CommentInput
+          onChange={handleReplyChange}
+          onFocus={onFocus}
+          value={replyContent}
+          isReply={isReply}
+          id={id}
         />
       )}
     </div>

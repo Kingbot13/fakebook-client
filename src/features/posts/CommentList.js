@@ -20,6 +20,7 @@ const CommentList = ({
   showInput,
   handleReplyChange,
   id,
+  replyContent,
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -48,6 +49,7 @@ const CommentList = ({
         handleReplyChange={handleReplyChange}
         onFocus={onFocus}
         parentCommentId={id}
+        replyContent={replyContent}
       />
     );
   });
@@ -68,14 +70,6 @@ const CommentList = ({
   }, [commentId]);
   return (
     <div className={styles.mainContainer}>
-      {show && (
-        <CommentInput
-          onChange={handleChange}
-          onFocus={onFocus}
-          value={content}
-          id={id}
-        />
-      )}
       <div>{mapComments}</div>
     </div>
   );
