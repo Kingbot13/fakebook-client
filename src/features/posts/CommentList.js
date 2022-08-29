@@ -47,6 +47,7 @@ const CommentList = ({
         showInput={showInput}
         handleReplyChange={handleReplyChange}
         onFocus={onFocus}
+        parentCommentId={id}
       />
     );
   });
@@ -67,7 +68,7 @@ const CommentList = ({
   }, [commentId]);
   return (
     <div className={styles.mainContainer}>
-      {show && document.activeElement === replyInput && (
+      {show && (
         <CommentInput
           onChange={handleChange}
           onFocus={onFocus}

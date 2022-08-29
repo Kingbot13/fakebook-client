@@ -32,7 +32,7 @@ const Comment = ({
   show,
   handleSubmit,
   onFocus,
-  value,
+  parentCommentId,
   showInput,
   setShowInput,
   replyContent,
@@ -178,10 +178,10 @@ const Comment = ({
           id={id}
         />
       )}
-      {showInput && (
+      {showInput && commentId === id && (
         <CommentInput
           onFocus={handleSubmit}
-          onChange={(e) => handleReplyChange(e)}
+          onChange={handleReplyChange}
           value={replyContent}
           isReply={true}
           idForReply={id}

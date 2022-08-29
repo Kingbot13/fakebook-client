@@ -86,6 +86,7 @@ const Post = ({
   const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
     setCommentId(id);
+    console.log(commentId);
     const optionsBtn = document.querySelector(
       `div[name='comment-options-btn'][data-id='${id}']`
     );
@@ -107,8 +108,11 @@ const Post = ({
   const toggleInput = (activeInputId) => {
     setShowInput(!showInput ? true : false);
     setShowCard(false);
-    if (activeInputId)
-      document.querySelector(`input[data-id="${activeInputId}"]`).focus();
+    // if (activeInputId) {
+    //   const el = document.querySelector(`input[data-id="${activeInputId}"]`);
+    //   console.log(el);
+    //   document.querySelector(`input[data-id="${activeInputId}"]`).focus();
+    // }
   };
 
   const toggleReplyInput = () => {
@@ -201,6 +205,11 @@ const Post = ({
     } catch (err) {
       console.error("issue with keyEvent function: ", err);
     }
+  };
+
+  const toggleCommentInput = () => {
+    setIsReplyBool(!isReplyBool ? true : false);
+    if (!isReplyBool) document.querySelector(`input[data-id="${id}"]`).focus();
   };
 
   const handleCommentEdit = (e, content, isReply) => {
@@ -344,7 +353,11 @@ const Post = ({
               Like
             </div>
           </div>
-          <div className={styles.secondaryContainer}>
+          <div
+            className={styles.secondaryContainer}
+            role="button"
+            onClick={toggleCommentInput}
+          >
             <div className={styles.likeContainer}>
               <i className={styles.commentIcon}></i>
             </div>
@@ -380,13 +393,13 @@ const Post = ({
           handleReplyChange={handleReplyChange}
         />
       )}
-      {!isReplyBool && (
-        <CommentInput
-          value={value}
-          onChange={handleChange}
-          onFocus={handleSubmit}
-        />
-      )}
+
+      <CommentInput
+        value={value}
+        onChange={handleChange}
+        onFocus={handleSubmit}
+        id={id}
+      />
     </div>
   );
 };
