@@ -336,6 +336,7 @@ const Post = ({
         share={share}
         shareId={shareId}
         filteredPost={filteredPost}
+        id={id}
       />
       <div>
         <div

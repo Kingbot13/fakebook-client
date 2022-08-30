@@ -10,6 +10,7 @@ export const UpperPost = ({
   share,
   shareId,
   filteredPost,
+  id,
 }) => {
   return (
     <div className={styles.container}>
@@ -21,13 +22,15 @@ export const UpperPost = ({
           <strong>{name}</strong>
           <div className={styles.time}>{formattedDate}</div>
         </div>
-        <div
-          role="button"
-          onClick={toggleOptionsCard}
-          className={styles.options}
-        >
-          ...
-        </div>
+        {id !== shareId && (
+          <div
+            role="button"
+            onClick={toggleOptionsCard}
+            className={styles.options}
+          >
+            ...
+          </div>
+        )}
       </div>
       <p className={styles.content}>{content}</p>
       {share && (
@@ -38,6 +41,7 @@ export const UpperPost = ({
             photo={filteredPost.data.photo}
             date={filteredPost.data.date}
             id={shareId}
+            shareId={shareId}
           />
         </div>
       )}
