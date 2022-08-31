@@ -11,6 +11,8 @@ export const UpperPost = ({
   shareId,
   filteredPost,
   id,
+  user,
+  userId,
 }) => {
   return (
     <div className={styles.container}>
@@ -22,7 +24,7 @@ export const UpperPost = ({
           <strong>{name}</strong>
           <div className={styles.time}>{formattedDate}</div>
         </div>
-        {id !== shareId && (
+        {id !== shareId && user === userId && (
           <div
             role="button"
             onClick={toggleOptionsCard}

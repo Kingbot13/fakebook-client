@@ -54,8 +54,6 @@ const CommentList = ({
     );
   });
 
-  const replyInput = document.querySelector(`input[data-id="${id}"]`);
-
   const handleChange = (e) => {
     setContent(e.target.value);
   };
