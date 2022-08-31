@@ -102,15 +102,13 @@ const Post = ({
       y: rect.top - mainRect.top,
     });
     setShowCard(!showCard ? true : false);
+    setShowInput(false);
     // document.addEventListener("click", (e) => clickOff(e));
   };
   // toggle input used for editing replies and comments
   const toggleInput = (activeInputId) => {
     setShowInput(!showInput ? true : false);
     setReplyContent(
-      document.querySelector(`p[data-id="${activeInputId}"]`).textContent
-    );
-    console.log(
       document.querySelector(`p[data-id="${activeInputId}"]`).textContent
     );
 
@@ -405,6 +403,7 @@ const Post = ({
           replyContent={replyContent}
           toggleInput={toggleReplyInput}
           handleReplyChange={handleReplyChange}
+          setShowCard={setShowCard}
         />
       )}
 

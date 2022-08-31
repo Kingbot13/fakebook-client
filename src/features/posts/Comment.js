@@ -37,7 +37,7 @@ const Comment = ({
   showInput,
   setShowInput,
   replyContent,
-  setReplyContent,
+  setShowCard,
   toggleInput,
   handleReplyChange,
 }) => {
@@ -68,6 +68,7 @@ const Comment = ({
       } else if (isReply) {
         await removeReply({ id }).unwrap();
       }
+      setShowCard(false);
     } catch (err) {
       console.error("could not delete comment at Comment.js: ", err);
     }

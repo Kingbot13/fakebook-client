@@ -21,6 +21,7 @@ const CommentList = ({
   handleReplyChange,
   id,
   replyContent,
+  setShowCard,
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
@@ -50,6 +51,7 @@ const CommentList = ({
         onFocus={onFocus}
         parentCommentId={id}
         replyContent={replyContent}
+        setShowCard={setShowCard}
       />
     );
   });
