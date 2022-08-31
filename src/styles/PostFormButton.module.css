@@ -31,3 +31,9 @@
     background-color: #e6e9ee;
 
 }
+
+@media screen and (max-width: 484px) {
+    .container{
+        width: 100%;
+    }
+}

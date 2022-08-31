@@ -68,3 +68,9 @@
     background-repeat: no-repeat;
     display: inline-block;
 }
+
+@media screen and (max-width: 484px) {
+    .container{
+        width: 100%;
+    }
+}
