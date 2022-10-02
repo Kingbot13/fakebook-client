@@ -1,125 +1,130 @@
 .form {
-    background-color: #fff;
-    min-height: 428px;
-    max-height: 640px;
-    width: 500px;
-    border-radius: 8px;
-    box-shadow: 0 12px 28px 0 rgba(0,0,0,0.2), 0 2px 4px 0 rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+  background-color: #fff;
+  min-height: 428px;
+  max-height: 640px;
+  width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .headerContainer {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    justify-content: center;
-    position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  position: relative;
 }
 
 .headerContainer h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.2;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .headerContainer button {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    height: 36px;
-    width: 36px;
-    background-color: #e4e6eb;
-    border: none;
-    border-radius: 50%;
-    transition: background-color 0.2s;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  height: 36px;
+  width: 36px;
+  background-color: #e4e6eb;
+  border: none;
+  border-radius: 50%;
+  transition: background-color 0.2s;
 }
 
 .headerContainer button:hover {
-    background-color: #dadde4;
+  background-color: #dadde4;
 }
 
 .userContainer {
-    margin: 0 16px;
-    padding: 16px 0;
-    display: flex;
-    align-items: center;
+  margin: 0 16px;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
 }
 
 .userPhotoContainer {
-    margin-right: 11px;
+  margin-right: 11px;
 }
 
 .username {
-    font-weight: 600;
-    font-size: .9375rem;
-    line-height: 1.3333;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.3333;
 }
 
 .form input {
-    width: 100%;
-    height: fit-content;
-    padding: 4px 16px 48px;
-    display: flex;
-    justify-content: center;
-    font-size: 1.5rem;
-    line-height: 1.1667;
-    font-weight: 400;
-    border: none;
-    outline: none;
+  width: 100%;
+  height: fit-content;
+  padding: 4px 16px 48px;
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  line-height: 1.1667;
+  font-weight: 400;
+  border: none;
+  outline: none;
 }
 
 .form input::placeholder {
-    color: var(--secondary-text);
-    font-size: 1.5rem;
-    line-height: 1.1667;
-    font-weight: 400;
-
-
+  color: var(--secondary-text);
+  font-size: 1.5rem;
+  line-height: 1.1667;
+  font-weight: 400;
 }
 
 .sharePost {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: scroll;
-    max-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+  max-height: 100px;
 }
 
 .addToPostContainer {
-    display: flex;
-    margin: 16px 16px 0;
-    padding: 8px;
-    border-radius: 8px;
-    justify-content: space-between;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    border: solid 1px #ced0d4;
-    align-items: center;
+  display: flex;
+  margin: 16px 16px 0;
+  padding: 8px;
+  border-radius: 8px;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  border: solid 1px #ced0d4;
+  align-items: center;
 }
 
-.addToPostContainer  div:first-child {
-    padding: 0 8px;
-    font-weight: 600;
-    line-height: 1.3333;
-    font-size: .9375rem;
+.addToPostContainer div:first-child {
+  padding: 0 8px;
+  font-weight: 600;
+  line-height: 1.3333;
+  font-size: 0.9375rem;
 }
 
 .iconsContainer {
-    margin: 2px;
-    height: 36px;
-    width: 36px;
-    border-radius: 50%;
+  margin: 2px;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
 }
 
 .btnContainer {
-    padding: 16px 16px 0;
-    margin-bottom: 16px;
+  padding: 16px 16px 0;
+  margin-bottom: 16px;
 }
 
 .btnContainer button {
-    margin: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 640px) {
+  .form {
+    width: 100vw;
+  }
 }
