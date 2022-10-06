@@ -1,20 +1,7 @@
-import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  setDoc,
-  doc,
-  updateDoc,
-  increment,
-  arrayUnion,
-  arrayRemove,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../../firebase";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiSlice = createApi({
-  baseQuery: fakeBaseQuery(),
+  baseQuery: fetchBaseQuery({ baseURL: "" }),
   tagTypes: ["Posts", "Users", "Comments", "Replies"],
   endpoints: (build) => ({
     getPosts: build.query({
@@ -107,7 +94,9 @@ export const apiSlice = createApi({
       queryFn: async ({ id, reaction, userId }) => {
         try {
           const ref = doc(db, "posts", id);
-          await updateDoc(ref, { reactions: arrayUnion({reaction: reaction, id: userId })});
+          await updateDoc(ref, {
+            reactions: arrayUnion({ reaction: reaction, id: userId }),
+          });
           return { data: null };
         } catch (err) {
           console.error(err);
@@ -120,7 +109,7 @@ export const apiSlice = createApi({
       queryFn: async ({ id, userId, reaction }) => {
         try {
           const ref = doc(db, "posts", id);
-          const obj = {reaction: reaction, id: userId};
+          const obj = { reaction: reaction, id: userId };
           await updateDoc(ref, { reactions: arrayRemove(obj) });
           return { data: null };
         } catch (err) {
@@ -163,11 +152,11 @@ export const apiSlice = createApi({
       invalidatesTags: ["Comments"],
     }),
     editComment: build.mutation({
-      queryFn: async ({id, content}) => {
+      queryFn: async ({ id, content }) => {
         try {
           const ref = doc(db, "comments", id);
-          await updateDoc(ref, {content: content});
-          return {data: null};
+          await updateDoc(ref, { content: content });
+          return { data: null };
         } catch (err) {
           console.error("could not update comment: ", err);
         }
@@ -175,11 +164,10 @@ export const apiSlice = createApi({
       invalidatesTags: ["Comments"],
     }),
     removeComment: build.mutation({
-      queryFn: async ({commentId}) => {
+      queryFn: async ({ commentId }) => {
         try {
           await deleteDoc(doc(db, "comments", commentId));
-          return {data: null};
-
+          return { data: null };
         } catch (err) {
           console.error("could not delete comment: ", err);
         }
@@ -201,72 +189,74 @@ export const apiSlice = createApi({
       invalidatesTags: ["Comments"],
     }),
     removeCommentReaction: build.mutation({
-      queryFn: async ({commentId, userId}) => {
+      queryFn: async ({ commentId, userId }) => {
         try {
           const ref = doc(db, "comments", commentId);
-          const foundReaction = ref.reactions.find(item => item.userId === userId);
+          const foundReaction = ref.reactions.find(
+            (item) => item.userId === userId
+          );
           await updateDoc(ref, {
-            reactions: arrayRemove(foundReaction)
+            reactions: arrayRemove(foundReaction),
           });
-          return {data: null};
+          return { data: null };
         } catch (err) {
           console.error("could not remove comment reaction: ");
         }
       },
-      invalidatesTags: ["Comments"]
+      invalidatesTags: ["Comments"],
     }),
     getReplies: build.query({
       queryFn: async () => {
         try {
           let replies = [];
-          const req = await getDocs(collection(db, 'replies'));
-          req.forEach(doc => replies.push({id: doc.id, data: doc.data()}));
-          return {data: replies};
+          const req = await getDocs(collection(db, "replies"));
+          req.forEach((doc) => replies.push({ id: doc.id, data: doc.data() }));
+          return { data: replies };
         } catch (err) {
           console.error(err);
         }
       },
-      providesTags: ["Replies"]
+      providesTags: ["Replies"],
     }),
     addReply: build.mutation({
-      queryFn: async ({ userId, content, commentId, date}) => {
+      queryFn: async ({ userId, content, commentId, date }) => {
         try {
-          await addDoc(collection(db, 'replies'), {
+          await addDoc(collection(db, "replies"), {
             content: content,
             userId: userId,
             date: date,
-            commentId: commentId
+            commentId: commentId,
           });
-          return {data: null}
+          return { data: null };
         } catch (err) {
           console.error(err);
         }
       },
-      invalidatesTags: ["Replies"]
+      invalidatesTags: ["Replies"],
     }),
     editReply: build.mutation({
-      queryFn: async ({id, content}) => {
+      queryFn: async ({ id, content }) => {
         try {
-          const ref = doc(db, 'replies', id);
-          await updateDoc(ref, {content: content});
-          return {data: null};
+          const ref = doc(db, "replies", id);
+          await updateDoc(ref, { content: content });
+          return { data: null };
         } catch (err) {
           console.error("could not update reply", err);
         }
       },
-      invalidatesTags: ["Replies"]
+      invalidatesTags: ["Replies"],
     }),
     removeReply: build.mutation({
-      queryFn: async ({id}) => {
+      queryFn: async ({ id }) => {
         try {
           await deleteDoc(doc(db, "replies", id));
-          return {data: null};
+          return { data: null };
         } catch (err) {
           console.error(err);
         }
       },
-      invalidatesTags: ["Replies"]
-    })
+      invalidatesTags: ["Replies"],
+    }),
   }),
 });
 
