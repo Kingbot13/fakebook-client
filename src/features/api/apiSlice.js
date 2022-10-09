@@ -1,41 +1,25 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseURL: "" }),
+  baseQuery: fetchBaseQuery({
+    baseURL: "https://desolate-harbor-02562.herokuapp.com/api",
+  }),
+  prepareHeaders: (headers, {getState}) => {
+    const token = getState().auth.token;
+
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
   tagTypes: ["Posts", "Users", "Comments", "Replies"],
   endpoints: (build) => ({
     getPosts: build.query({
-      queryFn: async () => {
-        try {
-          let posts = [];
-          const request = await getDocs(collection(db, "posts"));
-          request.forEach((doc) =>
-            posts.push({ data: doc.data(), id: doc.id })
-          );
-          return { data: posts };
-        } catch (err) {
-          console.error(err);
-        }
-      },
+      query: () => "/posts",
       providesTags: ["Posts"],
     }),
     addPost: build.mutation({
-      queryFn: async ({ name, content, photo, id, date, share, shareId }) => {
-        try {
-          await addDoc(collection(db, "posts"), {
-            name: name,
-            content: content,
-            photo: photo,
-            userId: id,
-            date: date,
-            share: share ?? false,
-            shareId: share ? shareId : null,
-          });
-          return { data: null };
-        } catch (err) {
-          console.error(err);
-        }
-      },
+      query:,
       invalidatesTags: ["Posts"],
     }),
     editPost: build.mutation({
