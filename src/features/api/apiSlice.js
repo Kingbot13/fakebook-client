@@ -4,11 +4,11 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseURL: "https://desolate-harbor-02562.herokuapp.com/api",
   }),
-  prepareHeaders: (headers, {getState}) => {
+  prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
 
     if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
   },
@@ -19,61 +19,34 @@ export const apiSlice = createApi({
       providesTags: ["Posts"],
     }),
     addPost: build.mutation({
-      query:,
+      query: (initialPost) => ({
+        url: "/posts",
+        method: "POST",
+        body: initialPost,
+      }),
       invalidatesTags: ["Posts"],
     }),
     editPost: build.mutation({
-      queryFn: async ({ postId, content }) => {
-        try {
-          const ref = doc(db, "posts", postId);
-          await updateDoc(ref, { content: content });
-          return { data: null };
-        } catch (err) {
-          console.error("could not update post: ", err);
-        }
-      },
+      query: (post) => ({
+        url: `/posts/${post.id}`,
+        method: "PUT",
+        body: post,
+      }),
       invalidatesTags: ["Posts"],
     }),
     deletePost: build.mutation({
-      queryFn: async ({ postId }) => {
-        try {
-          await deleteDoc(doc(db, "posts", postId));
-          return { data: null };
-        } catch (err) {
-          console.error("problem deleting post: ", err);
-        }
-      },
+      query: (post) => ({
+        url: `posts/${post.id}`,
+        method: "DELETE",
+        body: post,
+      }),
       invalidatesTags: ["Posts"],
     }),
     getUsers: build.query({
-      queryFn: async () => {
-        try {
-          let users = [];
-          const request = await getDocs(collection(db, "users"));
-          request.forEach((doc) =>
-            users.push({ data: doc.data(), id: doc.id })
-          );
-          return { data: users };
-        } catch (err) {
-          console.error(err);
-        }
-      },
+      query: () => "/users",
       providesTags: ["Users"],
     }),
-    addUser: build.mutation({
-      queryFn: async ({ name, photo, id }) => {
-        try {
-          await setDoc(doc(db, "users", `${id}`), {
-            name: name,
-            photo: photo,
-          });
-          return { data: null };
-        } catch (err) {
-          console.error(err);
-        }
-      },
-      invalidatesTags: ["Users"],
-    }),
+    // replace addReaction and removeReaction with updateReaction that handles logic on the server
     addReaction: build.mutation({
       queryFn: async ({ id, reaction, userId }) => {
         try {
@@ -104,35 +77,15 @@ export const apiSlice = createApi({
       invalidatesTags: ["Posts"],
     }),
     getComments: build.query({
-      queryFn: async () => {
-        try {
-          let comments = [];
-          const request = await getDocs(collection(db, "comments"));
-          request.forEach((doc) =>
-            comments.push({ id: doc.id, data: doc.data() })
-          );
-          return { data: comments };
-        } catch (err) {
-          console.error(err);
-          return { error: "error fetching posts" };
-        }
-      },
+      query: () => "/comments",
       providesTags: ["Comments"],
     }),
     addComment: build.mutation({
-      queryFn: async ({ userId, content, postId, date }) => {
-        try {
-          await addDoc(collection(db, "comments"), {
-            content: content,
-            date: date,
-            postId: postId,
-            userId: userId,
-          });
-          return { data: null };
-        } catch (err) {
-          console.error("could not add comment: ", err);
-        }
-      },
+      query: (comment, post) => ({
+        url: `/posts/${post.id}/comments`,
+        method: "POST",
+        body: comment,
+      }),
       invalidatesTags: ["Comments"],
     }),
     editComment: build.mutation({
