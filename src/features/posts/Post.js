@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/Post.module.css";
 import {
   useAddCommentMutation,
-  useAddReactionMutation,
+  useUpdateReactionMutation,
   useDeletePostMutation,
   useEditPostMutation,
-  useRemoveReactionMutation,
   useGetCommentsQuery,
   useEditCommentMutation,
   useAddReplyMutation,
@@ -16,7 +15,6 @@ import {
   useGetPostsQuery,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
-import { auth } from "../../firebase";
 import { CommentInput } from "./CommentInput";
 import { CommentList } from "./CommentList";
 import { PostOptionsCard } from "./PostOptionsCard";
@@ -57,8 +55,7 @@ const Post = ({
     filteredComments = comments.filter((item) => item.data.postId === id);
   }
   const [addPost] = useAddPostMutation();
-  const [addReaction] = useAddReactionMutation();
-  const [removeReaction] = useRemoveReactionMutation();
+  const [updateReaction] = useUpdateReactionMutation();
   const [addComment] = useAddCommentMutation();
   const [editComment] = useEditCommentMutation();
   const [editPost] = useEditPostMutation();
@@ -80,8 +77,8 @@ const Post = ({
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
   // set commentId to use when editing comments
   const [commentId, setCommentId] = useState("");
-  const userId = auth.currentUser.uid;
-  const userName = auth.currentUser.displayName;
+  const userId = null;
+  const userName = null;
   // toggle comment options card
   const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
@@ -147,12 +144,12 @@ const Post = ({
         `div[name='reaction-name'][data-id='${id}']`
       );
       if (!reactions || !reactions.find((item) => item.id === userId)) {
-        await addReaction({ id, reaction: "like", userId }).unwrap();
+        await updateReaction({ id, reaction: "like", userId }).unwrap();
         thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
       } else if (reactions.find((item) => item.id === userId)) {
-        await removeReaction({ id, userId, reaction: "like" }).unwrap();
+        await updateReaction({ id, userId, reaction: "like" }).unwrap();
         thumbsUp.classList.remove("blue-filter", "solid-like-btn");
         thumbsUp.classList.add("like-btn");
         reactionName.classList.remove("blue-filter");

@@ -9,8 +9,7 @@ import { StyledReactions } from "../../components/ReactionsContainer";
 import { CommentList } from "./CommentList";
 import { CommentInput } from "./CommentInput";
 import {
-  useAddCommentReactionMutation,
-  useRemoveCommentReactionMutation,
+  useUpdateCommentReactionMutation,
   useGetRepliesQuery,
   useAddReplyMutation,
   useRemoveReplyMutation,
@@ -58,8 +57,7 @@ const Comment = ({
 
   const [removeComment] = useRemoveCommentMutation();
   const [removeReply] = useRemoveReplyMutation();
-  const [addReaction] = useAddCommentReactionMutation();
-  const [removeReaction] = useRemoveCommentReactionMutation();
+  const [updateReaction] = useUpdateCommentReactionMutation();
 
   const deleteComment = async () => {
     try {
@@ -79,10 +77,14 @@ const Comment = ({
         `div[name='comment-reaction-name'][data-id='${id}']`
       );
       if (!reactions || !reactions.find((item) => item.id === userId)) {
-        await addReaction({ commentId: id, reaction: "like", userId }).unwrap();
+        await updateReaction({
+          commentId: id,
+          reaction: "like",
+          userId,
+        }).unwrap();
         reactionName.classList.add("blue-filter");
       } else if (reactions.find((item) => item.id === userId)) {
-        await removeReaction({ commentId: id, userId }).unwrap();
+        await updateReaction({ commentId: id, userId }).unwrap();
         reactionName.classList.remove("blue-filter");
       } else {
         throw new Error("could not update reaction");

@@ -6,9 +6,10 @@ import { SubmitBtn } from "../components/Button";
 import ReactFacebookLogin from "react-facebook-login";
 
 export const SignInForm = () => {
+  const storage = localStorage;
   const { data: users, isError } = useGetUsersQuery();
-  const [addUser] = useAddUserMutation();
-  const navigate = useNavigate();
+  // const [addUser] = useAddUserMutation();
+  // const navigate = useNavigate();
 
   // const checkAndAddUser = async () => {
   //   try {
@@ -38,6 +39,7 @@ export const SignInForm = () => {
   // }, []);
   const responseFacebook = (response) => {
     console.log(response);
+    storage.setItem("token", response.accessToken);
   };
 
   return (

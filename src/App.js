@@ -5,7 +5,6 @@ import { UserOptionsCard } from "./components/UserOptionsCard";
 import "./App.css";
 import { Newsfeed } from "./app/Newsfeed";
 import { SignInPage } from "./app/SignInPage";
-import { auth } from "./firebase";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
@@ -13,24 +12,32 @@ function App() {
   const [showOptionsCard, setShowOptionsCard] = useState(false);
   const toggleOptionsCard = () => {
     setShowOptionsCard(!showOptionsCard ? true : false);
-  }
+  };
   const toggleNav = () => {
     setShowNav(false);
-  }
+  };
   const location = useLocation();
   useEffect(() => {
-    if (auth.currentUser) setShowNav(true);
+    if (localStorage.getItem("token")) setShowNav(true);
   }, [location]);
   return (
     <div>
       {showNav && <StyledNav toggleCard={toggleOptionsCard} />}
-      {showOptionsCard && <UserOptionsCard toggleCard={toggleOptionsCard} toggleNav={toggleNav} />}
+      {showOptionsCard && (
+        <UserOptionsCard toggleCard={toggleOptionsCard} toggleNav={toggleNav} />
+      )}
       <Routes>
         <Route path="/" element={<SignInPage />} />
-        <Route path="/newsfeed" element={<ProtectedRoute user={auth.currentUser}><Newsfeed /></ProtectedRoute>} />
+        <Route
+          path="/newsfeed"
+          element={
+            <ProtectedRoute user={localStorage.getItem("token")}>
+              <Newsfeed />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
-
   );
 }
 

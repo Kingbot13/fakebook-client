@@ -1,6 +1,5 @@
 import React from "react";
 import { UserPhoto } from "../users/UserPhoto";
-import { auth } from "../../firebase";
 import { SubmitBtn } from "../../components/Button";
 import { Post } from "./Post";
 import { UpperPost } from "../../components/UpperPost";
@@ -27,7 +26,7 @@ export const PostForm = ({
         <div className={styles.userPhotoContainer}>
           <UserPhoto />
         </div>
-        <div className={styles.username}>{auth.currentUser.displayName}</div>
+        <div className={styles.username}>{null}</div>
       </div>
       <input
         type="text"

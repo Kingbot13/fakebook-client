@@ -4,8 +4,9 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseURL: "https://desolate-harbor-02562.herokuapp.com/api",
   }),
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token;
+  prepareHeaders: (headers) => {
+    const storage = localStorage;
+    const token = storage.getItem("token");
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
@@ -126,14 +127,12 @@ export const {
   useGetUsersQuery,
   useAddPostMutation,
   useAddUserMutation,
-  useAddReactionMutation,
-  useRemoveReactionMutation,
+  useUpdateReactionMutation,
   useAddCommentMutation,
   useEditPostMutation,
   useDeletePostMutation,
   useGetCommentsQuery,
-  useAddCommentReactionMutation,
-  useRemoveCommentReactionMutation,
+  useUpdateCommentReactionMutation,
   useRemoveCommentMutation,
   useEditCommentMutation,
   useAddReplyMutation,
