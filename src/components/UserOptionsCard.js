@@ -1,23 +1,26 @@
 import React, {useState, useEffect} from "react";
 import styles from '../styles/UserOptionsCard.module.css';
 import { UserPhoto } from "../features/users/UserPhoto";
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useGetCurrentUserQuery } from "../features/api/apiSlice";
 
 export const UserOptionsCard = ({toggleCard, toggleNav}) => {
     const [name, setName] = useState('');
+    const {data: user, isError} = useGetCurrentUserQuery();
 
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        setName(auth.currentUser.displayName);
+        if (isError) {
+            throw new Error('User not found');
+        }
+        setName(`${user.firstName} ${user.lastName}`);
     }, []);
 
     const logOut = async () => {
         try {
-            await signOut(auth);
+            // await signOut(auth);
             toggleCard();
             toggleNav();
             navigate('/');

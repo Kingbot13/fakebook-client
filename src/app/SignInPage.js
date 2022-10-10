@@ -2,12 +2,11 @@ import React, {useEffect} from "react";
 import { SignInForm } from "./SignInForm";
 import styles from '../styles/SignInPage.module.css';
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
 
 export const SignInPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (auth.currentUser) navigate('/newsfeed');
+    if (localStorage.getItem('token')) navigate('/newsfeed');
   },[]);
   return (
     <main className={styles.main}>

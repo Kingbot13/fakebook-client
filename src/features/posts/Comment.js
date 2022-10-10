@@ -15,7 +15,6 @@ import {
   useRemoveReplyMutation,
   useEditReplyMutation,
 } from "../api/apiSlice";
-import { auth } from "../../firebase";
 
 const Comment = ({
   userId,
@@ -135,7 +134,7 @@ const Comment = ({
           </div>
           {reactions && <StyledReactions reactions={reactions} />}
         </div>
-        {userId === auth.currentUser.uid && (
+        {userId === null && (
           <div
             role="button"
             className={styles.optionsBtn}

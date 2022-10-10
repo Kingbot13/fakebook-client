@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/UserPhoto.module.css";
+import { useGetCurrentUserQuery } from "../api/apiSlice";
 
 export const UserPhoto = () => {
   const [photoURL, setPhotoURL] = useState("");
-  const user = null;
+  const {data: user, isError} = useGetCurrentUserQuery();
 
   useEffect(() => {
-    setPhotoURL(user.photoURL || null);
+    if (isError) {
+      throw new Error('User not found');
+    }
+    setPhotoURL(user.profileImage);
   }, []);
 
   return (

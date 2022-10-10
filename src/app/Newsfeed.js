@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase";
 import styles from "../styles/Newsfeed.module.css";
 import { PostFormButton } from "../features/posts/PostFormButton";
 import { PostForm } from "../features/posts/PostForm";
@@ -15,26 +14,26 @@ export const Newsfeed = () => {
 
   const handleChange = (e) => setContent(e.target.value);
 
-  const getUserInfo = () => {
-    const user = auth.currentUser;
+  // const getUserInfo = () => {
+  //   const user = auth.currentUser;
 
-    if (user) {
-      setName(user.displayName);
-      setId(user.uid);
-    } else {
-      throw new Error("user is not signed in");
-    }
-  };
+  //   if (user) {
+  //     setName(user.displayName);
+  //     setId(user.uid);
+  //   } else {
+  //     throw new Error("user is not signed in");
+  //   }
+  // };
 
   useEffect(() => {
-    getUserInfo();
+    // getUserInfo();
   }, []);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      getUserInfo();
-      const photo = auth.currentUser.photoURL;
+      // getUserInfo();
+      const photo = null;
       await addPost({ name, content, photo, id, date: Date() }).unwrap();
       setContent("");
       toggleForm();

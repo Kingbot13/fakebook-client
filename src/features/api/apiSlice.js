@@ -2,24 +2,24 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
-    baseURL: "https://desolate-harbor-02562.herokuapp.com/api",
+    baseUrl: "https://desolate-harbor-02562.herokuapp.com/api",
+    prepareHeaders: (headers) => {
+      const storage = localStorage;
+      const token = storage.getItem("token");
+  
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
-  prepareHeaders: (headers) => {
-    const storage = localStorage;
-    const token = storage.getItem("token");
-
-    if (token) {
-      headers.set("authorization", `Bearer ${token}`);
-    }
-    return headers;
-  },
   tagTypes: ["Posts", "Users", "Comments", "Replies"],
-  endpoints: (build) => ({
-    getPosts: build.query({
+  endpoints: (builder) => ({
+    getPosts: builder.query({
       query: () => "/posts",
       providesTags: ["Posts"],
     }),
-    addPost: build.mutation({
+    addPost: builder.mutation({
       query: (initialPost) => ({
         url: "/posts",
         method: "POST",
@@ -27,7 +27,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Posts"],
     }),
-    editPost: build.mutation({
+    editPost: builder.mutation({
       query: (post) => ({
         url: `/posts/${post.id}`,
         method: "PUT",
@@ -35,7 +35,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Posts"],
     }),
-    deletePost: build.mutation({
+    deletePost: builder.mutation({
       query: (post) => ({
         url: `posts/${post.id}`,
         method: "DELETE",
@@ -43,11 +43,14 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Posts"],
     }),
-    getUsers: build.query({
+    getUsers: builder.query({
       query: () => "/users",
       providesTags: ["Users"],
     }),
-    updateReaction: build.mutation({
+    getCurrentUser: builder.query({
+      query: () => '/auth/facebook/token'
+    }),
+    updateReaction: builder.mutation({
       query: (post) => ({
         url: `/posts/${post.id}`,
         method: "PUT",
@@ -55,11 +58,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Posts"],
     }),
-    getComments: build.query({
+    getComments: builder.query({
       query: () => "/comments",
       providesTags: ["Comments"],
     }),
-    addComment: build.mutation({
+    addComment: builder.mutation({
       query: (comment, post) => ({
         url: `/posts/${post.id}/comments`,
         method: "POST",
@@ -67,7 +70,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Comments"],
     }),
-    editComment: build.mutation({
+    editComment: builder.mutation({
       query: (comment) => ({
         url: `/posts/${comment.postId}/comments/${comment.id}`,
         method: "PUT",
@@ -75,7 +78,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Comments"],
     }),
-    removeComment: build.mutation({
+    removeComment: builder.mutation({
       query: (comment) => ({
         url: `/posts/${comment.postId}/comments/${comment.id}`,
         method: "DELETE",
@@ -83,7 +86,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Comments"],
     }),
-    updateCommentReaction: build.mutation({
+    updateCommentReaction: builder.mutation({
       query: (comment) => ({
         url: `/posts/${comment.postId}/comments/${comment.id}`,
         method: "PUT",
@@ -91,11 +94,11 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Comments"],
     }),
-    getReplies: build.query({
+    getReplies: builder.query({
       query: () => "/replies",
       providesTags: ["Replies"],
     }),
-    addReply: build.mutation({
+    addReply: builder.mutation({
       query: (reply) => ({
         url: `comments/${reply.commentId}/replies`,
         method: "POST",
@@ -103,7 +106,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Replies"],
     }),
-    editReply: build.mutation({
+    editReply: builder.mutation({
       query: (reply) => ({
         url: `/comments/${reply.commentId}/${reply.id}`,
         method: "PUT",
@@ -111,7 +114,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Replies"],
     }),
-    removeReply: build.mutation({
+    removeReply: builder.mutation({
       query: (reply) => ({
         url: `comments/${reply.commentId}/replies/${reply.id}`,
         method: "PUT",
@@ -125,6 +128,7 @@ export const apiSlice = createApi({
 export const {
   useGetPostsQuery,
   useGetUsersQuery,
+  useGetCurrentUserQuery,
   useAddPostMutation,
   useAddUserMutation,
   useUpdateReactionMutation,
