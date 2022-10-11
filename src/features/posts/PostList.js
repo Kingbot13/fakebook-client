@@ -4,10 +4,10 @@ import { useGetPostsQuery } from "../api/apiSlice";
 import styles from "../../styles/PostList.module.css";
 
 export const PostList = ({ toggle }) => {
-  const { data: posts, isError } = useGetPostsQuery();
+  const { data: posts = [], isError } = useGetPostsQuery();
 
   let sortedPosts;
-  if (posts) sortedPosts = [...posts];
+  if (posts && posts.length) sortedPosts = [...posts];
   useEffect(() => {
     if (posts && posts.length > 1) {
       sortedPosts.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
@@ -16,15 +16,15 @@ export const PostList = ({ toggle }) => {
 
   return (
     <div className={styles.container}>
-      {posts
+      {posts && posts.length
         ? sortedPosts.map((post) => (
             <Post
-              key={post.id}
+              key={post._id}
               name={post.data.name}
               content={post.data.content}
               photo={post.data.photo}
               date={post.data.date}
-              id={post.id}
+              id={post._id}
               reactions={post.data.reactions}
               toggle={toggle}
               user={post.data.userId}

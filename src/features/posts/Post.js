@@ -13,6 +13,7 @@ import {
   useRemoveReplyMutation,
   useAddPostMutation,
   useGetPostsQuery,
+  useGetCurrentUserQuery
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { CommentInput } from "./CommentInput";
@@ -29,10 +30,11 @@ const Post = ({
   date,
   id,
   reactions,
-  user,
+  userProp,
   share,
   shareId,
 }) => {
+  const {data: user, isError, isSuccess} = useGetCurrentUserQuery();
   const formattedDate = formatDistanceToNow(new Date(date));
   const postInfo = {
     name: name,
@@ -64,7 +66,8 @@ const Post = ({
   const [editReply] = useEditReplyMutation();
   const [value, setValue] = useState("");
   const [replyContent, setReplyContent] = useState("");
-
+  // set state for current user data
+  const [userState, setUserState] = useState({});
   const [contentData, setContentData] = useState(content);
   const [isReplyBool, setIsReplyBool] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -77,8 +80,6 @@ const Post = ({
   const [cardPosition, setCardPosition] = useState({ x: 0, y: 0 });
   // set commentId to use when editing comments
   const [commentId, setCommentId] = useState("");
-  const userId = null;
-  const userName = null;
   // toggle comment options card
   const toggleCard = (id) => {
     // set commentId as soon as commentOptionsCard is toggled
@@ -143,13 +144,13 @@ const Post = ({
       const reactionName = document.querySelector(
         `div[name='reaction-name'][data-id='${id}']`
       );
-      if (!reactions || !reactions.find((item) => item.id === userId)) {
-        await updateReaction({ id, reaction: "like", userId }).unwrap();
+      if (!reactions || !reactions.find((item) => item.id === user.id)) {
+        await updateReaction({ id, reaction: "like", user: user.id }).unwrap();
         thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
-      } else if (reactions.find((item) => item.id === userId)) {
-        await updateReaction({ id, userId, reaction: "like" }).unwrap();
+      } else if (reactions.find((item) => item.id === user.id)) {
+        await updateReaction({ id, user: user.id, reaction: "like" }).unwrap();
         thumbsUp.classList.remove("blue-filter", "solid-like-btn");
         thumbsUp.classList.add("like-btn");
         reactionName.classList.remove("blue-filter");
@@ -169,7 +170,7 @@ const Post = ({
         if (e.code === "Enter") {
           if (action === "add") {
             await addComment({
-              userId,
+              user: user.id,
               content: value,
               postId: id,
               date: Date(),
@@ -190,7 +191,7 @@ const Post = ({
         if (e.code === "Enter") {
           if (action === "add") {
             await addReply({
-              userId,
+              user: user.id,
               content: replyContent,
               commentId: idForReply,
               date: Date(),
@@ -257,10 +258,10 @@ const Post = ({
   const handleShareSubmit = async () => {
     try {
       await addPost({
-        name: userName,
+        name: user.username,
         content: value,
         photo: null,
-        id: userId,
+        id: user.id,
         date: Date(),
         share: true,
         shareId: id,
@@ -279,9 +280,22 @@ const Post = ({
       console.error("problem handling post deletion: ", err);
     }
   };
-  // if userId is contained in reactions array, render like button with blue filter and solid thumb image
+
+  useEffect(() => { // set userState when data is finished fetching
+    if (isError) {
+      throw new Error('error fetching user');
+    }
+    if (user) {
+      setUserState({
+        id: user._id,
+        username: `${user.firstName} ${user.lastName}`
+      });
+    }
+  }, [user]);
+
+  // if user.id is contained in reactions array, render like button with blue filter and solid thumb image
   useEffect(() => {
-    if (reactions && reactions.find((item) => item.id === userId)) {
+    if (reactions && reactions.find((item) => item.id === user.id)) {
       const thumbsUp = document.querySelector(
         `i[name='like-icon'][data-id='${id}']`
       );
@@ -292,7 +306,7 @@ const Post = ({
       thumbsUp.classList.add("blue-filter", "solid-like-btn");
       reactionName.classList.add("blue-filter");
     }
-  }, [reactions, userId]);
+  }, [reactions, user.id]);
 
   return (
     <div className={styles.container}>
@@ -333,7 +347,7 @@ const Post = ({
         filteredPost={filteredPost}
         id={id}
         user={user}
-        userId={userId}
+        userId={user.id}
       />
       <div>
         <div

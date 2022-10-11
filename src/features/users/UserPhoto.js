@@ -3,15 +3,18 @@ import styles from "../../styles/UserPhoto.module.css";
 import { useGetCurrentUserQuery } from "../api/apiSlice";
 
 export const UserPhoto = () => {
-  const [photoURL, setPhotoURL] = useState("");
-  const {data: user, isError} = useGetCurrentUserQuery();
+  const {data: user, isError, isSuccess} = useGetCurrentUserQuery();
+  const [photoURL, setPhotoURL] = useState('');
 
   useEffect(() => {
     if (isError) {
       throw new Error('User not found');
     }
-    setPhotoURL(user.profileImage);
-  }, []);
+    if (user) {
+      console.log(user);
+      setPhotoURL(user.profileImage);
+    }
+  }, [user, isSuccess]);
 
   return (
     <img className={styles.img} src={photoURL} alt="" name="profile-img" />
