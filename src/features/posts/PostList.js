@@ -20,16 +20,16 @@ export const PostList = ({ toggle }) => {
         ? sortedPosts.map((post) => (
             <Post
               key={post._id}
-              name={post.data.name}
-              content={post.data.content}
-              photo={post.data.photo}
-              date={post.data.date}
+              name={post.name}
+              content={post.content}
+              photo={post.photo}
+              date={post.date}
               id={post._id}
-              reactions={post.data.reactions}
+              reactions={post.reactions}
               toggle={toggle}
-              user={post.data.userId}
-              share={post.data.share}
-              shareId={post.data.shareId}
+              user={post.user}
+              share={post.share}
+              shareId={post.shareId}
             />
           ))
         : "Be the first to write a post!"}
