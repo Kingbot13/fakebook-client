@@ -13,7 +13,7 @@ export const PostList = ({ toggle }) => {
   if (posts && posts.length) sortedPosts = [...posts];
   useEffect(() => {
     if (posts && posts.length > 1) {
-      sortedPosts.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
+      sortedPosts.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
   }, [posts, isSuccess]);
 
