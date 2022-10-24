@@ -4,9 +4,6 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "../../app/store";
-import { auth, db } from "../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 
 describe("post", () => {
   const initialData = {
@@ -16,14 +13,6 @@ describe("post", () => {
     date: "June 14, 2022",
     id: "QIrY5G3B6inS03dCFnfL",
   };
-  // let data;
-  beforeAll(async () => {
-    try {
-      return await signInWithEmailAndPassword(auth, "test@test.com", "test123");
-    } catch (err) {
-      console.error(err);
-    }
-  });
   afterEach(() => cleanup());
 
   test("clicking like button increase likes displayed by 1", async () => {

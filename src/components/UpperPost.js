@@ -21,7 +21,7 @@ export const UpperPost = ({
           <StyledImg src={photo} alt="" />
         </div>
         <div className={styles.nameContainer}>
-          <strong>{name}</strong>
+          <strong>{`${name.firstName} ${name.lastName}`}</strong>
           <div className={styles.time}>{formattedDate}</div>
         </div>
         {id !== shareId && user === userId && (

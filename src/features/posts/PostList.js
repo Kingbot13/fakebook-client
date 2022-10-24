@@ -4,7 +4,7 @@ import { useGetPostsQuery } from "../api/apiSlice";
 import styles from "../../styles/PostList.module.css";
 
 export const PostList = ({ toggle }) => {
-  const { data: posts = [], isError } = useGetPostsQuery();
+  const { data: posts, isError } = useGetPostsQuery();
 
   let sortedPosts;
   if (posts && posts.length) sortedPosts = [...posts];
@@ -20,7 +20,10 @@ export const PostList = ({ toggle }) => {
         ? sortedPosts.map((post) => (
             <Post
               key={post._id}
-              name={post.name}
+              name={{
+                firstName: post.user.firstName,
+                lastName: post.user.lastName,
+              }}
               content={post.content}
               photo={post.photo}
               date={post.date}
