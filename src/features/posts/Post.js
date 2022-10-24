@@ -13,7 +13,7 @@ import {
   useRemoveReplyMutation,
   useAddPostMutation,
   useGetPostsQuery,
-  useGetCurrentUserQuery
+  useGetCurrentUserQuery,
 } from "../api/apiSlice";
 import Proptypes from "prop-types";
 import { CommentInput } from "./CommentInput";
@@ -34,7 +34,8 @@ const Post = ({
   share,
   shareId,
 }) => {
-  const {data: user, isError, isSuccess} = useGetCurrentUserQuery();
+  const { data: userData, isError, isSuccess } = useGetCurrentUserQuery();
+  const { user } = userData;
   const formattedDate = formatDistanceToNow(new Date(date));
   const postInfo = {
     name: name,
@@ -44,17 +45,18 @@ const Post = ({
     id: id,
     reactions: reactions,
   };
-  const { data: posts } = useGetPostsQuery();
+  const { data: postsData } = useGetPostsQuery();
+  const posts = postsData.posts;
   let filteredPost;
   if (posts && share) {
-    const filteredPostArray = posts.filter((post) => post.id === shareId);
+    const filteredPostArray = posts.filter((post) => post._id === shareId);
     filteredPost = filteredPostArray[0];
   }
   const { data: comments } = useGetCommentsQuery();
 
   let filteredComments;
   if (comments) {
-    filteredComments = comments.filter((item) => item.data.postId === id);
+    filteredComments = comments.comments.filter((item) => item.postId === id);
   }
   const [addPost] = useAddPostMutation();
   const [updateReaction] = useUpdateReactionMutation();
@@ -144,13 +146,13 @@ const Post = ({
       const reactionName = document.querySelector(
         `div[name='reaction-name'][data-id='${id}']`
       );
-      if (!reactions || !reactions.find((item) => item.id === user.id)) {
-        await updateReaction({ id, reaction: "like", user: user.id }).unwrap();
+      if (!reactions || !reactions.find((item) => item.id === user._id)) {
+        await updateReaction({ id, reaction: "like", user: user._id }).unwrap();
         thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
-      } else if (reactions.find((item) => item.id === user.id)) {
-        await updateReaction({ id, user: user.id, reaction: "like" }).unwrap();
+      } else if (reactions.find((item) => item.id === user._id)) {
+        await updateReaction({ id, user: user._id, reaction: "like" }).unwrap();
         thumbsUp.classList.remove("blue-filter", "solid-like-btn");
         thumbsUp.classList.add("like-btn");
         reactionName.classList.remove("blue-filter");
@@ -170,7 +172,7 @@ const Post = ({
         if (e.code === "Enter") {
           if (action === "add") {
             await addComment({
-              user: user.id,
+              user: user._id,
               content: value,
               postId: id,
               date: Date(),
@@ -191,7 +193,7 @@ const Post = ({
         if (e.code === "Enter") {
           if (action === "add") {
             await addReply({
-              user: user.id,
+              user: user._id,
               content: replyContent,
               commentId: idForReply,
               date: Date(),
@@ -281,14 +283,15 @@ const Post = ({
     }
   };
 
-  useEffect(() => { // set userState when data is finished fetching
+  useEffect(() => {
+    // set userState when data is finished fetching
     if (isError) {
-      throw new Error('error fetching user');
+      throw new Error("error fetching user");
     }
     if (user) {
       setUserState({
         id: user._id,
-        username: `${user.firstName} ${user.lastName}`
+        username: `${user.firstName} ${user.lastName}`,
       });
     }
   }, [user]);
