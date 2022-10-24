@@ -4,7 +4,10 @@ import { useGetPostsQuery } from "../api/apiSlice";
 import styles from "../../styles/PostList.module.css";
 
 export const PostList = ({ toggle }) => {
-  const { data: posts, isError } = useGetPostsQuery();
+  const { data: postsData, isError, isSuccess } = useGetPostsQuery();
+
+  let posts;
+  if (postsData) posts = postsData.posts;
 
   let sortedPosts;
   if (posts && posts.length) sortedPosts = [...posts];
@@ -12,7 +15,7 @@ export const PostList = ({ toggle }) => {
     if (posts && posts.length > 1) {
       sortedPosts.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
     }
-  }, [posts]);
+  }, [posts, isSuccess]);
 
   return (
     <div className={styles.container}>
