@@ -14,25 +14,9 @@ export const Newsfeed = () => {
 
   const handleChange = (e) => setContent(e.target.value);
 
-  // const getUserInfo = () => {
-  //   const user = auth.currentUser;
-
-  //   if (user) {
-  //     setName(user.displayName);
-  //     setId(user.uid);
-  //   } else {
-  //     throw new Error("user is not signed in");
-  //   }
-  // };
-
-  useEffect(() => {
-    // getUserInfo();
-  }, []);
-
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      // getUserInfo();
       const photo = null;
       await addPost({ name, content, photo, id, date: Date() }).unwrap();
       setContent("");
@@ -55,7 +39,7 @@ export const Newsfeed = () => {
           setContent={setContent}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-          title='Create post'
+          title="Create post"
         />
       )}
       <PostFormButton onClick={toggleForm} />
