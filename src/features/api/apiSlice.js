@@ -52,7 +52,7 @@ export const apiSlice = createApi({
     }),
     updateReaction: builder.mutation({
       query: (post) => ({
-        url: `/posts/${post.id}`,
+        url: `/posts/${post.id}/reactions`,
         method: "PUT",
         body: post,
       }),
@@ -88,7 +88,7 @@ export const apiSlice = createApi({
     }),
     updateCommentReaction: builder.mutation({
       query: (comment) => ({
-        url: `/posts/${comment.postId}/comments/${comment.id}`,
+        url: `/posts/${comment.postId}/comments/${comment.id}/reactions`,
         method: "PUT",
         body: comment,
       }),

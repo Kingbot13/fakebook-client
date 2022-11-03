@@ -148,18 +148,17 @@ const Post = ({
         `div[name='reaction-name'][data-id='${id}']`
       );
       if (!reactions || !reactions.find((item) => item.id === user._id)) {
-        await updateReaction({ id, reaction: "like", user: user._id }).unwrap();
         thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
         reactionName.classList.add("blue-filter");
       } else if (reactions.find((item) => item.id === user._id)) {
-        await updateReaction({ id, user: user._id, reaction: "like" }).unwrap();
         thumbsUp.classList.remove("blue-filter", "solid-like-btn");
         thumbsUp.classList.add("like-btn");
         reactionName.classList.remove("blue-filter");
       } else {
         throw new Error("could not update reaction");
       }
+      await updateReaction({ id, reaction: "like", user: user._id }).unwrap();
     } catch (err) {
       console.error(err);
     }
@@ -299,7 +298,7 @@ const Post = ({
 
   // if user.id is contained in reactions array, render like button with blue filter and solid thumb image
   useEffect(() => {
-    if (reactions && reactions.find((item) => item.id === user.id)) {
+    if (reactions && reactions.find((item) => item.id === user._id)) {
       const thumbsUp = document.querySelector(
         `i[name='like-icon'][data-id='${id}']`
       );
@@ -310,7 +309,7 @@ const Post = ({
       thumbsUp.classList.add("blue-filter", "solid-like-btn");
       reactionName.classList.add("blue-filter");
     }
-  }, [reactions, user.id]);
+  }, [reactions, user._id]);
 
   return (
     <div className={styles.container}>
@@ -352,7 +351,7 @@ const Post = ({
         filteredPost={filteredPost}
         id={id}
         user={user}
-        userId={user.id}
+        userId={user._id}
       />
       <div>
         <div
