@@ -147,6 +147,7 @@ const Post = ({
       const reactionName = document.querySelector(
         `div[name='reaction-name'][data-id='${id}']`
       );
+      await updateReaction({ id, reaction: "like", user: user._id }).unwrap();
       if (!reactions || !reactions.find((item) => item.id === user._id)) {
         thumbsUp.classList.remove("like-btn");
         thumbsUp.classList.add("blue-filter", "solid-like-btn");
@@ -158,7 +159,6 @@ const Post = ({
       } else {
         throw new Error("could not update reaction");
       }
-      await updateReaction({ id, reaction: "like", user: user._id }).unwrap();
     } catch (err) {
       console.error(err);
     }
