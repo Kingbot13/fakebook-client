@@ -358,7 +358,7 @@ const Post = ({
           name="reactions"
           className={styles.displayedReactions}
         >
-          {(reactions && reactions.length) || 0}
+          {reactions && reactions.length ? reactions.length : 0}
         </div>
         <div className={styles.reactionContainer}>
           <div
