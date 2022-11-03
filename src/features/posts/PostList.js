@@ -36,6 +36,7 @@ export const PostList = ({ toggle }) => {
               user={post.user}
               share={post.share}
               shareId={post.shareId}
+              profilePhoto={post.user.profileImage}
             />
           ))
         : "Be the first to write a post!"}

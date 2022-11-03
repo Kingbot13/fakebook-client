@@ -13,12 +13,13 @@ export const UpperPost = ({
   id,
   user,
   userId,
+  profilePhoto
 }) => {
   return (
     <div className={styles.container}>
       <div className={styles.user}>
         <div>
-          <StyledImg src={photo} alt="" />
+          <StyledImg src={profilePhoto} alt="" />
         </div>
         <div className={styles.nameContainer}>
           <strong>{`${name.firstName} ${name.lastName}`}</strong>

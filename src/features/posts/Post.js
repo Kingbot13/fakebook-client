@@ -27,6 +27,7 @@ const Post = ({
   name,
   content,
   photo,
+  profilePhoto,
   date,
   id,
   reactions,
@@ -342,6 +343,7 @@ const Post = ({
       <UpperPost
         name={name}
         photo={photo}
+        profilePhoto={profilePhoto}
         formattedDate={formattedDate}
         toggleOptionsCard={toggleOptionsCard}
         content={content}
