@@ -45,6 +45,7 @@ export const UpperPost = ({
             date={filteredPost.data.date}
             id={shareId}
             shareId={shareId}
+            profilePhoto={profilePhoto}
           />
         </div>
       )}
