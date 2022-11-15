@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     prepareHeaders: (headers) => {
       const storage = localStorage;
       const token = storage.getItem("token");
-  
+
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -48,7 +48,7 @@ export const apiSlice = createApi({
       providesTags: ["Users"],
     }),
     getCurrentUser: builder.query({
-      query: () => '/auth/facebook/token'
+      query: () => "/auth/facebook/token",
     }),
     updateReaction: builder.mutation({
       query: (post) => ({
@@ -122,6 +122,14 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Replies"],
     }),
+    updateReplyReaction: builder.mutation({
+      query: (reply) => ({
+        url: `/comments/${reply.commentId}/replies/${reply.id}`,
+        method: "PUT",
+        body: reply,
+      }),
+      invalidatesTags: ["Replies"],
+    }),
   }),
 });
 
@@ -130,7 +138,7 @@ export const {
   useGetUsersQuery,
   useGetCurrentUserQuery,
   useAddPostMutation,
-  useAddUserMutation,
+  useUpdateReplyReactionMutation,
   useUpdateReactionMutation,
   useAddCommentMutation,
   useEditPostMutation,
