@@ -15,11 +15,13 @@ import {
   useRemoveReplyMutation,
   useEditReplyMutation,
 } from "../api/apiSlice";
+import { StyledImage } from "../../components/Image";
 
 const Comment = ({
   userId,
   content,
   id,
+  author,
   date,
   showCard,
   position,
@@ -43,13 +45,7 @@ const Comment = ({
   const { data: replies } = useGetRepliesQuery();
   let filteredReplies;
   if (replies) {
-    filteredReplies = replies.filter((item) => item.data.commentId === id);
-  }
-  // get the name of who posted comment
-  const { data: users } = useGetUsersQuery();
-  let foundUser;
-  if (users) {
-    foundUser = users.find((user) => user.id === userId);
+    filteredReplies = replies.replies.filter((item) => item.commentId === id);
   }
 
   const formattedDate = formatDistanceToNow(new Date(date));
@@ -118,14 +114,14 @@ const Comment = ({
         />
       )}
       <div className={styles.profileContainer}>
-        <UserPhoto />
+        <StyledImage src={author.user.profileImage} />
       </div>
       <div className={styles.secondaryContainer}>
         <div className={styles.commentCard}>
           <div>
             <div>
               <div className={styles.userName}>
-                {users && foundUser.data.name}
+                {author.firstName} {author.lastName}
               </div>
               <p className={styles.contentContainer} data-id={id}>
                 {content}

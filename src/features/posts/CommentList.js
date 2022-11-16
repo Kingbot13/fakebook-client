@@ -25,20 +25,21 @@ const CommentList = ({
 }) => {
   const [content, setContent] = useState("");
   const sortedComments = [...comments];
-  sortedComments.sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
+  sortedComments.sort((a, b) => new Date(a.date) - new Date(b.date));
   const mapComments = sortedComments.map((comment) => {
     return (
       <Comment
-        key={comment.id}
-        content={comment.data.content}
-        userId={comment.data.userId}
-        id={comment.id}
-        date={comment.data.date}
+        key={comment._id}
+        content={comment.content}
+        userId={comment.user._id}
+        id={comment._id}
+        author={comment.user}
+        date={comment.date}
         showCard={showCard}
         position={position}
         toggleCard={toggleCard}
         toggleEdit={toggleEdit}
-        reactions={comment.data.reactions}
+        reactions={comment.reactions}
         isReply={isReply}
         commentId={commentId}
         show={show}
